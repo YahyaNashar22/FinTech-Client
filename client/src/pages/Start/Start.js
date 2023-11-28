@@ -1,5 +1,5 @@
 import React from "react";
-import style from './Users.module.css';
+import style from './Start.module.css';
 
 const Start = () => {
   return (
