@@ -1,0 +1,78 @@
+body{
+    background-color: var(--page-background-color);
+}
+.goal{
+    margin: auto;
+    height: 100vh;
+    width: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.createGoal{
+    height: 10vh;
+    width: 20vh;
+    border:2px solid var(--primary-green);
+    color:var(--primary-green) ;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.createGoal:active{
+    box-shadow: none;
+}
+.particle1, .particle2, .particle3, .particle4, .particle5, .particle6,.particle7, .particle8, .particle9, .particle10, .particle11, .particle12{
+    width: 50px;
+    height: 50px;
+    background-color: var(--secondery-green);
+    position: absolute;
+}
+.particle1{
+    top: 2rem;
+    left: 2rem;
+}
+.particle2{
+    top: 38rem;
+    left: 38rem;
+}
+.particle3{
+    top: 37rem;
+    left: 4rem ;
+}
+.particle4{
+    top:4rem ;
+    left:35rem ;
+}
+.particle5{
+    top:8rem ;
+    left:20rem ;
+}
+.particle6{
+    top: 37em;
+    left: 25rem;
+}
+.particle7{
+    top: 2rem;
+    right: 2rem;
+}
+.particle8{
+    top: 36rem;
+    right: 36rem;
+}
+.particle9{
+    top: 35rem;
+    right: 4rem ;
+}
+.particle10{
+    top:4rem ;
+    right:35rem ;
+}
+.particle11{
+    top:8rem ;
+    right:20rem ;
+}
+.particle12{
+    top: 37em;
+    right: 25rem;
+}
