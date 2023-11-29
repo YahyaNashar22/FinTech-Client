@@ -13,7 +13,7 @@
 }
 .yearlyForm{
     display: flex;
-    column-gap: 5rem;
+    column-gap: 3rem;
     scale: 2;
 }
 .inp{
@@ -50,4 +50,10 @@
     color: var(--third-green);
     padding: 4px;
     cursor:pointer;
+}
+@media(max-width:600px){
+    .yearlyForm{
+        flex-direction: column;
+        row-gap: 5rem;
+    }
 }
