@@ -13,7 +13,7 @@ function CreateGoal() {
         ease: [0, 0.71, 0.2, 1.01],
         scale: {
           type: "spring",
-          damping: 5,
+          damping: 10,
           stiffness: 100,
           restDelta: 0.001,
         },

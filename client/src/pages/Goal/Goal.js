@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import style from "./Goal.module.css";
 import { Link } from "react-router-dom";
 
-const Goal = () => {
+function Goal() {
   return (
     <>
       <motion.div className={style.particle1} whileHover={{ rotate: 35 }} />
@@ -43,5 +43,5 @@ const Goal = () => {
       </Link>
     </>
   );
-};
+}
 export default Goal;
