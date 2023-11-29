@@ -6,7 +6,7 @@ function LayoutWithHeaderSidebar({ children }) {
   return (
     <>
       <Header />
-      <div>
+      <div style={{display: "flex"}}>
         <Sidebar />
         {children}
       </div>

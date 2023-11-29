@@ -1,0 +1,64 @@
+.main {
+  margin: 25px;
+  padding: 25px;
+  width: 100%;
+  background-color: #25282C;
+  color: white;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 45px;
+}
+.header .title {
+
+}
+.header .editInfoButton {
+  background: var(--secondery-green);
+  color: white;
+  font-size: 18px;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 9px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.header .editInfoButton:hover {
+  background-color: var(--third-green);
+}
+
+
+
+
+.tableContainer {
+
+}
+.tableContainer .dataTable {
+  border-collapse: collapse;
+  width: 100%;
+}
+tr:first-child {
+  border-top: 1px solid var(--primary-green);
+}
+tr {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--primary-green);
+}
+tr td {
+  font-size: 18px;
+  padding: 18px;
+}
+tr td:first-child {
+  font-weight: bold;
+  font-size: 20px;
+}
+tr td:nth-child(2) {
+}
+@media (max-width: 992px) {
+  tr td:nth-child(2) {
+    text-align: center;
+  }
+}
