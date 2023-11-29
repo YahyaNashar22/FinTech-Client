@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 function QuarterlyGoal() {
   const [goal, setGoal] = useState();
-  const [month, setMonth] = useState();
+  const [quarter, setQuarter] = useState();
   const [isPending, setIsPending] = useState(false);
 
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ function QuarterlyGoal() {
       });
   };
   let start, end;
-  switch (month) {
+  switch (quarter) {
     case "firstQuarter":
       start = new Date("January 1");
       break;
@@ -49,7 +49,7 @@ function QuarterlyGoal() {
     default:
       start = new Date();
   }
-  switch (month) {
+  switch (quarter) {
     case "firstQuarter":
       end = new Date("March 31");
       break;
@@ -82,7 +82,7 @@ function QuarterlyGoal() {
       }}
     >
       <h1 className={style.header}>Enter Quarterly Goal</h1>
-      <form className={style.monthlyForm} onSubmit={handleSubmit}>
+      <form className={style.quarterlyForm} onSubmit={handleSubmit}>
         <motion.input
           className={style.inp}
           type="number"
@@ -96,8 +96,8 @@ function QuarterlyGoal() {
           }}
         />
         <motion.select
-          value={month}
-          onChange={(e) => setMonth(e.target.value)}
+          value={quarter}
+          onChange={(e) => setQuarter(e.target.value)}
           className={style.selection}
           whileHover={{ border: "1px solid var(--primary-green)" }}
         >
