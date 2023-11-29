@@ -5,11 +5,14 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 function MonthlyGoal() {
   const [goal, setGoal] = useState();
   const [month, setMonth] = useState();
   const [isPending, setIsPending] = useState(false);
+
+  const navigate = useNavigate();
 
   const notify = () => toast("Monthly Goal Submitted");
 
@@ -26,6 +29,7 @@ function MonthlyGoal() {
       .then(() => {
         setIsPending(false);
         notify();
+        navigate("/");
       });
   };
   let start, end;

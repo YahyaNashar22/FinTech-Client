@@ -29,7 +29,7 @@ function CreateGoal() {
             Monthly
           </motion.li>
         </Link>
-        <Link to="quarterlygoal" className={style.links}>
+        <Link to="/quarterlygoal" className={style.links}>
           <motion.li
             className={style.type}
             whileHover={{ scale: 1.3, color: "var(--primary-green)" }}
@@ -37,7 +37,7 @@ function CreateGoal() {
             Quarterly
           </motion.li>
         </Link>
-        <Link to="yearlygoal" className={style.links}>
+        <Link to="/yearlygoal" className={style.links}>
           <motion.li
             className={style.type}
             whileHover={{ scale: 1.3, color: "var(--primary-green)" }}
