@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import style from './Start.module.css';
-import Rocket from '../../assets/images/Frame.png'
 import Typography from '@mui/material/Typography';
+import Rocket from '../../assets/images/Frame.png'
 import userIcon from '../../assets/icons/uiw_user.svg';
 import logoIcon from '../../assets/icons/lets-icons_img-load-box-fill.svg'
 import mailIcon from '../../assets/icons/fi_mail.svg';
+import locationIcon from '../../assets/icons/mdi_address-marker.svg'
 import textDescriptionIcon from '../../assets/icons/fluent_text-description-32-regular.svg';
 import phoneIcon from '../../assets/icons/ic_baseline-phone.svg';
 import shareIcon from '../../assets/icons/ion_share-social.svg';
@@ -18,16 +19,12 @@ import YouTubeIcon from '../../assets/icons/mdi_youtube.svg';
 import LinkedInIcon from '../../assets/icons/mdi_linkedin.svg';
 
 const Start = () => {
-  // Watch out..............
+
   const [showPopup, setShowPopup] = useState(false);
 
   const handleSocialMediaClick = () => {
     setShowPopup(!showPopup);
   };
-
-  // const handleClosePopup = () => {
-  //   setShowPopup(false);
-  // };
 
   const renderSocialMediaPopup = () => {
     return (
@@ -56,11 +53,10 @@ const Start = () => {
           <img src={LinkedInIcon} alt="LinkedIn Icon" className={style.icon} />
           <input type="text" placeholder="LinkedIn" />
         </div>
-        {/* <button onClick={handleClosePopup} className={style.closeButton}>Close</button> */}
       </div>
     );
   };
-  // -----------------------
+
   return (
     <main className={style.main}>
       <div className={style.background}>
@@ -97,6 +93,10 @@ const Start = () => {
             />
           </div>
           <div className={style.input}>
+            <img src={mailIcon} alt="Email Icon" className={style.icon} />
+            <input type="text" placeholder="Email" name="Email" required/>
+          </div>
+          <div className={style.input}>
             <img src={textDescriptionIcon} alt="Description Icon" className={style.icon} />
             <input type="text" placeholder="Description" name="Description" required/>
           </div>
@@ -105,19 +105,14 @@ const Start = () => {
             <input type="text" placeholder="Capital" name="Capital"/>
           </div>
           <div className={style.input}>
-            <img src={mailIcon} alt="Address Icon" className={style.icon} />
+            <img src={locationIcon} alt="Address Icon" className={style.icon} />
             <input type="text" placeholder="Address" name="Address"/>
           </div>
-
-
           <div className={style.input}>
             <img src={shareIcon} alt="Social Media Links Icon" className={style.icon}/>
             <input type="text" className={style.socialMediainput} placeholder="Social Media Links" readOnly={true} onClick={handleSocialMediaClick}/>
             {showPopup && renderSocialMediaPopup()}
           </div>
-
-
-          
           <div className={style.input}>
             <img src={phoneIcon} alt="Phone Number Icon" className={style.icon} />
             <input type="text" placeholder="Phone Number" name="Phone Number" required/>
