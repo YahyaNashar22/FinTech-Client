@@ -1,0 +1,15 @@
+.wrapper{
+    display: flex;
+    height: 100vh;
+    width:100vw;
+    align-items: center;
+    justify-content: center;
+    margin:auto;
+    column-gap: 100px;
+}
+.left{
+    width: 40vw;
+}
+.right{
+     width: 40vw;
+}
