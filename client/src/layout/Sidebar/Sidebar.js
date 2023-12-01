@@ -1,178 +1,59 @@
+import React from 'react'
+import 
+{BsCart3, BsGrid1X2Fill, BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, 
+  BsListCheck, BsMenuButtonWideFill, BsFillGearFill}
+ from 'react-icons/bs'
+ import './Sidebar.css'
 
-import styles from '../../layout/Sidebar/Sidebar.module.css'
-import { NavLink } from "react-router-dom";
-import { FaBars } from "react-icons/fa";
-import { BiCog } from "react-icons/bi";
-import { useState ,useEffect} from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import SidebarMenu from "./SidebarMenu";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartBar, faUsers,  faSignOutAlt, faBullseye, faFileAlt, faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
-
-
-
-const routes = [
-  {
-    path: "/",
-    name: "Dashboard",
-    icon: <FontAwesomeIcon icon={faChartBar} />,
-  },
-  {
-    path: "/users",
-    name: "Users",
-    icon: <FontAwesomeIcon icon={faUsers} />,
-  },
-  {
-    path: "/report",
-    name: "Reports",
-    icon: <FontAwesomeIcon icon={faFileAlt} />,
-  },
-  {
-    path: "/transactions",
-    name: "Transactions",
-    icon:< FontAwesomeIcon icon={faExchangeAlt} />,
-  },
-  {
-    path: "/goal",
-    name: "Goal",
-    icon: <  FontAwesomeIcon icon={faBullseye} />,
-   
-  },
- 
-  {
-    path: "/settings",
-    name: "Settings",
-    icon: <BiCog />,
-    exact: true,
-  },
-  {
-    path: "/saved",
-    name: "Log Out",
-    icon: < FontAwesomeIcon icon={faSignOutAlt} />,
-  },
-];
-
-const SideBar = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => setIsOpen(!isOpen);
-  useEffect(() => {
-    const handleResize = () => {
-      // Check the screen width and set the initial state accordingly
-      const isResponsiveMode = window.innerWidth <= 768; // You can adjust this threshold as needed
-      setIsOpen(!isResponsiveMode);
-    };
-
-    // Set initial state
-    handleResize();
-
-    // Add event listener for window resize
-    window.addEventListener("resize", handleResize);
-
-    // Cleanup event listener on component unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-  
-
-
-  const showAnimation = {
-    hidden: {
-      width: 0,
-      opacity: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
-    show: {
-      opacity: 1,
-      width: "auto",
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
-
+function Sidebar({openSidebarToggle, OpenSidebar}) {
   return (
-    <>
-      <div className={styles.maincontainer}>
-        <motion.div
-          animate={{
-            width: isOpen ? "250px" : "45px",
-
-            transition: {
-              duration: 0.5,
-              type: "spring",
-              damping: 10,
-            },
-          }}
-          className={styles.sidebar}
-        >
-          <div className={styles.topsection}>
-            <AnimatePresence>
-              {isOpen && (
-                <motion.h1
-                  variants={showAnimation}
-                  initial="hidden"
-                  animate="show"
-                  exit="hidden"
-                  className={styles.logo}
-                >
-                  DoSomeCoding
-                </motion.h1>
-              )}
-            </AnimatePresence>
-
-            <div className={styles.bars}>
-              <FaBars onClick={toggle} />
+    <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive": ""}>
+        <div className='sidebar-title'>
+            <div className='sidebar-brand'>
+                <BsCart3  className='icon_header'/> SHOP
             </div>
-          </div>
-          {}
-          <section className={styles.routes}>
-            {routes.map((route, index) => {
-              if (route.subRoutes) {
-                return (
-                  <SidebarMenu
-                    setIsOpen={setIsOpen}
-                    route={route}
-                    showAnimation={showAnimation}
-                    isOpen={isOpen}
-                  />
-                );
-              }
+            <span className='icon close_icon' onClick={OpenSidebar}>X</span>
+        </div>
 
-              return (
-                <NavLink
-                  to={route.path}
-                  key={index}
-                  className={styles.link}
-                  activeClassName="active"
-                >
-                  <div className={styles.icon}>{route.icon}</div>
-                  <AnimatePresence>
-                    {isOpen && (
-                      <motion.div
-                        variants={showAnimation}
-                        initial="hidden"
-                        animate="show"
-                        exit="hidden"
-                        className={styles.linktext}
-                      >
-                        {route.name}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </NavLink>
-              );
-            })}
-          </section>
-        </motion.div>
+        <ul className='sidebar-list'>
+            <li className='sidebar-list-item'>
+                <a href="">
+                    <BsGrid1X2Fill className='icon'/> Dashboard
+                </a>
+            </li>
+            <li className='sidebar-list-item'>
+                <a href="">
+                    <BsFillArchiveFill className='icon'/> Products
+                </a>
+            </li>
+            <li className='sidebar-list-item'>
+                <a href="">
+                    <BsFillGrid3X3GapFill className='icon'/> Categories
+                </a>
+            </li>
+            <li className='sidebar-list-item'>
+                <a href="">
+                    <BsPeopleFill className='icon'/> Customers
+                </a>
+            </li>
+            <li className='sidebar-list-item'>
+                <a href="">
+                    <BsListCheck className='icon'/> Inventory
+                </a>
+            </li>
+            <li className='sidebar-list-item'>
+                <a href="">
+                    <BsMenuButtonWideFill className='icon'/> Reports
+                </a>
+            </li>
+            <li className='sidebar-list-item'>
+                <a href="">
+                    <BsFillGearFill className='icon'/> Setting
+                </a>
+            </li>
+        </ul>
+    </aside>
+  )
+}
 
-        <main>{children}</main>
-      </div>
-    </>
-  );
-};
-
-export default SideBar;
-
+export default Sidebar
