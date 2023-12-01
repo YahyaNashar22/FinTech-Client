@@ -1,59 +1,79 @@
-import React from 'react'
-import 
-{BsCart3, BsGrid1X2Fill, BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, 
-  BsListCheck, BsMenuButtonWideFill, BsFillGearFill}
- from 'react-icons/bs'
- import './Sidebar.css'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import {
+  BsGrid1X2Fill,
+  BsFillArchiveFill,
+  BsFillGrid3X3GapFill,
+  BsPeopleFill,
+  BsListCheck,
+  BsMenuButtonWideFill,
+  BsFillGearFill
+} from 'react-icons/bs';
+import Styles from './Sidebar.module.css';
+import { FaMoneyCheckAlt } from 'react-icons/fa';
+import { FaExchangeAlt, FaSignOutAlt, FaBullseye } from 'react-icons/fa';
 
-function Sidebar({openSidebarToggle, OpenSidebar}) {
+function Sidebar({ openSidebarToggle, OpenSidebar }) {
   return (
-    <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive": ""}>
-        <div className='sidebar-title'>
-            <div className='sidebar-brand'>
-                <BsCart3  className='icon_header'/> SHOP
-            </div>
-            <span className='icon close_icon' onClick={OpenSidebar}>X</span>
+    <aside id={Styles.sidebar} className={`${openSidebarToggle ? Styles.sidebarResponsive : ''}`}>
+      <div className={Styles.sidebartitle}>
+        <div className={Styles.sidebarbrand}>
+        FINANCIAL
+        {/* <img src="./home/souhad-moussa/Pictures/image.png" alt="FINANCIA" className={Styles.logo} /> */}
         </div>
+        {openSidebarToggle && (
+          <span className={`${Styles.icon} ${Styles.closeicon}`} onClick={OpenSidebar}>
+            X
+          </span>
+        )}
+      </div>
 
-        <ul className='sidebar-list'>
-            <li className='sidebar-list-item'>
-                <a href="">
-                    <BsGrid1X2Fill className='icon'/> Dashboard
-                </a>
+      <ul className={Styles.sidebarList}>
+      <Link to="/">
+        <li className={Styles.sidebarListItem}>
+            <BsGrid1X2Fill className={Styles.icon} /> Dashboard
             </li>
-            <li className='sidebar-list-item'>
-                <a href="">
-                    <BsFillArchiveFill className='icon'/> Products
-                </a>
+          </Link>
+        <Link to="/transactions">
+        <li className={Styles.sidebarListItem}>
+            <FaExchangeAlt className={Styles.icon} /> Transactions
             </li>
-            <li className='sidebar-list-item'>
-                <a href="">
-                    <BsFillGrid3X3GapFill className='icon'/> Categories
-                </a>
+          </Link>
+      
+
+        <Link to="/users">
+        <li className={Styles.sidebarListItem}>
+            <BsPeopleFill className={Styles.icon} /> Users
+        </li>
+        </Link>
+        <Link to="/goal">
+        <li className={Styles.sidebarListItem}>
+          
+            <FaBullseye className={Styles.icon} /> Goal
             </li>
-            <li className='sidebar-list-item'>
-                <a href="">
-                    <BsPeopleFill className='icon'/> Customers
-                </a>
+          </Link>
+          <Link to="/report">
+
+        <li className={Styles.sidebarListItem}>
+            <BsMenuButtonWideFill className={Styles.icon} /> Reports
             </li>
-            <li className='sidebar-list-item'>
-                <a href="">
-                    <BsListCheck className='icon'/> Inventory
-                </a>
+          </Link>
+          <Link to="/settings">
+
+        <li className={Styles.sidebarListItem}>
+            <BsFillGearFill className={Styles.icon} /> Setting
             </li>
-            <li className='sidebar-list-item'>
-                <a href="">
-                    <BsMenuButtonWideFill className='icon'/> Reports
-                </a>
+          </Link>
+          <Link to="/signin">
+
+        <li className={Styles.sidebarListItem}>
+            <FaSignOutAlt className={Styles.icon} /> Log Out
             </li>
-            <li className='sidebar-list-item'>
-                <a href="">
-                    <BsFillGearFill className='icon'/> Setting
-                </a>
-            </li>
-        </ul>
+
+          </Link>
+      </ul>
     </aside>
-  )
+  );
 }
 
-export default Sidebar
+export default Sidebar;

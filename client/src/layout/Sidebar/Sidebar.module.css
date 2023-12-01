@@ -1,54 +1,65 @@
 /* Sidebar  */
+
 #sidebar {
   grid-area: sidebar;
   height: 100%;
-  background-color: #263043;
+  background-color: #25282C;
   overflow-y: auto;
-  transition: all 0.5s;
-  -webkit-transition: all 0.5s;
+
+}
+.closeicon {
+  color:white;
+  margin-left: 30px;
+  cursor: pointer;
 }
 
-.sidebar-title {
+.sidebartitle {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 30px 0px 30px;
-  margin-bottom: 30px;
-}
-
-.sidebar-title > span {
-  display: none;
-}
-
-.sidebar-brand {
   margin-top: 15px;
+  margin-bottom: 30px;
+  transition: margin-left 0.5s ease; /* Added transition property for margin-left */
+
+}
+
+.sidebarbrand {
   font-size: 20px;
   font-weight: 700;
+  color: white;
 }
 
-.sidebar-list {
+.sidebarList {
   padding: 0;
   list-style-type: none;
+  transition: margin-left 0.5s ease; /* Added transition property for margin-left */
+
 }
 
-.sidebar-list-item {
+.sidebarListItem {
   padding: 20px 20px 20px 20px;
   font-size: 18px;
 }
 
-.sidebar-list-item:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+.sidebarListItem:hover {
+  background-color: #49837D;
   cursor: pointer;
 }
 
-.sidebar-list-item > a {
+.sidebarListItem > a {
   text-decoration: none;
-  color: #9e9ea4;
+  color:white;
+}
+a{
+  color:white;
 }
 
-.sidebar-responsive {
+.sidebarResponsive {
   display: inline !important;
   position: absolute;
+  transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+
   /*
     we want the z-index of the sidebar higher so that
     the charts are not showing over the sidebar 
@@ -60,7 +71,7 @@
   /* Medium <= 992px */
   
 @media screen and (max-width: 992px) {
-  .grid-container {
+  .gridContainer {
     grid-template-columns: 1fr;
     grid-template-rows: 0.2fr 3fr;
     grid-template-areas:
@@ -71,12 +82,13 @@
   #sidebar {
     display: none;
   }
+ 
 
   .menu-icon {
     display: inline;
   }
 
-  .sidebar-title > span {
+  .sidebartitle > span {
     display: inline;
   }
 }
@@ -88,4 +100,10 @@
   .hedaer-left {
     display: none;
   }
+}
+
+.icon {
+  vertical-align: middle;
+  line-height: 1px;
+  font-size: 20px;
 }
