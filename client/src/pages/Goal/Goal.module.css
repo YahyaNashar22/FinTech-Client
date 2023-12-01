@@ -76,3 +76,9 @@ body{
     top: 37em;
     right: 25rem;
 }
+.off{
+ background-color: red;
+}
+.on{
+    background-color: blue;
+}

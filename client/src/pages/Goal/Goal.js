@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import style from "./Goal.module.css";
 import { Link } from "react-router-dom";
 
 function Goal() {
+  const [light, setLight] = useState("on");
+  const handleHover = (e) => {
+    setLight("off");
+  };
+  if (light === "on") {
+    document.body.classList.add("on");
+  } else {
+    document.body.classList.remove("off");
+  }
   return (
     <>
       <motion.div className={style.particle1} whileHover={{ rotate: 35 }} />
@@ -36,6 +45,7 @@ function Goal() {
             boxShadow: "1px 1px 6px 10px var(--grey-color) ",
             scale: 3.5,
           }}
+          onHoverStart={handleHover}
           className={style.createGoal}
         >
           Create Goal
