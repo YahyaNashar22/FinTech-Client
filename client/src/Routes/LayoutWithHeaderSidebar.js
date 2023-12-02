@@ -14,10 +14,12 @@ function LayoutWithHeaderSidebar({ children }) {
   }
 
   return (
-    <div className={styles.gridContainer}>
-      <Header OpenSidebar={OpenSidebar}/>
+    <div style={{display: "flex"}}>
       <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
-      {children}
+      <div style={{display: "flex", flexDirection:"column", flex: "1"}}>
+        <Header OpenSidebar={OpenSidebar}/>
+        {children}
+      </div>
     </div>
   )
 }

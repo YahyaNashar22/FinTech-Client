@@ -1,11 +1,11 @@
 /* Sidebar  */
 
 #sidebar {
-  grid-area: sidebar;
   height: 100%;
   background-color: #25282C;
   overflow-y: auto;
-
+  width: 250px;
+  height: 100vh;
 }
 .closeicon {
   color:white;
@@ -71,19 +71,9 @@ a{
   /* Medium <= 992px */
   
 @media screen and (max-width: 992px) {
-  .gridContainer {
-    grid-template-columns: 1fr;
-    grid-template-rows: 0.2fr 3fr;
-    grid-template-areas:
-      'header'
-      'main';
-  }
-
   #sidebar {
     display: none;
   }
- 
-
   .menu-icon {
     display: inline;
   }
