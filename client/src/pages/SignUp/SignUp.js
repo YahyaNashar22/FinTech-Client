@@ -12,12 +12,13 @@ import {
 } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
 import logo from "../../assets/Vectorlogo.png";
 import open from "../../assets/open.png";
 import closed from "../../assets/close.png";
+import finishSignUp from "../../assets/finishSignUp.png";
 
 const SignUp = () => {
   const [pass, setPass] = useState(true);
@@ -27,7 +28,8 @@ const SignUp = () => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-
+  const [layout, setLayout] = useState(style.wrapper);
+  const [layout2, setLayout2] = useState(style.layout2);
   /* REGEX */
 
   let passPattern =
@@ -76,24 +78,30 @@ const SignUp = () => {
   /* used to handle the post request */
 
   const notify = () => toast("Account created successfully !");
-  const navigate = useNavigate();
+  const passnotify = () => toast("Password did not meet the criteria !");
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsPending(true);
-    axios
-      .post("http://localhost:5000/users/create", {
-        Name: name,
-        Email: email,
-        Password: pass,
-        Role: role,
-        Picture: file,
-      })
-      .then((res) => {
-        console.log(res);
-        setIsPending(false);
-        notify();
-        navigate("/successfullsignin");
-      });
+    if (validatePass(password)) {
+      setIsPending(true);
+      axios
+        .post("http://localhost:5000/users/create", {
+          Name: name,
+          Email: email,
+          Password: pass,
+          Role: role,
+          Picture: file,
+        })
+        .then((res) => {
+          console.log(res);
+          setIsPending(false);
+          notify();
+          setLayout(style.wrapperv2);
+          setLayout2(style.layout2v2);
+          notify();
+        });
+    } else {
+      passnotify();
+    }
   };
   return (
     <>
@@ -110,7 +118,7 @@ const SignUp = () => {
         theme="dark"
       />
       <motion.section
-        className={style.wrapper}
+        className={layout}
         initial={{ x: -200, opacity: 0 }}
         animate={{
           opacity: 1,
@@ -321,6 +329,57 @@ const SignUp = () => {
             height="700px"
             width="600px"
             alt="sigun up page"
+          />
+        </aside>
+      </motion.section>
+      <motion.section
+        className={layout2}
+        initial={{ x: -200, opacity: 0 }}
+        animate={{
+          opacity: 1,
+          x: 0,
+        }}
+        transition={{
+          ease: "easeOut",
+          duration: 0.5,
+        }}
+      >
+        <aside className={style.left}>
+          <Typography
+            variant="h1"
+            component="h1"
+            sx={{ fontSize: "32px" }}
+            className={style.companyName}
+          >
+            <span className={style.companyLogo}>
+              <img src={logo} height="30px" width="30px" alt="company logo" />{" "}
+              {/* needs to be changed when we fetch */}
+            </span>
+            Company Name {/* needs to be changed when we fetch */}
+          </Typography>
+          <Typography
+            variant="h2"
+            component="h2"
+            sx={{ fontSize: "48px" }}
+            className={style.subtitle}
+          >
+            Your Account Has Been Successfully Created
+          </Typography>
+          <Typography variant="p" component="p" className={style.fillForm}>
+            You Can Now Access The Dashboard !
+          </Typography>
+          <p className={style.finishSignUpP}>
+            <Link to="/" className={style.finishSignUpL}>
+              Finish
+            </Link>
+          </p>
+        </aside>
+        <aside className={style.right}>
+          <img
+            src={finishSignUp}
+            height="600px"
+            width="500px"
+            alt="finish sign up"
           />
         </aside>
       </motion.section>
