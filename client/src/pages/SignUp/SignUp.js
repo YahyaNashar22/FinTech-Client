@@ -248,7 +248,7 @@ const SignUp = () => {
                         color: "green",
                         fontSize: "12px",
                         display: "block",
-                        py: 2,
+                        py: 1,
                       }}
                     >
                       password accepted
