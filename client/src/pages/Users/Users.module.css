@@ -12,7 +12,7 @@
     align-items: center;
     color:var(--primary-green)
 }
-button{
+.button{
     color: var(--white);
     background: var(--primary-green);
     border: none;

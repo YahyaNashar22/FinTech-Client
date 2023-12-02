@@ -6,7 +6,7 @@ const Users = () => {
     <main className={style.main}>
       <div className={style.info}>
         <h1>Users</h1>
-        <button>Add new User</button>
+        <button className={style.button}>Add new User</button>
       </div>
       <DataTable />
     </main>
