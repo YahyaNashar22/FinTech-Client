@@ -1,0 +1,59 @@
+.wrapper{
+    height: 100vh;
+    width:100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 15rem;
+}
+.header{
+    font-size: 64px;
+    color: var(--primary-green);
+}
+.yearlyForm{
+    display: flex;
+    column-gap: 3rem;
+    scale: 2;
+}
+.inp{
+    background-color: var(--main-background-color);
+    border: 1px solid var(--third-green);
+    color: var(--primary-green);
+    padding: 4px 0 4px 8px;
+    cursor:text;
+
+}
+.inp::-webkit-outer-spin-button,
+.inp::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.inp::placeholder{
+    font-size: 12px;
+    color: var(--third-green);
+    padding: 5px;
+}
+.selection{
+    background-color: var(--main-background-color);
+    border: 1px solid var(--third-green);
+    color: var(--third-green);
+    padding: 4px 0 4px 4px;
+    cursor:pointer;
+}
+.selection:active{
+    border:1px solid var(--primary-green);
+}
+.btn{
+    background-color: var(--main-background-color);
+    border: 1px solid var(--third-green);
+    color: var(--third-green);
+    padding: 4px;
+    cursor:pointer;
+}
+@media(max-width:600px){
+    .yearlyForm{
+        flex-direction: column;
+        row-gap: 5rem;
+    }
+}
