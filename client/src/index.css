@@ -24,4 +24,5 @@ ul{
 }
 body{
   font-family: 'Roboto', sans-serif;
+  background-color: var(--page-background-color);
 }

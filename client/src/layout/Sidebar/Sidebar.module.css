@@ -1,0 +1,10 @@
+.sidebar {
+    background-color: var(--main-background-color);
+    width: 250px;
+    height: 860px;
+  }
+@media (max-width: 767px) {
+.sidebar {
+    width: 0px;
+}
+}

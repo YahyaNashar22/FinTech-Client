@@ -1,12 +1,12 @@
 import React from 'react';
-import Header from '../layout/Header/Header';
+import Header from '../layout/Header/Header.js';
 import Sidebar from '../layout/Sidebar/Sidebar';
 
 function LayoutWithHeaderSidebar({ children }) {
   return (
     <>
       <Header />
-      <div>
+      <div style={{display: "flex"}}>
         <Sidebar />
         {children}
       </div>

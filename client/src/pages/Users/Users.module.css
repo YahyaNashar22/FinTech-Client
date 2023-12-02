@@ -1,0 +1,22 @@
+.main {
+    margin: 25px;
+    padding: 25px;
+    width: 100%;
+    background-color: var(--main-background-color);
+    color: white;
+}
+.info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color:var(--primary-green)
+}
+button{
+    color: var(--white);
+    background: var(--primary-green);
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+    width: 100px;
+}
