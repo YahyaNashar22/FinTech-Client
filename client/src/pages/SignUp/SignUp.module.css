@@ -6,10 +6,83 @@
     justify-content: center;
     margin:auto;
     column-gap: 100px;
+    background-color: #f8f8f8;
 }
 .left{
     width: 40vw;
 }
 .right{
      width: 40vw;
+}
+.signupForm{
+    margin-top:10px;
+    display: block;
+}
+.companyName{
+    padding-bottom: 20px;
+    text-align: center;
+}
+.companyLogo{
+    padding-right:10px;
+}
+.fillForm{
+    color: var(--grey-color);
+    padding: 10px 0;
+}
+.passContainer{
+    display: flex;
+}
+.passEye{
+    position: absolute;
+    display: inline;
+    cursor: pointer;
+    right: 10px;
+    bottom: 14px;
+}
+.passInp{
+    position: relative;
+}
+.submitter, .pendingSubmit{
+    width: 40vw;
+    padding: 15px;
+    margin: 40px 0 20px 0;
+    border-radius: 8px;
+    background-color: var(--main-background-color);
+    color: #f8f8f8;
+}
+.submitter{
+    cursor: pointer;
+}
+.pendingSubmit{
+opacity: 0.7;
+cursor: not-allowed;
+}
+.signIn{
+    color: var(--main-background-color);
+    text-decoration: none;
+    text-align: center;
+}
+.imgTxt{
+    padding-bottom: 5px;
+    color: var(--main-background-color);
+}
+@media(max-width:1314px) {
+    .wrapper{column-gap: 20px;}
+    .right{
+        transform: scale(0.5);
+    }
+}
+@media(max-width:779px){
+    .right{display: none;}
+    .subtitle{font-size: 2rem;}
+    .companyName{font-size: 1.8rem;}
+    .fillForm{font-size: 1.5rem;}
+    .companyLogo{transform: scale(0.8);}
+}
+@media(max-width:367px){
+    .right{display: none;}
+    .subtitle{font-size: 1.6rem;}
+    .companyName{font-size: 1.4rem;}
+    .fillForm{font-size: 1rem;}
+    .companyLogo{transform: scale(0.6);}
 }
