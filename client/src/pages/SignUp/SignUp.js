@@ -28,6 +28,14 @@ const SignUp = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
+  /* REGEX */
+
+  let passPattern =
+    /^(?=(?:.*[A-Z]){2})(?=(?:.*[a-z]){3})(?=.*[!@#$%^&*()_+[\]{}|;:'",.<>/?])(?=(?:.*\d){2})[A-Za-z\d!@#$%^&*()_+[\]{}|;:'",.<>/?]{8,}$/;
+  const validatePass = (password) => {
+    return passPattern.test(password);
+  };
+
   /* used to handle show/hide password */
 
   let see = "";
@@ -84,7 +92,7 @@ const SignUp = () => {
         console.log(res);
         setIsPending(false);
         notify();
-        navigate("/");
+        navigate("/successfullsignin");
       });
   };
   return (
@@ -232,6 +240,35 @@ const SignUp = () => {
                       alt="open close eye"
                     />
                   </span>
+                  {validatePass(password) && (
+                    <Typography
+                      variant="p"
+                      component="p"
+                      sx={{
+                        color: "green",
+                        fontSize: "12px",
+                        display: "block",
+                        py: 2,
+                      }}
+                    >
+                      password accepted
+                    </Typography>
+                  )}
+                  {!validatePass(password) && (
+                    <Typography
+                      variant="p"
+                      component="p"
+                      sx={{
+                        color: "red",
+                        fontSize: "12px",
+                        display: "block",
+                        py: 1,
+                      }}
+                    >
+                      password needs to have at least 2 capital characters, 3
+                      lower case characters, 1 special character, 2 numbers
+                    </Typography>
+                  )}
                 </FormControl>
               </Grid>
               <Grid item xs={12}>

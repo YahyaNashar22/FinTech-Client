@@ -37,7 +37,7 @@
     display: inline;
     cursor: pointer;
     right: 10px;
-    bottom: 14px;
+    bottom: 60px;
 }
 .passInp{
     position: relative;
@@ -45,7 +45,7 @@
 .submitter, .pendingSubmit{
     width: 40vw;
     padding: 15px;
-    margin: 40px 0 20px 0;
+    margin: 20px 0 10px 0;
     border-radius: 8px;
     background-color: var(--main-background-color);
     color: #f8f8f8;
