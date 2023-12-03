@@ -20,6 +20,8 @@
     "apexcharts": "^3.44.0",
     "axios": "^1.6.2",
     "chart.js": "^4.4.0",
+    "chartjs-adapter-date-fns": "^3.0.0",
+    "date-fns": "^2.30.0",
     "framer-motion": "^10.16.5",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
