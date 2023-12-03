@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -26,9 +25,6 @@ import AddTransactionForm from './AddTransactionForm';
 import { Button } from '@mui/material';
 import EditTransactionForm from './ EditTransactionForm';
 import { toast } from 'react-toastify';
-// import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { red } from '@mui/material/colors';
 
 
 // ... (other imports)
@@ -270,7 +266,10 @@ const handleDeleteClick = () => {
     const lastPage = Math.ceil(updatedRows.length / rowsPerPage);
     if (page > lastPage - 1) {
       setPage(lastPage - 1);
+
     }
+    toast.success('deleted', { position: 'top-right' });
+
   } else {
     toast.warning('No rows selected for deletion', { position: 'top-right' });
   }
@@ -287,11 +286,7 @@ const handleDeleteClick = () => {
   };
   
   const handleAddTransaction = (newTransaction) => {
-    // In a real application, you would persist the new transaction to a backend
-    // or use client-side storage to persist it across page refreshes.
-    // For now, just update the state.
     addTransactionToState(newTransaction);
-    // Additional logic for persistence if needed
   };
 
 
