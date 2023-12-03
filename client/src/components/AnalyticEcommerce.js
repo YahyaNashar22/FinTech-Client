@@ -9,10 +9,25 @@ import MainCard from './MainCard';
 // assets
 import { RiseOutlined, FallOutlined } from '@ant-design/icons';
 
+
+const style = {
+  ".box": {
+    pr: "20px",
+    backgroundColor: "#E3F5FF"
+  },
+  ".paragraph": {
+    pt: 2.25
+  },
+  ".extraNumber": {
+    color: "#0794D5",
+    fontWeight: "bold",
+    }
+}
+
 // ==============================|| STATISTICS - ECOMMERCE CARD  ||============================== //
 
 const AnalyticEcommerce = ({ color, title, count, percentage, isLoss, extra }) => (
-  <MainCard contentSX={{ p: 2.25 }}>
+  <MainCard contentSX={style['.box']}>
     <Stack spacing={0.5}>
       <Typography variant="h6" color="textSecondary">
         {title}
@@ -42,10 +57,10 @@ const AnalyticEcommerce = ({ color, title, count, percentage, isLoss, extra }) =
         )}
       </Grid>
     </Stack>
-    <Box sx={{ pt: 2.25 }}>
-      <Typography variant="caption" color="textSecondary">
+    <Box sx={style['.paragraph']}>
+      <Typography variant="caption">
         You made an extra{' '}
-        <Typography component="span" variant="caption" sx={{ color: `${color || 'primary'}.main` }}>
+        <Typography component="span" variant="caption" sx={style['.extraNumber']}>
           {extra}
         </Typography>{' '}
         this year

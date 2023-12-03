@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import style from './Dashboard.module.css'
 
 // material-ui
 import {
@@ -18,106 +19,94 @@ import {
   Typography
 } from '@mui/material';
 
+
 // Components
 
 import AnalyticEcommerce from "../../components/AnalyticEcommerce"
+import OrdersTable from '../../components/OrdersTable';
+import IncomeAreaChart from '../../components/IncomeAreaChart';
+import MonthlyBarChart from '../../components/MonthlyBarChart';
+import ReportAreaChart from '../../components/ReportAreaChart';
+// import SalesColumnChart from './SalesColumnChart';
+import MainCard from '../../components/MainCard';
+import { fontSize } from '@mui/system';
 
 const styles = {
-
+  h1: {
+    color: "white",
+    fontSize: "50px",
+    fontWeight: 'bold',
+  },
+  ".css-dasaed-MuiGrid-root":{
+    mt: "0",
+    p: "20px",
+    m: "20px",
+    backgroundColor: '#25282C',
+    width: "initial"
+  },
+  ".MuiCardContent-root": {
+    backgroundColor: '#25282C',
+  },
+  ".title": {
+    color: "white",
+  },
+  ".MuiButtonBase-root": {
+    color: "white"
+  },
+  ".css-1sazv7p-MuiStack-root>:not(style)~:not(style)": {
+  mt: "7px"
+}
 }
 
 
 const Dashboard = () => {
-  // const [value, setValue] = useState('today');
-  // const [slot, setSlot] = useState('week');
+  const [value, setValue] = useState('today');
+  const [slot, setSlot] = useState('week');
 
   return (
-    <Grid container rowSpacing={4.5} columnSpacing={2.75}>
+    <Grid container rowSpacing={4.5} columnSpacing={2.75} sx={styles['.css-dasaed-MuiGrid-root']}>
       {/* row 1 */}
       <Grid item xs={12} sx={{ mb: -2.25 }}>
-        <Typography variant="h1">Dashboard</Typography>
+        <Typography variant="h1" sx={styles.h1}>Dashboard</Typography>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Total Page Views" count="4,42,236" percentage={59.3} extra="35,000" />
+        <AnalyticEcommerce title="Total Sales" count="$4,000" percentage={59.3} extra="$3,000"/>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Total Users" count="78,250" percentage={70.5} extra="8,900" />
+        <AnalyticEcommerce title="Total Profits" count="$1,000" isLoss color="warning" percentage={70.5} extra="$8,900"/>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Total Order" count="18,800" percentage={27.4} isLoss color="warning" extra="1,943" />
+        <AnalyticEcommerce title="Total Expences" count="$2,000" percentage={27.4} extra="$1,943" />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <AnalyticEcommerce title="Total Sales" count="$35,078" percentage={27.4} isLoss color="warning" extra="$20,395" />
+        <AnalyticEcommerce title="Total Goal" count="$1000" percentage={27.4} isLoss color="warning" extra="$2,395" />
       </Grid>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       <Grid item md={8} sx={{ display: { sm: 'none', md: 'block', lg: 'none' } }} />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       {/* row 2 */}
       <Grid item xs={12} md={7} lg={8}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h5">Unique Visitor</Typography>
+            <Typography variant="h5" sx={styles['.title']}>Unique Visitor</Typography>
           </Grid>
           <Grid item>
             <Stack direction="row" alignItems="center" spacing={0}>
-              <Button
-                size="small"
-                onClick={() => setSlot('month')}
-                color={slot === 'month' ? 'primary' : 'secondary'}
-                variant={slot === 'month' ? 'outlined' : 'text'}
-              >
-                Month
-              </Button>
-              <Button
+            <Button
                 size="small"
                 onClick={() => setSlot('week')}
-                color={slot === 'week' ? 'primary' : 'secondary'}
+                sx={styles['.MuiButtonBase-root']}
                 variant={slot === 'week' ? 'outlined' : 'text'}
               >
                 Week
+              </Button>
+              <Button
+                size="small"
+                onClick={() => setSlot('month')}
+                sx={styles['.MuiButtonBase-root']}
+                variant={slot === 'month' ? 'outlined' : 'text'}
+              >
+                Month
               </Button>
             </Stack>
           </Grid>
@@ -131,17 +120,17 @@ const Dashboard = () => {
       <Grid item xs={12} md={5} lg={4}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h5">Income Overview</Typography>
+            <Typography variant="h5" sx={styles['.title']}>Income Overview</Typography>
           </Grid>
           <Grid item />
         </Grid>
         <MainCard sx={{ mt: 2 }} content={false}>
-          <Box sx={{ p: 3, pb: 0 }}>
+          <Box sx={{ p: 3, pb: 0}}>
             <Stack spacing={2}>
-              <Typography variant="h6" color="textSecondary">
+              <Typography variant="h6" color="textSecondary" sx={{fontSize: "17px"}}>
                 This Week Statistics
               </Typography>
-              <Typography variant="h3">$7,650</Typography>
+              <Typography variant="h3" sx={{fontSize:"25px", m: "7px"}}>$7,650</Typography>
             </Stack>
           </Box>
           <MonthlyBarChart />
@@ -187,7 +176,7 @@ const Dashboard = () => {
       </Grid>
 
       {/* row 4 */}
-      <Grid item xs={12} md={7} lg={8}>
+      {/* <Grid item xs={12} md={7} lg={8}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
             <Typography variant="h5">Sales Report</Typography>
@@ -337,7 +326,7 @@ const Dashboard = () => {
             </Button>
           </Stack>
         </MainCard>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 };
