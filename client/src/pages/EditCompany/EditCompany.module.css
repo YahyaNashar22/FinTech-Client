@@ -28,8 +28,10 @@
 .input input {
   padding: 10px;
   border-radius: 6px;
-  border: 0.5px solid #264653;
+  border: 0.5px solid var(--primary-green);
   width: 84%;
+  background-color: transparent;
+  color: white;
 }
 .input input:focus {
   outline: none;
