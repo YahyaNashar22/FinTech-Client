@@ -192,7 +192,6 @@ function MonthlyGoal() {
             className={style.btn}
             whileHover={{
               border: "1px solid var(--primary-green)",
-              borderRadius: "16px",
               backgroundColor: "var(--secondery-green)",
               color: "var(--main-background-color)",
             }}
@@ -206,7 +205,6 @@ function MonthlyGoal() {
             className={style.btn}
             whileHover={{
               border: "1px solid var(--primary-green)",
-              borderRadius: "16px",
               backgroundColor: "var(--secondery-green)",
               color: "var(--main-background-color)",
               cursor: "not-allowed",

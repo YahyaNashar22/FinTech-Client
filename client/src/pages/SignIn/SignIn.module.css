@@ -1,0 +1,83 @@
+.wrapper{
+    display: flex;
+    height: 100vh;
+    width:100vw;
+    align-items: center;
+    justify-content: center;
+    margin:auto;
+    column-gap: 100px;
+    background-color: #f8f8f8;
+}
+.right{
+    width: 40vw;
+}
+.left{
+     width: 40vw;
+     background-color: var(--main-background-color);
+}
+.companyName{
+    padding-bottom: 20px;
+    text-align: start;
+    margin-bottom: 10px;
+}
+.companyLogo{
+    padding-right:10px;
+}
+.fillForm{
+    color: var(--grey-color);
+    padding: 10px 0;
+}
+.signinForm{
+    margin-top:10px;
+    display: block;
+}
+.passContainer{
+    display: flex;
+}
+.passEye{
+    position: absolute;
+    display: inline;
+    cursor: pointer;
+    right: 10px;
+    bottom: 16px;
+}
+.passInp{
+    position: relative;
+}
+.submitter, .pendingSubmit{
+    width: 40vw;
+    padding: 15px;
+    margin: 20px 0 10px 0;
+    border-radius: 8px;
+    background-color: var(--main-background-color);
+    color: #f8f8f8;
+}
+.submitter{
+    cursor: pointer;
+}
+.pendingSubmit{
+opacity: 0.7;
+cursor: not-allowed;
+}
+.signUp{
+    color: var(--main-background-color);
+    text-decoration: none;
+    text-align: center;
+}
+@media(max-width:1314px) {
+    .wrapper{column-gap: 20px;}
+}
+@media(max-width:779px){
+    .left{display: none;}
+    .subtitle{font-size: 2rem;}
+    .companyName{font-size: 1.8rem;}
+    .fillForm{font-size: 1.5rem;}
+    .companyLogo{transform: scale(0.8);}
+}
+@media(max-width:367px){
+    .left{display: none;}
+    .subtitle{font-size: 1.6rem;}
+    .companyName{font-size: 1.4rem;}
+    .fillForm{font-size: 1rem;}
+    .companyLogo{transform: scale(0.6);}
+}
