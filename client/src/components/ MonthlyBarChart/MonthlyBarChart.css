@@ -1,0 +1,32 @@
+.css-1m3254j-MuiPaper-root-MuiCard-root {
+  background-color: var(--page-background-color) !important;
+  border: none !important;
+  color: black !important;
+}
+.MuiGrid-grid-lg-4 .apexcharts-tooltip-text-y-label {
+  display: none;
+}
+
+
+
+.apexcharts-xaxis-label {
+  fill: white !important;
+}
+.apexcharts-legend {
+  color: white !important;
+}
+line {
+  stroke: rgb(113, 113, 113) !important;
+}
+#SvgjsG1663 line {
+  stroke: white !important;
+}
+#SvgjsG1666 line {
+  stroke: white !important;
+}
+#SvgjsLine1666 line:nth-child(2) {
+  stroke: none !important;
+}
+.apexcharts-tooltip-marker {
+  background-color: #0794D5 !important;
+}
