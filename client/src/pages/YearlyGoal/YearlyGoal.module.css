@@ -1,19 +1,19 @@
 .wrapper{
-    height: 100vh;
-    width:100vw;
+    height: 89vh;
+    width:80vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    row-gap: 15rem;
+    row-gap: 8rem;
 }
 .header{
-    font-size: 64px;
+    font-size: 6vw;
     color: var(--primary-green);
 }
 .yearlyForm{
     display: flex;
-    column-gap: 3rem;
+    column-gap: 2rem;
     scale: 2;
 }
 .inp{
@@ -54,6 +54,14 @@
 @media(max-width:600px){
     .yearlyForm{
         flex-direction: column;
-        row-gap: 5rem;
+        row-gap: 3rem;
+    }
+    .header{
+        font-size: 12vw;
+    }
+}
+@media (max-width:250px){
+    .yearlyForm{
+        scale: 1.5;
     }
 }
