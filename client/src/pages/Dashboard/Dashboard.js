@@ -3,10 +3,19 @@ import style from './Dashboard.module.css'
 
 // material-ui
 import {
+  Avatar,
+  AvatarGroup,
   Box,
   Button,
   Grid,
+  List,
+  ListItemAvatar,
+  ListItemButton,
+  ListItemSecondaryAction,
+  ListItemText,
+  MenuItem,
   Stack,
+  TextField,
   Typography
 } from '@mui/material';
 
@@ -18,6 +27,7 @@ import OrdersTable from '../../components/OrdersTable/OrdersTable';
 import IncomeAreaChart from '../../components/IncomeAreaChart/IncomeAreaChart';
 import MonthlyBarChart from '../../components/ MonthlyBarChart/MonthlyBarChart';
 import MainCard from '../../components/MainCard/MainCard';
+import ReportAreaChart from '../../components/ReportAreaChart/ReportAreaChart';
 
 const styles = {
   h1: {
@@ -121,7 +131,32 @@ const Dashboard = () => {
       </Grid>
 
       {/* row 3 */}
-      <Grid item xs={12} md={12} lg={12}>
+      <Grid item xs={12} md={5} lg={4}>
+        <Grid container alignItems="center" justifyContent="space-between">
+          <Grid item>
+            <Typography variant="h5">Analytics Report</Typography>
+          </Grid>
+          <Grid item />
+        </Grid>
+        <MainCard sx={{ mt: 2 }} content={false}>
+          <List sx={{ p: 0, '& .MuiListItemButton-root': { py: 2 } }}>
+            <ListItemButton divider>
+              <ListItemText primary="Finance Growth" sx={{color: "white"}} />
+              <Typography variant="h5">+45.14%</Typography>
+            </ListItemButton>
+            <ListItemButton divider>
+              <ListItemText primary="Expenses Ratio" sx={{color: "white"}} />
+              <Typography variant="h5">0.58%</Typography>
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemText primary="Risk Cases" sx={{color: "white"}}/>
+              <Typography variant="h5">Low</Typography>
+            </ListItemButton>
+          </List>
+          <ReportAreaChart />
+        </MainCard>
+      </Grid>
+      <Grid item xs={12} md={7} lg={8}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
             <Typography variant="h5">Recent Transactions</Typography>
@@ -132,6 +167,7 @@ const Dashboard = () => {
           <OrdersTable />
         </MainCard>
       </Grid>
+
     </Grid>
   );
 };
