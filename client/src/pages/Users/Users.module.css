@@ -10,7 +10,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    color:var(--primary-green)
+    color:white
 }
 .button{
     color: var(--white);
