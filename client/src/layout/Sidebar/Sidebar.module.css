@@ -8,7 +8,7 @@
   height: 100vh;
 }
 .closeicon {
-  color:white;
+  color:var(--primary-green);
   margin-left: 30px;
   cursor: pointer;
 }
@@ -40,6 +40,9 @@
 .sidebarListItem {
   padding: 20px 20px 20px 20px;
   font-size: 18px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
 }
 
 .sidebarListItem:hover {
@@ -75,14 +78,14 @@ a{
     display: none;
   }
   .menu-icon {
-    display: inline;
+    display: block;
   }
 
   .sidebartitle > span {
-    display: inline;
+    display: flex;
+    align-items: center;
   }
 }
-
 
 /* Extra Small <= 576px */
 
@@ -93,7 +96,6 @@ a{
 }
 
 .icon {
-  vertical-align: middle;
-  line-height: 1px;
   font-size: 20px;
+  color:var(--primary-green)
 }
