@@ -35,6 +35,11 @@
   list-style-type: none;
   transition: margin-left 0.5s ease; /* Added transition property for margin-left */
 
+  display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh - 100px);
+
 }
 
 .sidebarListItem {
