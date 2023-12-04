@@ -29,7 +29,8 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
       </div>
 
       <ul className={Styles.sidebarList}>
-      <Link to="/">
+          <div className={Styles.firstDiv}>
+          <Link to="/">
         <li className={Styles.sidebarListItem}>
             <BsGrid1X2Fill className={Styles.icon} /> Dashboard
             </li>
@@ -58,19 +59,23 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
             <BsMenuButtonWideFill className={Styles.icon} /> Reports
             </li>
           </Link>
+          </div>
+
+          <div className={Styles.secondDiv}>
           <Link to="/settings">
 
-        <li className={Styles.sidebarListItem}>
-            <BsFillGearFill className={Styles.icon} /> Setting
-            </li>
-          </Link>
-          <Link to="/signin">
+          <li className={Styles.sidebarListItem}>
+              <BsFillGearFill className={Styles.icon} /> Settings
+              </li>
+            </Link>
+            <Link to="/signin">
 
-        <li className={Styles.sidebarListItem}>
-            <FaSignOutAlt className={Styles.icon} /> Log Out
-            </li>
+          <li className={Styles.sidebarListItem}>
+              <FaSignOutAlt className={Styles.icon} /> Log Out
+              </li>
 
-          </Link>
+            </Link>
+          </div>
       </ul>
     </aside>
   );
