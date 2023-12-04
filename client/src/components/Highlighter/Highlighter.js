@@ -9,7 +9,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import reactElementToJSXString from 'react-element-to-jsx-string';
 
 // project import
-import SyntaxHighlight from './SyntaxHighlight';
+import SyntaxHighlight from '../SyntaxHighlight/SyntaxHighlight';
 
 // assets
 import { CodeOutlined, CopyOutlined } from '@ant-design/icons';

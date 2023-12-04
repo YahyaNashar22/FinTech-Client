@@ -6,7 +6,7 @@ import { useTheme } from '@mui/material/styles';
 import { Card, CardContent, CardHeader, Divider, Typography } from '@mui/material';
 
 // project import
-import Highlighter from './Highlighter';
+import Highlighter from '../Highlighter/Highlighter';
 
 // header style
 const headerSX = {

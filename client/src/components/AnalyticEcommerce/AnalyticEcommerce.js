@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Box, Chip, Grid, Stack, Typography } from '@mui/material';
 
 // project import
-import MainCard from './MainCard';
+import MainCard from '../MainCard/MainCard';
 
 // assets
 import { RiseOutlined, FallOutlined } from '@ant-design/icons';
@@ -13,28 +13,36 @@ import { RiseOutlined, FallOutlined } from '@ant-design/icons';
 const style = {
   ".box": {
     pr: "20px",
-    backgroundColor: "#E3F5FF"
+    backgroundColor: "var(--page-background-color)"
+  },
+  ".title": {
+    color: "white"
   },
   ".paragraph": {
-    pt: 2.25
+    pt: 2.25,
+    color: "white"
+  },
+  ".count": {
+    color: "white"
   },
   ".extraNumber": {
     color: "#0794D5",
     fontWeight: "bold",
+    fontSize: "13.5px"
     }
 }
 
 // ==============================|| STATISTICS - ECOMMERCE CARD  ||============================== //
 
-const AnalyticEcommerce = ({ color, title, count, percentage, isLoss, extra }) => (
+const AnalyticEcommerce = ({ color, title, count, percentage, isLoss, extra, colorB }) => (
   <MainCard contentSX={style['.box']}>
     <Stack spacing={0.5}>
-      <Typography variant="h6" color="textSecondary">
+      <Typography variant="h6" sx={style['.title']}>
         {title}
       </Typography>
       <Grid container alignItems="center">
         <Grid item>
-          <Typography variant="h4" color="inherit">
+          <Typography variant="h4" sx={style['.count']}>
             {count}
           </Typography>
         </Grid>
@@ -42,7 +50,6 @@ const AnalyticEcommerce = ({ color, title, count, percentage, isLoss, extra }) =
           <Grid item>
             <Chip
               variant="combined"
-              color={color}
               icon={
                 <>
                   {!isLoss && <RiseOutlined style={{ fontSize: '0.75rem', color: 'inherit' }} />}
@@ -50,7 +57,7 @@ const AnalyticEcommerce = ({ color, title, count, percentage, isLoss, extra }) =
                 </>
               }
               label={`${percentage}%`}
-              sx={{ ml: 1.25, pl: 1 }}
+              sx={{ ml: 1.25, pl: 1, background: colorB, color: "white" }}
               size="small"
             />
           </Grid>
@@ -69,17 +76,17 @@ const AnalyticEcommerce = ({ color, title, count, percentage, isLoss, extra }) =
   </MainCard>
 );
 
-AnalyticEcommerce.propTypes = {
-  color: PropTypes.string,
-  title: PropTypes.string,
-  count: PropTypes.string,
-  percentage: PropTypes.number,
-  isLoss: PropTypes.bool,
-  extra: PropTypes.oneOfType([PropTypes.node, PropTypes.string])
-};
+// AnalyticEcommerce.propTypes = {
+//   color: PropTypes.string,
+//   title: PropTypes.string,
+//   count: PropTypes.string,
+//   percentage: PropTypes.number,
+//   isLoss: PropTypes.bool,
+//   extra: PropTypes.oneOfType([PropTypes.node, PropTypes.string])
+// };
 
-AnalyticEcommerce.defaultProps = {
-  color: 'primary'
-};
+// AnalyticEcommerce.defaultProps = {
+//   color: 'primary'
+// };
 
 export default AnalyticEcommerce;

@@ -1,31 +1,29 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import './OrdersTable.css';
 
 // material-ui
 import { Box, Link, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
-// third-party
-import NumberFormat from 'react-number-format';
-
 // project import
-import Dot from './Dot'
+import Dot from '../Dot/Dot'
 
-function createData(trackingNo, name, fat, carbs, protein) {
-  return { trackingNo, name, fat, carbs, protein };
+function createData(transactionID, title, value, date) {
+  return { transactionID, title, value, date };
 }
 
 const rows = [
-  createData(84564564, 'Camera Lens', 40, 2, 40570),
-  createData(98764564, 'Laptop', 300, 0, 180139),
-  createData(98756325, 'Mobile', 355, 1, 90989),
-  createData(98652366, 'Handset', 50, 1, 10239),
-  createData(13286564, 'Computer Accessories', 100, 1, 83348),
-  createData(86739658, 'TV', 99, 0, 410780),
-  createData(13256498, 'Keyboard', 125, 2, 70999),
-  createData(98753263, 'Mouse', 89, 2, 10570),
-  createData(98753275, 'Desktop', 185, 1, 98063),
-  createData(98753291, 'Chair', 100, 0, 14001)
+  createData(84564564, 'Camera Lens', 40, "3/11/2023"),
+  createData(98764564, 'Laptop', 300, "3/11/2023"),
+  createData(98756325, 'Mobile', 355, "3/11/2023"),
+  createData(98652366, 'Handset', 50, "3/11/2023"),
+  createData(13286564, 'Computer Accessories', 100, "3/11/2023"),
+  createData(86739658, 'TV', 99, "3/11/2023"),
+  createData(13256498, 'Keyboard', 125, "3/11/2023"),
+  createData(98753263, 'Mouse', 89, "3/11/2023"),
+  createData(98753275, 'Desktop', 185, "3/11/2023"),
+  createData(98753291, 'Chair', 100, "3/11/2023")
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -58,35 +56,28 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'trackingNo',
+    id: 'transactionID',
     align: 'left',
     disablePadding: false,
-    label: 'Tracking No.'
+    label: 'Transaction ID'
   },
   {
-    id: 'name',
+    id: 'title',
     align: 'left',
     disablePadding: true,
-    label: 'Product Name'
+    label: 'Title'
   },
   {
-    id: 'fat',
+    id: 'value',
     align: 'right',
     disablePadding: false,
-    label: 'Total Order'
+    label: 'Value'
   },
   {
-    id: 'carbs',
+    id: 'date',
     align: 'left',
     disablePadding: false,
-
-    label: 'Status'
-  },
-  {
-    id: 'protein',
-    align: 'right',
-    disablePadding: false,
-    label: 'Total Amount'
+    label: 'Date'
   }
 ];
 
@@ -116,50 +107,14 @@ OrderTableHead.propTypes = {
   orderBy: PropTypes.string
 };
 
-// ==============================|| ORDER TABLE - STATUS ||============================== //
-
-const OrderStatus = ({ status }) => {
-  let color;
-  let title;
-
-  switch (status) {
-    case 0:
-      color = 'warning';
-      title = 'Pending';
-      break;
-    case 1:
-      color = 'success';
-      title = 'Approved';
-      break;
-    case 2:
-      color = 'error';
-      title = 'Rejected';
-      break;
-    default:
-      color = 'primary';
-      title = 'None';
-  }
-
-  return (
-    <Stack direction="row" spacing={1} alignItems="center">
-      <Dot color={color} />
-      <Typography>{title}</Typography>
-    </Stack>
-  );
-};
-
-OrderStatus.propTypes = {
-  status: PropTypes.number
-};
-
 // ==============================|| ORDER TABLE ||============================== //
 
 export default function OrderTable() {
   const [order] = useState('asc');
-  const [orderBy] = useState('trackingNo');
+  const [orderBy] = useState('transactionID');
   const [selected] = useState([]);
 
-  const isSelected = (trackingNo) => selected.indexOf(trackingNo) !== -1;
+  const isSelected = (transactionID) => selected.indexOf(transactionID) !== -1;
 
   return (
     <Box>
@@ -187,7 +142,7 @@ export default function OrderTable() {
           <OrderTableHead order={order} orderBy={orderBy} />
           <TableBody>
             {stableSort(rows, getComparator(order, orderBy)).map((row, index) => {
-              const isItemSelected = isSelected(row.trackingNo);
+              const isItemSelected = isSelected(row.transactionID);
               const labelId = `enhanced-table-checkbox-${index}`;
 
               return (
@@ -197,21 +152,24 @@ export default function OrderTable() {
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   aria-checked={isItemSelected}
                   tabIndex={-1}
-                  key={row.trackingNo}
+                  key={row.transactionID}
                   selected={isItemSelected}
                 >
-                  <TableCell component="th" id={labelId} scope="row" align="left">
-                    <Link color="secondary" component={RouterLink} to="">
-                      {row.trackingNo}
-                    </Link>
+                  <TableCell component="th" id={labelId} scope="row">
+                    <Typography color="secondary">
+                      {row.transactionID}
+                    </Typography>
                   </TableCell>
-                  <TableCell align="left">{row.name}</TableCell>
-                  <TableCell align="right">{row.fat}</TableCell>
-                  <TableCell align="left">
-                    <OrderStatus status={row.carbs} />
+                  <TableCell>{row.title}</TableCell>
+                  <TableCell>
+                  <Typography>
+                      ${row.value}
+                    </Typography>
                   </TableCell>
-                  <TableCell align="right">
-                    <NumberFormat value={row.protein} displayType="text" thousandSeparator prefix="$" />
+                  <TableCell>
+                  <Typography>
+                      {row.date}
+                    </Typography>
                   </TableCell>
                 </TableRow>
               );

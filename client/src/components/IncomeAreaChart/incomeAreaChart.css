@@ -1,0 +1,16 @@
+.css-ckcvyb {
+  background-color: var(--page-background-color);
+  /* background-color: rgb(132, 88, 88); */
+}
+.apexcharts-legend-marker {
+  background-color: #a8a8a8;
+}
+.apexcharts-tooltip-marker {
+  background-color: #a8a8a8;
+}
+.apexcharts-yaxis-texts-g text {
+  fill: white !important;
+}
+.apexcharts-legend-text {
+  color: white !important;
+}

@@ -1,0 +1,33 @@
+.css-ag7rrr-MuiTypography-root {
+  color: white;
+}
+.css-1hmt0ej-MuiTableContainer-root {
+  height: 555px;
+}
+.css-1hmt0ej-MuiTableContainer-root td, .css-1hmt0ej-MuiTableContainer-root th {
+  white-space: nowrap;
+  padding: 16px;
+  text-align: left !important;
+  color: white;
+  border-top: 1px solid transparent;
+}
+.css-18brw8f-MuiTypography-root {
+  color: white !important;
+}
+.css-34nofg-MuiTableRow-root {
+  border-bottom: 1px solid white;
+}
+
+
+.css-1hmt0ej-MuiTableContainer-root::-webkit-scrollbar {
+  width: 3px;
+}
+
+.css-1hmt0ej-MuiTableContainer-root::-webkit-scrollbar-thumb {
+  background-color: #24B3F5;
+}
+
+
+.apexcharts-ycrosshairs {
+  color: white !important;
+}
