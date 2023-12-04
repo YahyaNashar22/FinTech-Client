@@ -1,0 +1,72 @@
+.editUser {
+  margin: 25px;
+  padding: 25px;
+  background-color: var(--main-background-color);
+  color: white;
+}
+.image {
+  border-radius: 50%;
+  width: 90px;
+}
+.styleImgUpload {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 25%;
+  margin-top: 50px;
+}
+.sameInput {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100px;
+}
+.inputSize {
+  width: 50%;
+  height: 40px;
+  border-radius: 6px;
+  outline: none;
+  border: none;
+  padding-left: 10px;
+}
+.inputSize:click {
+  border: none;
+}
+
+.sameStyleBtn {
+  background: var(--secondery-green);
+  color: white;
+  font-size: 18px;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.sameStyleBtn:hover {
+  background-color: var(--third-green);
+}
+
+.sameInput input::placeholder {
+  font-size: 16px;
+  transition: 0.5s;
+  color: black;
+}
+.sameInput input:focus::placeholder {
+  opacity: 0;
+}
+
+.inputContainer {
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  left: 300px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  width: 30px;
+}
