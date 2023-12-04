@@ -356,7 +356,7 @@ const handleDeleteClick = () => {
   );
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', m:"20px" }}>
       <Paper sx={{ width: '100%', mb: 2, bgcolor: ' #25282C' }}>
         <EnhancedTableToolbar
           numSelected={selected.length}  // Ensure numSelected is defined
