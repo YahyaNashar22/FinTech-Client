@@ -17,7 +17,6 @@ import AnalyticEcommerce from "../../components/AnalyticEcommerce/AnalyticEcomme
 import OrdersTable from '../../components/OrdersTable/OrdersTable';
 import IncomeAreaChart from '../../components/IncomeAreaChart/IncomeAreaChart';
 import MonthlyBarChart from '../../components/ MonthlyBarChart/MonthlyBarChart';
-import ReportAreaChart from '../../components/ReportAreaChart/ReportAreaChart';
 import MainCard from '../../components/MainCard/MainCard';
 
 const styles = {
@@ -28,8 +27,8 @@ const styles = {
   },
   ".css-dasaed-MuiGrid-root":{
     mt: "0",
-    // p: "10px",
-    // m: "10px",
+    pr: "22px",
+    m: "20px",
     backgroundColor: '#25282C',
     width: "initial"
   },
@@ -52,19 +51,19 @@ const Dashboard = () => {
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75} sx={styles['.css-dasaed-MuiGrid-root']}>
       {/* row 1 */}
-      <Grid item xs={10} sx={{ mb: -2.25 }}>
+      <Grid item xs={12} sx={{ mb: -2.25 }}>
         <Typography variant="h1" sx={styles.h1}>Dashboard</Typography>
       </Grid>
-      <Grid item xs={10} sm={6} md={3} lg={3}>
+      <Grid item xs={12} sm={6} md={3} lg={3} sx={{ pl: 0}}>
         <AnalyticEcommerce title="Total Sales" count="$4,000" colorB="#228EBE" percentage={59.3} extra="$3,000"/>
       </Grid>
-      <Grid item xs={10} sm={6} md={3} lg={3}>
+      <Grid item xs={12} sm={6} md={3} lg={3}>
         <AnalyticEcommerce title="Total Profits" count="$1,000" isLoss colorB="var(--secondery-green);" percentage={70.5} extra="$8,900"/>
       </Grid>
-      <Grid item xs={10} sm={6} md={3} lg={3}>
+      <Grid item xs={12} sm={6} md={3} lg={3}>
         <AnalyticEcommerce title="Total Expences" count="$2,000" colorB="#228EBE" percentage={27.4} extra="$1,943" />
       </Grid>
-      <Grid item xs={10} sm={6} md={3} lg={3}>
+      <Grid item xs={12} sm={6} md={3} lg={3}>
         <AnalyticEcommerce title="Total Goal" count="$1,000" percentage={27.4} isLoss colorB="var(--secondery-green)" extra="$2,395" />
       </Grid>
 
