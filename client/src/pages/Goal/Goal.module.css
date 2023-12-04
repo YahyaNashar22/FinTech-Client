@@ -1,28 +1,34 @@
 body{
     background-color: var(--page-background-color);
 }
+.wrapper{
+    position: relative;
+}
 .goal{
     margin: auto;
-    height: 100vh;
-    width: 100vh;
+    height: 90vh;
+    width: 75vw;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .createGoal{
-    height: 10vh;
-    width: 20vh;
+    height: 6vh;
+    width: 13vw;
     border:2px solid var(--primary-green);
     color:var(--primary-green) ;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1rem;
+    margin: auto;
+    position: absolute;
 }
 .createGoal:active{
     box-shadow: none;
 }
-.particle1, .particle2, .particle3, .particle4, .particle5, .particle6,.particle7, .particle8, .particle9, .particle10, .particle11, .particle12{
+/* .particle1, .particle2, .particle3, .particle4, .particle5, .particle6,.particle7, .particle8, .particle9, .particle10, .particle11, .particle12{
     width: 50px;
     height: 50px;
     background-color: var(--secondery-green);
@@ -34,7 +40,7 @@ body{
 }
 .particle2{
     top: 38rem;
-    left: 38rem;
+    left: 20%;
 }
 .particle3{
     top: 37rem;
@@ -42,11 +48,11 @@ body{
 }
 .particle4{
     top:4rem ;
-    left:35rem ;
+    left:20% ;
 }
 .particle5{
     top:8rem ;
-    left:20rem ;
+    left:20em ;
 }
 .particle6{
     top: 37em;
@@ -58,27 +64,33 @@ body{
 }
 .particle8{
     top: 36rem;
-    right: 36rem;
+    right: 36em;
 }
 .particle9{
-    top: 35rem;
+    top: 35em;
     right: 4rem ;
 }
 .particle10{
     top:4rem ;
-    right:35rem ;
+    right:35em ;
 }
 .particle11{
     top:8rem ;
-    right:20rem ;
+    right:20em ;
 }
 .particle12{
     top: 37em;
-    right: 25rem;
-}
-.off{
- background-color: red;
-}
-.on{
-    background-color: blue;
+    right: 25em;
+} */
+/* @media(max-width:993px) {
+    .particle1, .particle2, .particle3, .particle4, .particle5, .particle6,.particle7, .particle8, .particle9, .particle10, .particle11, .particle12{
+  display: none;
+    }
+} */
+@media (max-width:415px) {
+    .createGoal{
+        font-size: 0.7rem;
+        height: 6vh;
+        width: 20vw;
+    }
 }
