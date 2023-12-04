@@ -1,0 +1,48 @@
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; 
+}
+
+.chartContainer,
+.lineChartContainer {
+  width: 100%;
+}
+
+.pieChartContainer {
+  width: 1000px;
+}
+
+.lineChartContainer {
+  display: grid;
+  grid-template-columns: 1fr; /* On small screens, display charts stacked vertically */
+  gap: 20px; /* Adjust the gap as needed */
+}
+
+/* .pieChartContainer {
+  display: none; /* Initially hide the pie chart container on small screens */
+ 
+
+@media (min-width: 768px) {
+  /* For tablets and larger screens */
+  .lineChartContainer {
+    grid-template-columns: 1fr 1fr; /* On larger screens, use a 1:1 ratio for line chart and bar chart */
+  }
+
+  .pieChartContainer {
+    display: block; /* Show the pie chart container on larger screens */
+    /* width: 65%; Adjust the width as needed */
+  }
+}
+
+@media (min-width: 1024px) {
+  /* For larger screens like desktops */
+  .lineChartContainer {
+    grid-template-columns: 2fr 1fr; /* On larger screens, use a 2:1 ratio for line chart and bar chart */
+  }
+
+  .pieChartContainer {
+    width: 500px; /* Adjust the width as needed */
+  }
+}
