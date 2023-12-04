@@ -1,6 +1,6 @@
 .background {
   height: 50vh;
-  background-color: var(--main-background-color);
+  background-color: var(--page-background-color);
   border-radius: 0 0 20px 20px;
   padding-top: 5%;
   position: relative;
