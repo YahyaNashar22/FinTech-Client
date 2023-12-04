@@ -12,7 +12,7 @@ const Report = () => {
     options: {
       colors: ["#0C2626", "#0FC2C0", " #0C2626", "#03A09D", "#015958"],
       labels: expenseState.categories,
-    },
+    },      
     series: expenseState.amounts,
   });
 
@@ -24,7 +24,7 @@ const Report = () => {
       },
       xaxis: {
         categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
-      },
+      },    
     },
     series: [
       {
@@ -73,28 +73,4 @@ const Report = () => {
 
 export default Report;
 
-// Import necessary dependencies
-// import React from 'react';
-// import BarChart from '../../components/BarChart.js'; 
-// import PieChart from '../../components/PieChart.js';
-// import LineChart from '../../components/LineChart.js';
-// const Report = () => {
 
-//   return (
-//     <div>
-//     <div>
-//       <BarChart />
-   
-//     </div>
-//     <div>
-//     <PieChart/>
-// </div>
-// <div>
-//     <LineChart/>
-// </div>
-//     </div >
-
-//   );
-// }
-
-// export default Report;
