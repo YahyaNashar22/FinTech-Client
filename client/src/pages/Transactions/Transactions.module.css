@@ -1,0 +1,7 @@
+.Firstcontainer {
+  margin: 20px;
+}
+.Secondcontainer {
+  padding: 20px;
+  background: var(--main-background-color);
+}

@@ -1,11 +1,13 @@
 import React from "react";
-// import style from './Transactions.module.css';
+import style from './Transactions.module.css';
  import EnhancedTable from '../../components/tableTransactions.js'
 
 const Transactions = () => {
   return (
-    <div>
-     < EnhancedTable/>
+    <div className={style.Firstcontainer}>
+      <div className={style.Secondcontainer}>
+      < EnhancedTable/>
+      </div>
     </div>
   )
 };

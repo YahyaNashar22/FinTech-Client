@@ -121,7 +121,7 @@ const EnhancedTable = () => {
     };
 
     return (
-      <TableHead>
+      <TableHead sx={{p: "20px"}}>
         <TableRow>
           <TableCell padding="checkbox">
             <Checkbox
