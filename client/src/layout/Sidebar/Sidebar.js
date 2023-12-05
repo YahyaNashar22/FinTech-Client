@@ -50,7 +50,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
         <Link to="/goal">
         <li className={Styles.sidebarListItem}>
           
-            <FaBullseye className={Styles.icon} /> Goal
+            <FaBullseye className={Styles.icon} /> Goals
             </li>
           </Link>
           <Link to="/report">

@@ -14,8 +14,8 @@ function Header({OpenSidebar}) {
         <div className={styles.headerLeft}>
         </div>
         <div className={ styles.headerRight}>
-            <BsFillBellFill className={styles.icon}/>
-            <BsPersonCircle className={styles.icon}/>
+            <BsFillBellFill className={`${styles.NotificationIcon} ${styles.icon}`}/>
+            <BsPersonCircle className={`${styles.UserIcon} ${styles.icon}`}/>
         </div>
     </header>
   )
