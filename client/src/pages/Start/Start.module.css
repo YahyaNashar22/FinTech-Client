@@ -100,6 +100,7 @@
   background: #f1f1f1;
   outline: none;
   cursor: pointer;
+  font-size: 15px;
 }
 .uploadButton:hover {
   background: rgba(0, 0, 0, 0.05);
@@ -147,15 +148,6 @@
   .content {
     width: 49%;
   }
-}
-
-
-
-.popup {
-
-}
-.popup .input {
-
 }
 .popup .input  {
   margin: 5px 0;

@@ -77,9 +77,7 @@ const Start = () => {
           <div className={style.input}>
             <img src={logoIcon} alt="Logo Icon" className={style.icon} />
             <input type="text" placeholder="Logo" readOnly={true} />
-            <label for="logoUpload">
-              <button className={style.uploadButton}>Insert Logo</button>
-            </label>
+            <label htmlFor="logoUpload" className={style.uploadButton}>Insert Logo</label>
             <input
               type="file"
               id="logoUpload"
@@ -89,7 +87,6 @@ const Start = () => {
                 const file = event.target.files[0];
                 // Implement multer logic to upload the file
               }}
-              required
             />
           </div>
           <div className={style.input}>

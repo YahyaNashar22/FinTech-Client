@@ -165,6 +165,7 @@ const EditCompany = () => {
         {formErrors.Website && <span className={style.error}>{formErrors.Website}</span>}
         <div className={style.input}>
           <label className={style.label}>Logo:</label>
+          
           <label htmlFor="logoUpload" className={style.uploadButton}>Insert Logo</label>
           <input
             type="file"
@@ -177,6 +178,7 @@ const EditCompany = () => {
             }}
           />
         </div>
+        
         <div className={style.buttons}>
           <button type="reset" className={style.reset}>Reset</button>
           <button type="submit" className={style.submit}>
