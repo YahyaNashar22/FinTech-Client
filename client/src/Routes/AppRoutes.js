@@ -18,6 +18,7 @@ import CreateGoal from "../pages/CreateGoal/CreateGoal";
 import MonthlyGoal from "../pages/MonthlyGoal/MonthlyGoal";
 import QuarterlyGoal from "../pages/QuarterlyGoal/QuarterlyGoal";
 import YearlyGoal from "../pages/YearlyGoal/YearlyGoal";
+import NotFound from "../pages/NotFound/NotFound";
 
 function AppRoutes() {
   return (
@@ -152,6 +153,14 @@ function AppRoutes() {
             element={
               <LayoutWithoutHeaderSidebar>
                 <SignIn />
+              </LayoutWithoutHeaderSidebar>
+            }
+          />
+          <Route
+            path="/*"
+            element={
+              <LayoutWithoutHeaderSidebar>
+                <NotFound />
               </LayoutWithoutHeaderSidebar>
             }
           />
