@@ -1,5 +1,6 @@
 import {React, useState} from "react";
 import style from './EditCompany.module.css';
+import { Link } from "react-router-dom";
 
 const EditCompany = () => {
 
@@ -73,7 +74,10 @@ const EditCompany = () => {
   return (
     <main className={style.main}>
       <div className={style.header}>
-        <h1 className={style.title}>Company Information</h1>
+        <h1 className={style.title}>Edit Company Information</h1>
+        <Link to="/settings">
+          <button className={style.editInfoButton}>Cancel</button>
+        </Link>
       </div>
       <form className={style.form} onSubmit={handleSubmit}>
         <div className={style.input}>

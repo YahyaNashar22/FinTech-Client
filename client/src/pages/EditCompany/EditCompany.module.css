@@ -5,8 +5,26 @@
   color: white;
 }
 .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 45px;
 }
+.header .editInfoButton {
+  background: var(--secondery-green);
+  color: white;
+  font-size: 18px;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.header .editInfoButton:hover {
+  background-color: var(--third-green);
+}
+
 .form {
   display: flex;
   flex-direction: column;

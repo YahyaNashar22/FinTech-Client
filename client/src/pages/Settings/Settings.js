@@ -6,7 +6,7 @@ const Settings = () => {
   return (
     <main className={style.main}>
       <div className={style.header}>
-        <h1 className={style.title}>Company Information:</h1>
+        <h1 className={style.title}>Company Information</h1>
         <Link to="/editcompany">
           <button className={style.editInfoButton}>Edit Info</button>
         </Link>
