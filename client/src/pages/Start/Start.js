@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import style from './Start.module.css';
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
 import Rocket from '../../assets/images/Frame.png'
 import userIcon from '../../assets/icons/uiw_user.svg';
 import logoIcon from '../../assets/icons/lets-icons_img-load-box-fill.svg'
@@ -17,41 +18,83 @@ import TikTokIcon from '../../assets/icons/ic_baseline-tiktok.svg';
 import XIcon from '../../assets/icons/akar-icons_x-fill.svg';
 import YouTubeIcon from '../../assets/icons/mdi_youtube.svg';
 import LinkedInIcon from '../../assets/icons/mdi_linkedin.svg';
+import {Link} from 'react-router-dom';
+import { convertLength } from "@mui/material/styles/cssUtils";
 
 const Start = () => {
+
+    // Fetching
+    const [formData, setFormData] = useState({
+      Name: '',
+      Logo: '',
+      Email: '',
+      Description: '',
+      Capital: '',
+      UpdatedCapital: '',
+      Address: '',
+      Social_Media: [{
+        Facebook: '',
+        Instagram: '',
+        TikTok: '',
+        X: '',
+        YouTube: '',
+        LinkedIn: '',
+    }],
+      Phone_Number: '',
+      Website: '',
+    });
+
+    const handleInputChange = (event) => {
+      setFormData({
+        ...formData,
+        [event.target.name]: event.target.value
+      });
+    };
+  
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+  
+      try {
+        const response = await axios.post('http://localhost:5000/company/create', formData);
+        console.log('Response:', response.data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
 
   const [showPopup, setShowPopup] = useState(false);
 
   const handleSocialMediaClick = () => {
     setShowPopup(!showPopup);
   };
+  console.log("HELLO: ", formData)
 
   const renderSocialMediaPopup = () => {
     return (
       <div className={style.popup}>
         <div className={style.input}>
           <img src={FacebookIcon} alt="Facebook Icon" className={style.icon} />
-          <input type="text" placeholder="Facebook" />
+          <input type="text" placeholder="Facebook" name="Facebook" value={formData.Social_Media} onChange={handleInputChange} />
         </div>
         <div className={style.input}>
           <img src={InstagramIcon} alt="Instagram Icon" className={style.icon} />
-          <input type="text" placeholder="Instagram" />
+          <input type="text" placeholder="Instagram" name="Instagram" value={formData.Social_Media.Instagram} onChange={handleInputChange} />
         </div>
         <div className={style.input}>
           <img src={TikTokIcon} alt="TikTok Icon" className={style.icon} />
-          <input type="text" placeholder="TikTok" />
+          <input type="text" placeholder="TikTok" name="TikTok" value={formData.Social_Media.TikTok} onChange={handleInputChange} />
         </div>
         <div className={style.input}>
           <img src={XIcon} alt="X Icon" className={style.icon} />
-          <input type="text" placeholder="X" />
+          <input type="text" placeholder="X" name="X" value={formData.Social_Media.X} onChange={handleInputChange} />
         </div>
         <div className={style.input}>
           <img src={YouTubeIcon} alt="YouTube Icon" className={style.icon} />
-          <input type="text" placeholder="YouTube" />
+          <input type="text" placeholder="YouTube" name="YouTube" value={formData.Social_Media.YouTube} onChange={handleInputChange} />
         </div>
         <div className={style.input}>
           <img src={LinkedInIcon} alt="LinkedIn Icon" className={style.icon} />
-          <input type="text" placeholder="LinkedIn" />
+          <input type="text" placeholder="LinkedIn" name="LinkedIn" value={formData.Social_Media.LinkedIn} onChange={handleInputChange} />
         </div>
       </div>
     );
@@ -69,16 +112,16 @@ const Start = () => {
         <Typography className={style.paragraph} gutterBottom>
         Begin your financial journey. Customize your details to get started.
         </Typography>
-        <form className={style.form} action="" method="GET">
+        <form className={style.form} onSubmit={handleSubmit}>
           <div className={style.input}>
             <img src={userIcon} alt="Name Icon" className={style.icon} />
-            <input type="text" placeholder="Name" name="Name" required />
+            <input type="text" placeholder="Name" name="Name" value={formData.Name} onChange={handleInputChange} required />
           </div>
           <div className={style.input}>
             <img src={logoIcon} alt="Logo Icon" className={style.icon} />
-            <input type="text" placeholder="Logo" readOnly={true} />
+            <input type="text" placeholder="Logo" name="Logo" value={formData.Logo} onChange={handleInputChange}/>
             <label htmlFor="logoUpload" className={style.uploadButton}>Insert Logo</label>
-            <input
+            {/* <input
               type="file"
               id="logoUpload"
               style={{ display: "none" }}
@@ -87,38 +130,40 @@ const Start = () => {
                 const file = event.target.files[0];
                 // Implement multer logic to upload the file
               }}
-            />
+            /> */}
           </div>
           <div className={style.input}>
             <img src={mailIcon} alt="Email Icon" className={style.icon} />
-            <input type="text" placeholder="Email" name="Email" required/>
+            <input type="text" placeholder="Email" name="Email" value={formData.Email} onChange={handleInputChange} required/>
           </div>
           <div className={style.input}>
             <img src={textDescriptionIcon} alt="Description Icon" className={style.icon} />
-            <input type="text" placeholder="Description" name="Description" required/>
+            <input type="text" placeholder="Description" name="Description"value={formData.Description} onChange={handleInputChange} required/>
           </div>
           <div className={style.input}>
             <img src={moneyIcon} alt="Capital Icon" className={style.icon} />
-            <input type="text" placeholder="Capital" name="Capital"/>
+            <input type="text" placeholder="Capital" name="Capital" value={formData.Capital} onChange={handleInputChange}/>
           </div>
           <div className={style.input}>
             <img src={locationIcon} alt="Address Icon" className={style.icon} />
-            <input type="text" placeholder="Address" name="Address"/>
+            <input type="text" placeholder="Address" name="Address" value={formData.Address} onChange={handleInputChange}/>
           </div>
           <div className={style.input}>
             <img src={shareIcon} alt="Social Media Links Icon" className={style.icon}/>
-            <input type="text" className={style.socialMediainput} placeholder="Social Media Links" readOnly={true} onClick={handleSocialMediaClick}/>
+            <input type="text" name="Social_Media" className={style.socialMediainput} placeholder="Social Media Links" onClick={handleSocialMediaClick}/>
             {showPopup && renderSocialMediaPopup()}
           </div>
           <div className={style.input}>
             <img src={phoneIcon} alt="Phone Number Icon" className={style.icon} />
-            <input type="text" placeholder="Phone Number" name="Phone Number" required/>
+            <input type="text" placeholder="Phone Number" name="Phone_Number" value={formData.Phone_Number} onChange={handleInputChange} required/>
           </div>
           <div className={style.input}>
             <img src={webIcon} alt="Website Icon" className={style.icon} />
-            <input type="text" placeholder="Website" name="Website"/>
+            <input type="text" placeholder="Website" name="Website" value={formData.Website} onChange={handleInputChange}/>
           </div>
-          <button type="submit" className={style.submit}>Setup Account!</button>
+          <Link to="/signup">
+            <button type="submit" onClick={handleSubmit} className={style.submit}>Setup Account!</button>
+          </Link>
         </form>
       </div>
     </main>
