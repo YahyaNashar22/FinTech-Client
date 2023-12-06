@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import style from './Start.module.css';
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
 import Rocket from '../../assets/images/Frame.png'
 import userIcon from '../../assets/icons/uiw_user.svg';
 import logoIcon from '../../assets/icons/lets-icons_img-load-box-fill.svg'
@@ -17,42 +18,119 @@ import TikTokIcon from '../../assets/icons/ic_baseline-tiktok.svg';
 import XIcon from '../../assets/icons/akar-icons_x-fill.svg';
 import YouTubeIcon from '../../assets/icons/mdi_youtube.svg';
 import LinkedInIcon from '../../assets/icons/mdi_linkedin.svg';
+import {Link} from 'react-router-dom';
+// import { convertLength } from "@mui/material/styles/cssUtils";
 
 const Start = () => {
+
+    // Fetching
+    const [formData, setFormData] = useState({
+      Name: '',
+      Logo: '',
+      Email: '',
+      Description: '',
+      Capital: '',
+      UpdatedCapital: '',
+      Address: '',
+      Social_Media: [
+        {
+          platform: 'Facebook',
+          link: '',
+        },
+        {
+          platform: 'Instagram',
+          link: '',
+        },
+        {
+          platform: 'TikTok',
+          link: '',
+        },
+        {
+          platform: 'X',
+          link: '',
+        },
+        {
+          platform: 'YoutTube',
+          link: '',
+        },
+        {
+          platform: 'LinkedIn',
+          link: '',
+        },
+    ],
+      Phone_Number: '',
+      Website: '',
+    });
+
+    const handleInputChange = (event) => {
+      const { name, value } = event.target;
+    
+      if (name.startsWith('Social_Media')) {
+        const updatedSocialMedia = formData.Social_Media.map((item) => {
+          if (`Social_Media_${item.platform}` === name) {
+            return { ...item, link: value };
+          }
+          return item;
+        });
+        setFormData({
+          ...formData,
+          Social_Media: updatedSocialMedia,
+        });
+      } else {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          [name]: value,
+        }));
+      }
+    };
+    
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+  
+      try {
+        const response = await axios.post('http://localhost:5000/company/create', formData);
+        console.log('Response:', response.data);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
 
   const [showPopup, setShowPopup] = useState(false);
 
   const handleSocialMediaClick = () => {
     setShowPopup(!showPopup);
   };
+  console.log("HELLO: ", formData)
 
   const renderSocialMediaPopup = () => {
+    const socialMediaIcons = [FacebookIcon, InstagramIcon, TikTokIcon, XIcon, YouTubeIcon, LinkedInIcon];
+  
+    const handleSocialMediaInputChange = (event, index) => {
+      const { value } = event.target;
+      const updatedSocialMedia = formData.Social_Media.map((item, idx) =>
+        idx === index ? { ...item, link: value } : item
+      );
+  
+      setFormData({
+        ...formData,
+        Social_Media: updatedSocialMedia,
+      });
+    };
+  
     return (
       <div className={style.popup}>
-        <div className={style.input}>
-          <img src={FacebookIcon} alt="Facebook Icon" className={style.icon} />
-          <input type="text" placeholder="Facebook" />
-        </div>
-        <div className={style.input}>
-          <img src={InstagramIcon} alt="Instagram Icon" className={style.icon} />
-          <input type="text" placeholder="Instagram" />
-        </div>
-        <div className={style.input}>
-          <img src={TikTokIcon} alt="TikTok Icon" className={style.icon} />
-          <input type="text" placeholder="TikTok" />
-        </div>
-        <div className={style.input}>
-          <img src={XIcon} alt="X Icon" className={style.icon} />
-          <input type="text" placeholder="X" />
-        </div>
-        <div className={style.input}>
-          <img src={YouTubeIcon} alt="YouTube Icon" className={style.icon} />
-          <input type="text" placeholder="YouTube" />
-        </div>
-        <div className={style.input}>
-          <img src={LinkedInIcon} alt="LinkedIn Icon" className={style.icon} />
-          <input type="text" placeholder="LinkedIn" />
-        </div>
+        {formData.Social_Media.map((platformData, index) => (
+          <div className={style.input} key={index}>
+            <img src={socialMediaIcons[index]} alt={`${platformData.platform} Icon`} className={style.icon} />
+            <input
+              type="text"
+              placeholder={platformData.platform}
+              name={`Social_Media_${platformData.platform}`} // Unique name for each input
+              value={platformData.link}
+              onChange={(e) => handleSocialMediaInputChange(e, index)}
+            />
+          </div>
+        ))}
       </div>
     );
   };
@@ -69,16 +147,16 @@ const Start = () => {
         <Typography className={style.paragraph} gutterBottom>
         Begin your financial journey. Customize your details to get started.
         </Typography>
-        <form className={style.form} action="" method="GET">
+        <form className={style.form} onSubmit={handleSubmit}>
           <div className={style.input}>
             <img src={userIcon} alt="Name Icon" className={style.icon} />
-            <input type="text" placeholder="Name" name="Name" required />
+            <input type="text" placeholder="Name" name="Name" value={formData.Name} onChange={handleInputChange} required />
           </div>
           <div className={style.input}>
             <img src={logoIcon} alt="Logo Icon" className={style.icon} />
-            <input type="text" placeholder="Logo" readOnly={true} />
+            <input type="text" placeholder="Logo" name="Logo" value={formData.Logo} onChange={handleInputChange}/>
             <label htmlFor="logoUpload" className={style.uploadButton}>Insert Logo</label>
-            <input
+            {/* <input
               type="file"
               id="logoUpload"
               style={{ display: "none" }}
@@ -87,38 +165,40 @@ const Start = () => {
                 const file = event.target.files[0];
                 // Implement multer logic to upload the file
               }}
-            />
+            /> */}
           </div>
           <div className={style.input}>
             <img src={mailIcon} alt="Email Icon" className={style.icon} />
-            <input type="text" placeholder="Email" name="Email" required/>
+            <input type="text" placeholder="Email" name="Email" value={formData.Email} onChange={handleInputChange} required/>
           </div>
           <div className={style.input}>
             <img src={textDescriptionIcon} alt="Description Icon" className={style.icon} />
-            <input type="text" placeholder="Description" name="Description" required/>
+            <input type="text" placeholder="Description" name="Description"value={formData.Description} onChange={handleInputChange} required/>
           </div>
           <div className={style.input}>
             <img src={moneyIcon} alt="Capital Icon" className={style.icon} />
-            <input type="text" placeholder="Capital" name="Capital"/>
+            <input type="text" placeholder="Capital" name="Capital" value={formData.Capital} onChange={handleInputChange}/>
           </div>
           <div className={style.input}>
             <img src={locationIcon} alt="Address Icon" className={style.icon} />
-            <input type="text" placeholder="Address" name="Address"/>
+            <input type="text" placeholder="Address" name="Address" value={formData.Address} onChange={handleInputChange}/>
           </div>
           <div className={style.input}>
             <img src={shareIcon} alt="Social Media Links Icon" className={style.icon}/>
-            <input type="text" className={style.socialMediainput} placeholder="Social Media Links" readOnly={true} onClick={handleSocialMediaClick}/>
+            <input type="text" name="Social_Media" className={style.socialMediainput} placeholder="Social Media Links" onClick={handleSocialMediaClick}/>
             {showPopup && renderSocialMediaPopup()}
           </div>
           <div className={style.input}>
             <img src={phoneIcon} alt="Phone Number Icon" className={style.icon} />
-            <input type="text" placeholder="Phone Number" name="Phone Number" required/>
+            <input type="text" placeholder="Phone Number" name="Phone_Number" value={formData.Phone_Number} onChange={handleInputChange} required/>
           </div>
           <div className={style.input}>
             <img src={webIcon} alt="Website Icon" className={style.icon} />
-            <input type="text" placeholder="Website" name="Website"/>
+            <input type="text" placeholder="Website" name="Website" value={formData.Website} onChange={handleInputChange}/>
           </div>
-          <button type="submit" className={style.submit}>Setup Account!</button>
+          <Link to="/signup">
+            <button type="submit" onClick={handleSubmit} className={style.submit}>Setup Account!</button>
+          </Link>
         </form>
       </div>
     </main>
