@@ -1,69 +1,51 @@
 import React from 'react'
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 import pic from "../../assets/icons/noAvatar.png"
+import { Link } from 'react-router-dom'
 export const DataTable = ({ usersData }) => {
-    // const columns = [
-    //     { field: 'id', headerName: 'ID', width: 30 },
-    //     {
-    //         field: "avatar", headerName: "Profile", width: 300,
-    //         renderCell: (params) => {
-    //             return <img src={params.row.img || pic} alt='' />
-    //         }
-    //     },
+    const columns = [
+        { field: 'id', headerName: 'ID', width: 100 },
+        {
+            field: "avatar", headerName: "Profile", width: 200,
+            renderCell: (params) => {
+                return <img src={params.row.img || pic} alt='' />
+            }
+        },
 
-    //     {
-    //         field: 'Name',
-    //         headerName: 'Name',
-    //         width: 300,
-    //         editable: true,
-    //     },
+        {
+            field: 'Name',
+            headerName: 'Name',
+            width: 200,
+            editable: true,
+        },
 
-    //     {
-    //         field: "role", headerName: "Role", width: 300,
-    //     },
-    //     {
-    //         field: "email", headerName: "Email", width: 300,
-    //     },
-    //     {
-    //         field: "action", headerName: "Action", width: 300,
-    //         renderCell: (params) => {
-    //             return <div className='action'>
-    //                 <span className='view'>Edit </span>
-    //                 <span>/ </span>
-    //                 <span className='delete'>Delete</span>
-    //             </div>
-    //         }
-    //     },
-    // ];
+        {
+            field: "Role", headerName: "Role", width: 200,
+        },
+        {
+            field: "Email", headerName: "Email", width: 200,
+        },
+        {
+            field: "action", headerName: "Action", width: 200,
+            renderCell: (params) => {
+                return <div className='action'>
+                    <Link to="/editUser">
+                    <span className='view'>Edit </span>
+                    </Link>
+                    <span>/ </span>
+                    <span className='delete'>Delete</span>
+                </div>
+            }
+        },
+    ];
 
-    // const rows = [
-    //     { id: 1, avatar: '', Name: 'Jon', email: "example@gmail.com", role: "manager" },
-    //     { id: 2, avatar: '', Name: 'Cersei', email: "example@gmail.com", role: "manager" },
-    //     { id: 3, avatar: '', Name: 'Jaime', email: "example@gmail.com", role: "manager" },
-    //     { id: 4, avatar: '', Name: 'Arya', email: "example@gmail.com", role: "manager" },
-    //     { id: 5, avatar: '', Name: 'Daenerys', email: "example@gmail.com", role: "manager" },
-    //     { id: 6, avatar: '', Name: null, email: "example@gmail.com", role: "manager" },
-    //     { id: 7, avatar: '', Name: 'Ferrara', email: "example@gmail.com", role: "manager" },
-    //     { id: 8, avatar: '', Name: 'Rossini', email: "example@gmail.com", role: "manager" },
-    //     { id: 9, avatar: '', Name: 'Harvey', email: "example@gmail.com", role: "manager" },
-    //     { id: 10, avatar: '', Name: 'Jon', email: "example@gmail.com", role: "manager" },
-    //     { id: 11, avatar: '', Name: 'Jon', email: "example@gmail.com", role: "manegar" },
-    //     { id: 12, avatar: '', Name: 'Cersei', email: "example@gmail.com", role: "manager" },
-    //     { id: 13, avatar: '', Name: 'Jaime', email: "example@gmail.com", role: "manager" },
-    //     { id: 14, avatar: '', Name: 'Arya', email: "example@gmail.com", role: "manager" },
-    //     { id: 15, avatar: '', Name: 'Daenerys', email: "example@gmail.com", role: "manager" },
-    //     { id: 16, avatar: '', Name: null, email: "example@gmail.com", role: "manager" },
-    //     { id: 17, avatar: '', Name: 'Ferrara', email: "example@gmail.com", role: "manager" },
-    //     { id: 18, avatar: '', Name: 'Rossini', email: "example@gmail.com", role: "manager" },
-    //     { id: 19, avatar: '', Name: 'Harvey', email: "example@gmail.com", role: "manager" },
+    console.log("lklk",usersData.Email)
 
-    // ];
+    // const columns = Object.keys(usersData[0] || {}).map((key) => ({
 
-    const columns = Object.keys(usersData[0] || {}).map((key) => ({
-        field: key,
-        headerName: key,
-        width: 200,
-    }))
+    //     field: key, headerName: key, width: 300
+
+    // }))
 
     console.log("dataTable", usersData)
     return (

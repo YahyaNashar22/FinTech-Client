@@ -11,6 +11,16 @@ const EditUser = () => {
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [showPassword3, setShowPassword3] = useState(false);
+  
+  // const [editUser, setEditUSer] = useState([]);
+
+  // async function fetchEditUser() {
+  //   try {
+      
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
 
 
   const visiblePasswor = () => {
