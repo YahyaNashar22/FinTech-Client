@@ -12,22 +12,7 @@ const EditUser = () => {
   const [showPassword2, setShowPassword2] = useState(false);
   const [showPassword3, setShowPassword3] = useState(false);
 
-  // const [password1, setPassword1] = useState('')
-  // const [password2, setPassword2] = useState('')
-  // const [err, setErr] = useState('')
 
-  // const handlecChange1 = (e) => {
-  //   setPassword1(e.target.value)
-  // }
-  // const handlecChange2 = (e) => {
-  //   setPassword2(e.target.value)
-  // }
-  // if (password1 !== password2) {
-  //   setErr('password not correct')
-  // }
-  // else{
-  //   setErr('')
-  // }
   const visiblePasswor = () => {
     setShowPassword1(!showPassword1)
   };
