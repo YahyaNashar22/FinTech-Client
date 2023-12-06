@@ -19,7 +19,7 @@ import XIcon from '../../assets/icons/akar-icons_x-fill.svg';
 import YouTubeIcon from '../../assets/icons/mdi_youtube.svg';
 import LinkedInIcon from '../../assets/icons/mdi_linkedin.svg';
 import {Link} from 'react-router-dom';
-import { convertLength } from "@mui/material/styles/cssUtils";
+// import { convertLength } from "@mui/material/styles/cssUtils";
 
 const Start = () => {
 
@@ -32,25 +32,58 @@ const Start = () => {
       Capital: '',
       UpdatedCapital: '',
       Address: '',
-      Social_Media: [{
-        Facebook: '',
-        Instagram: '',
-        TikTok: '',
-        X: '',
-        YouTube: '',
-        LinkedIn: '',
-    }],
+      Social_Media: [
+        {
+          platform: 'Facebook',
+          link: '',
+        },
+        {
+          platform: 'Instagram',
+          link: '',
+        },
+        {
+          platform: 'TikTok',
+          link: '',
+        },
+        {
+          platform: 'X',
+          link: '',
+        },
+        {
+          platform: 'YoutTube',
+          link: '',
+        },
+        {
+          platform: 'LinkedIn',
+          link: '',
+        },
+    ],
       Phone_Number: '',
       Website: '',
     });
 
     const handleInputChange = (event) => {
-      setFormData({
-        ...formData,
-        [event.target.name]: event.target.value
-      });
+      const { name, value } = event.target;
+    
+      if (name.startsWith('Social_Media')) {
+        const updatedSocialMedia = formData.Social_Media.map((item) => {
+          if (`Social_Media_${item.platform}` === name) {
+            return { ...item, link: value };
+          }
+          return item;
+        });
+        setFormData({
+          ...formData,
+          Social_Media: updatedSocialMedia,
+        });
+      } else {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          [name]: value,
+        }));
+      }
     };
-  
+    
     const handleSubmit = async (event) => {
       event.preventDefault();
   
@@ -70,32 +103,34 @@ const Start = () => {
   console.log("HELLO: ", formData)
 
   const renderSocialMediaPopup = () => {
+    const socialMediaIcons = [FacebookIcon, InstagramIcon, TikTokIcon, XIcon, YouTubeIcon, LinkedInIcon];
+  
+    const handleSocialMediaInputChange = (event, index) => {
+      const { value } = event.target;
+      const updatedSocialMedia = formData.Social_Media.map((item, idx) =>
+        idx === index ? { ...item, link: value } : item
+      );
+  
+      setFormData({
+        ...formData,
+        Social_Media: updatedSocialMedia,
+      });
+    };
+  
     return (
       <div className={style.popup}>
-        <div className={style.input}>
-          <img src={FacebookIcon} alt="Facebook Icon" className={style.icon} />
-          <input type="text" placeholder="Facebook" name="Facebook" value={formData.Social_Media} onChange={handleInputChange} />
-        </div>
-        <div className={style.input}>
-          <img src={InstagramIcon} alt="Instagram Icon" className={style.icon} />
-          <input type="text" placeholder="Instagram" name="Instagram" value={formData.Social_Media.Instagram} onChange={handleInputChange} />
-        </div>
-        <div className={style.input}>
-          <img src={TikTokIcon} alt="TikTok Icon" className={style.icon} />
-          <input type="text" placeholder="TikTok" name="TikTok" value={formData.Social_Media.TikTok} onChange={handleInputChange} />
-        </div>
-        <div className={style.input}>
-          <img src={XIcon} alt="X Icon" className={style.icon} />
-          <input type="text" placeholder="X" name="X" value={formData.Social_Media.X} onChange={handleInputChange} />
-        </div>
-        <div className={style.input}>
-          <img src={YouTubeIcon} alt="YouTube Icon" className={style.icon} />
-          <input type="text" placeholder="YouTube" name="YouTube" value={formData.Social_Media.YouTube} onChange={handleInputChange} />
-        </div>
-        <div className={style.input}>
-          <img src={LinkedInIcon} alt="LinkedIn Icon" className={style.icon} />
-          <input type="text" placeholder="LinkedIn" name="LinkedIn" value={formData.Social_Media.LinkedIn} onChange={handleInputChange} />
-        </div>
+        {formData.Social_Media.map((platformData, index) => (
+          <div className={style.input} key={index}>
+            <img src={socialMediaIcons[index]} alt={`${platformData.platform} Icon`} className={style.icon} />
+            <input
+              type="text"
+              placeholder={platformData.platform}
+              name={`Social_Media_${platformData.platform}`} // Unique name for each input
+              value={platformData.link}
+              onChange={(e) => handleSocialMediaInputChange(e, index)}
+            />
+          </div>
+        ))}
       </div>
     );
   };

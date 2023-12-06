@@ -74,6 +74,7 @@
 }
 .input .socialMediainput {
   cursor: pointer;
+  caret-color: transparent;
 }
 .input .socialMediainput:focus::placeholder,
 .input:nth-child(2) input:focus::placeholder {
