@@ -11,19 +11,19 @@ const EditTransactionForm = ({ onClose, onEditTransaction, rowData }) => {
   const [editedTransaction, setEditedTransaction] = useState({
     title: rowData.title,
     type: rowData.type,
-    date: rowData.date, // Corrected field name
+    Date: rowData.Date, // Corrected field name
     value: rowData.value,
-    userID: rowData.userID,
-    categoryID: rowData.categoryID,
+    UserID: rowData.UserID,
+    CategoryID: rowData.CategoryID,
   });
 
   const handleFieldChange = (fieldName, value) => {
     setEditedTransaction((prevTransaction) => ({
       ...prevTransaction,
-      [fieldName]: value,
+      [fieldName]: fieldName === 'date' ? new Date(value) : value,
     }));
   };
-
+  
   const handleEdit = (e) => {
     e.preventDefault();
 
@@ -43,7 +43,7 @@ const EditTransactionForm = ({ onClose, onEditTransaction, rowData }) => {
             <TextField
               label="Title"
               value={editedTransaction.title}
-              onChange={(e) => handleFieldChange('title', e.target.value)}
+              onChange={(e) => handleFieldChange('title', e.target.title)}
               fullWidth
               margin="normal"
               InputProps={{ style: { color: '#FFFFFF' } }}
@@ -53,7 +53,7 @@ const EditTransactionForm = ({ onClose, onEditTransaction, rowData }) => {
             <TextField
               label="Type"
               value={editedTransaction.type}
-              onChange={(e) => handleFieldChange('type', e.target.value)}
+              onChange={(e) => handleFieldChange('type', e.target.type)}
               fullWidth
               margin="normal"
               InputProps={{ style: { color: '#FFFFFF' } }}
@@ -63,7 +63,7 @@ const EditTransactionForm = ({ onClose, onEditTransaction, rowData }) => {
             <TextField
               label="Date"
               value={editedTransaction.date}
-              onChange={(e) => handleFieldChange('date', e.target.value)}
+              onChange={(e) => handleFieldChange('date', e.target.Date)}
               fullWidth
               margin="normal"
               InputProps={{ style: { color: '#FFFFFF' } }}
@@ -84,7 +84,7 @@ const EditTransactionForm = ({ onClose, onEditTransaction, rowData }) => {
             <TextField
               label="UserID"
               value={editedTransaction.userID}
-              onChange={(e) => handleFieldChange('userID', e.target.value)}
+              onChange={(e) => handleFieldChange('userID', e.target.UserID)}
               fullWidth
               margin="normal"
               InputProps={{ style: { color: '#FFFFFF' } }}
@@ -94,7 +94,7 @@ const EditTransactionForm = ({ onClose, onEditTransaction, rowData }) => {
             <TextField
               label="CategoryID"
               value={editedTransaction.categoryID}
-              onChange={(e) => handleFieldChange('categoryID', e.target.value)}
+              onChange={(e) => handleFieldChange('categoryID', e.target.CategoryID)}
               fullWidth
               margin="normal"
               InputProps={{ style: { color: '#FFFFFF' } }}
