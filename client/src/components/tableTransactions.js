@@ -56,6 +56,34 @@ const EnhancedTable = () => {
   const [isAddTransactionFormOpen, setAddTransactionFormOpen] = React.useState(false);
 
 
+
+
+  const [transaction, setTransaction] = React.useState([]);
+  
+  async function fetchTransaction() {
+    try {
+      const response = await axios.get("http://localhost:5000/transactions/read");
+      setTransaction(response.data); // Update the transaction state with the fetched data
+    } catch (err) {
+      console.log("error fetch", err);
+    }
+  }
+  
+  React.useEffect(() => {
+    fetchTransaction();
+  }, []); // Fetch data only on the initial render
+  
+  React.useEffect(() => {
+    // Update the rows state when the transaction state changes
+    setRows(transaction);
+  }, [transaction]);
+  
+  console.log("dataaa", rows);
+
+
+
+
+
   const handleEditTransaction = async (editedTransaction) => {
     try {
       // Make a PUT request to update the transaction by ID
@@ -154,10 +182,10 @@ function stableSort(array, comparator) {
 const headCells = [
   { id: 'title', numeric: false, disablePadding: true, label: 'Title' },
   { id: 'type', numeric: true, disablePadding: false, label: 'Type' },
-  { id: 'date', numeric: true, disablePadding: false, label: 'Date' },
+  { id: 'Date', numeric: true, disablePadding: false, label: 'Date' },
   { id: 'value', numeric: true, disablePadding: false, label: 'Value' },
-  { id: 'userID', numeric: true, disablePadding: false, label: 'UserID' },
-  { id: 'categoryID', numeric: true, disablePadding: false, label: 'CategoryID' },
+  { id: 'UserID', numeric: true, disablePadding: false, label: 'UserID' },
+  { id: 'CategoryID', numeric: true, disablePadding: false, label: 'CategoryID' },
 ];
 //the fetch 
 const EnhancedTableHead = (props) => {
@@ -166,23 +194,29 @@ const EnhancedTableHead = (props) => {
     onRequestSort(event, property);
   };
 
-  // const [transaction, setTransaction] = React.useState([]);
-
-  // async function fetchTransaction() {
-  //   try {
-  //     const response = await axios.get("http://localhost:5000/transactions/read");
-  //     setRows(response.data); // Update the rows state with the fetched data
-  //   } catch (err) {
-  //     console.log("error fetch", err);
-  //   }
-  // }
-
-  // React.useEffect(() => {
-  //   fetchTransaction();
-  // }, []); // Fetch data only on the initial render
-
-  // console.log("transaction", transaction);
-
+  const [transaction, setTransaction] = React.useState([]);
+  const [rows, setRows] = React.useState([]);
+  
+  async function fetchTransaction() {
+    try {
+      const response = await axios.get("http://localhost:5000/transactions/read");
+      setTransaction(response.data); // Update the transaction state with the fetched data
+    } catch (err) {
+      console.log("error fetch", err);
+    }
+  }
+  
+  React.useEffect(() => {
+    fetchTransaction();
+  }, []); // Fetch data only on the initial render
+  
+  React.useEffect(() => {
+    // Update the rows state when the transaction state changes
+    setRows(transaction);
+  }, [transaction]);
+  
+  console.log("dataaa", rows);
+  
 
 
 
@@ -421,7 +455,8 @@ const handleAddTransactionClick = () => {
 };
 
 const emptyRows =
-  page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+
 
 const visibleRows = React.useMemo(
   () =>
@@ -431,6 +466,7 @@ const visibleRows = React.useMemo(
     ),
   [order, orderBy, page, rowsPerPage],
 );
+
 return (
   <Box sx={{ width: '100%' }}>
     <Paper sx={{ width: '100%', mb: 2, bgcolor: ' #25282C' }}>
@@ -457,9 +493,10 @@ return (
             }}
           />
           <TableBody>
-            {visibleRows.map((row, index) => {
+            {rows.map((row, index) =>  {
               const isItemSelected = isSelected(row.id);
               const labelId = `enhanced-table-checkbox-${index}`;
+
 
               return (
                 <TableRow
