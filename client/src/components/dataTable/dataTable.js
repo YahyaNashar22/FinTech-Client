@@ -95,7 +95,7 @@ export const DataTable = () => {
                 initialState={{
                     pagination: {
                         paginationModel: {
-                            pageSize: 10,
+                            pageSize: 8,
                         },
                     },
                 }}
@@ -106,7 +106,7 @@ export const DataTable = () => {
                         quickFilterProps: { debounceMs: 500 }
                     },
                 }}
-                pageSizeOptions={[10]}
+                pageSizeOptions={[8]}
                 checkboxSelection
                 disableRowSelectionOnClick
                 disableColumnFilter
