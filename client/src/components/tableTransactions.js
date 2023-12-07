@@ -25,55 +25,134 @@ import AddTransactionForm from './AddTransactionForm';
 import { Button } from '@mui/material';
 import EditTransactionForm from './ EditTransactionForm';
 import { toast } from 'react-toastify';
+import axios from 'axios';
+
 
 
 // ... (other imports)
 
-function createData(id, title, type, date, value, userID, categoryID) {
+function createData(id, title, type, Date, value, UserID, CategoryID) {
   return {
     id,
     title,
     type,
-    date,
+    Date,
     value,
-    userID,
-    categoryID,
+    UserID,
+    CategoryID,
   };
 }
 
 const EnhancedTable = () => {
-  const [rows, setRows] = React.useState([
-    // createData(1, 'ELECTRECITY', 1, '22/11/2023', 67, 4, 5),
-    // createData(2, 'ELECTRECITY', 0, '25/11/2023', 68, 3, 6),
-    // createData(3, 'ELECTRECITY', 1, '24/11/2023', 69, 1, 2),
-    createData(4, 'souhad', 0, '23/11/2023', 70, 3, 2),
-    createData(5, 'nnn', 0, '22/11/2023', 67, 4, 3),
-    createData(6, 'sousou', 1, '29/11/2023', 60, 4, 3),
-    createData(7, 'hello', 0, '22/11/2023', 69, 4, 3),
-    createData(8, 'ahmad', 0, '22/11/2023', 68, 4, 3),
-    createData(9, 'aboude', 0, '22/11/2023', 62, 4, 3),
-    createData(10, 'ELECTRECITY', 0, '22/11/2023', 63, 4, 3),
+  const [rows, setRows] = React.useState([]);
+  const [order, setOrder] = React.useState('asc');
+  const [orderBy, setOrderBy] = React.useState('type');
+  const [selected, setSelected] = React.useState([]);
+  const [page, setPage] = React.useState(0);
+  const [dense, setDense] = React.useState(false);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [selectedRow, setSelectedRow] = React.useState(null);
+  const [isEditFormOpen, setEditFormOpen] = React.useState(false);
+  const [isAddTransactionFormOpen, setAddTransactionFormOpen] = React.useState(false);
+
+
+
+  const [transaction, setTransaction] = React.useState([]);
+  const [totalRows, setTotalRows] = React.useState(0);
+
+  async function fetchTransaction() {
+    try {
+      const response = await axios.get("http://localhost:5000/transactions/read", {
+        params: {
+          page: page + 1,
+          pageSize: rowsPerPage,
+        },
+      });
+      setTransaction(response.data);
+      setTotalRows(Number(response.headers['x-total-count'])); // Parse the total count as a number
+    } catch (err) {
+      console.log("error fetch", err);
+    }
+  }
+
+  React.useEffect(() => {
+    fetchTransaction();
+  }, [page, rowsPerPage]);
+
+  React.useEffect(() => {
+    setRows(transaction);
+  }, [transaction]);
+
+  console.log("dataaa", rows);
 
 
 
 
 
 
+  const handleEditTransaction = async (editedTransaction) => {
+    try {
+      // Make a PUT request to update the transaction by ID
+      const response = await axios.put(`http://localhost:5000/transactions/update/${selectedRow}`, editedTransaction);
+
+      // Check if the request was successful
+      if (response.status === 200) {
+        // Update your state with the edited transaction
+        setRows((prevRows) =>
+          prevRows.map((row) =>
+            row.id === selectedRow ? { ...row, ...response.data } : row
+          )
+        );
+
+        // Close the edit form and reset selectedRow
+        setEditFormOpen(false);
+        setSelectedRow(null);
+
+        // Show a success toast or perform any other action
+        toast.success('Transaction updated successfully', { position: 'top-right' });
+      } else {
+        // Handle error cases
+        toast.error('Failed to update transaction', { position: 'top-right' });
+      }
+    } catch (error) {
+      // Log and handle errors
+      console.error('Error updating transaction:', error);
+      toast.error('Error updating transaction', { position: 'top-right' });
+    }
+  };
 
 
-    // ... (add the rest of your data)
-  ]);
-
-  const handleEditTransaction = (editedTransaction) => {
-    setRows((prevRows) =>
-      prevRows.map((row) =>
-        row.id === selectedRow ? { ...row, ...editedTransaction } : row
-      )
-    );
-
-    // Close the edit form
+  // Close the edit form and reset selectedRow
+  React.useEffect(() => {
     setEditFormOpen(false);
     setSelectedRow(null);
+  }, []);
+
+
+  const handleAddTransaction = async (newTransaction) => {
+    try {
+      // Make a POST request to your backend endpoint
+      const response = await axios.post('http://localhost:5000/transactions/create', newTransaction);
+
+      // Check if the request was successful
+      if (response.status === 200) {
+        // Update your state with the new transaction
+        addTransactionToState(response.data.transaction);
+
+        // Close the add transaction form
+        setAddTransactionFormOpen(false);
+
+        // Show a success toast or perform any other action
+        toast.success('Transaction added successfully', { position: 'top-right' });
+      } else {
+        // Handle error cases
+        toast.error('Failed to add transaction', { position: 'top-right' });
+      }
+    } catch (error) {
+      // Log and handle errors
+      console.error('Error adding transaction:', error);
+      toast.error('Error adding transaction', { position: 'top-right' });
+    }
   };
 
 
@@ -105,20 +184,47 @@ const EnhancedTable = () => {
     return stabilizedThis.map((el) => el[0]);
   }
 
+
   const headCells = [
     { id: 'title', numeric: false, disablePadding: true, label: 'Title' },
     { id: 'type', numeric: true, disablePadding: false, label: 'Type' },
-    { id: 'date', numeric: true, disablePadding: false, label: 'Date' },
+    { id: 'Date', numeric: true, disablePadding: false, label: 'Date' },
     { id: 'value', numeric: true, disablePadding: false, label: 'Value' },
-    { id: 'userID', numeric: true, disablePadding: false, label: 'UserID' },
-    { id: 'categoryID', numeric: true, disablePadding: false, label: 'CategoryID' },
+    { id: 'UserID', numeric: true, disablePadding: false, label: 'UserID' },
+    { id: 'CategoryID', numeric: true, disablePadding: false, label: 'CategoryID' },
   ];
-
+  //the fetch 
   const EnhancedTableHead = (props) => {
     const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
     const createSortHandler = (property) => (event) => {
       onRequestSort(event, property);
     };
+
+    const [transaction, setTransaction] = React.useState([]);
+    const [rows, setRows] = React.useState([]);
+
+    async function fetchTransaction() {
+      try {
+        const response = await axios.get("http://localhost:5000/transactions/read");
+        setTransaction(response.data); // Update the transaction state with the fetched data
+      } catch (err) {
+        console.log("error fetch", err);
+      }
+    }
+
+    React.useEffect(() => {
+      fetchTransaction();
+    }, []); // Fetch data only on the initial render
+
+    React.useEffect(() => {
+      // Update the rows state when the transaction state changes
+      setRows(transaction);
+    }, [transaction]);
+
+    console.log("dataaa", rows);
+
+
+
 
     return (
       <TableHead sx={{p: "20px"}}>
@@ -180,9 +286,10 @@ const EnhancedTable = () => {
     const { numSelected, onAddTransactionClick } = props;
 
 
-    // const handleAddTransactionClick = () => {
-    //   setAddTransactionFormOpen(!isAddTransactionFormOpen);
-    // };
+    const handleAddTransactionClick = () => {
+      setAddTransactionFormOpen(!isAddTransactionFormOpen);
+    };
+
 
     return (
       <Toolbar
@@ -237,16 +344,6 @@ const EnhancedTable = () => {
     onAddTransactionClick: PropTypes.func.isRequired,
   };
 
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('type');
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [selectedRow, setSelectedRow] = React.useState(null);
-  const [isEditFormOpen, setEditFormOpen] = React.useState(false);
-  const [isAddTransactionFormOpen, setAddTransactionFormOpen] = React.useState(false);
-
 
   const handleEditClick = () => {
     // Open the edit form when the "Edit" button is clicked
@@ -256,38 +353,58 @@ const EnhancedTable = () => {
     }
   };
 
-const handleDeleteClick = () => {
-  if (selected.length > 0) {
-    const updatedRows = rows.filter((row) => !selected.includes(row.id));
-    setRows(updatedRows);
-    setSelected([]);
+  const handleDeleteClick = async () => {
+    if (selected.length > 0) {
+      try {
+        // Make a DELETE request for each selected row
+        await Promise.all(
+          selected.map(async (id) => {
+            await axios.delete(`http://localhost:5000/transactions/delete/${id}`);
+          })
+        );
 
-    // Adjust page after deletion
-    const lastPage = Math.ceil(updatedRows.length / rowsPerPage);
-    if (page > lastPage - 1) {
-      setPage(lastPage - 1);
+        // Update the local state to reflect the deletions
+        const updatedRows = rows.filter((row) => !selected.includes(row.id));
+        setRows(updatedRows);
+        setSelected([]);
 
+        // Adjust page after deletion
+        const lastPage = Math.ceil(updatedRows.length / rowsPerPage);
+        if (page > lastPage - 1) {
+          setPage(lastPage - 1);
+        }
+
+        toast.success('Deleted successfully', { position: 'top-right' });
+      } catch (error) {
+        console.error('Error deleting transactions:', error);
+        toast.error('Failed to delete transactions', { position: 'top-right' });
+      }
+    } else {
+      toast.warning('No rows selected for deletion', { position: 'top-right' });
     }
-    toast.success('deleted', { position: 'top-right' });
+  };
 
-  } else {
-    toast.warning('No rows selected for deletion', { position: 'top-right' });
-  }
-};
 
-  
-  
-  
+
+
   const addTransactionToState = (newTransaction) => {
     setRows((prevRows) => [
       ...prevRows,
-      createData(prevRows.length + 1, ...Object.values(newTransaction)),
+      {
+        id: newTransaction.id, // replace with the actual ID property of newTransaction
+        title: newTransaction.title,
+        type: newTransaction.type,
+        Date: newTransaction.Date,
+        value: newTransaction.value,
+        userID: newTransaction.userID,
+        categoryID: newTransaction.categoryID,
+      },
     ]);
   };
-  
-  const handleAddTransaction = (newTransaction) => {
-    addTransactionToState(newTransaction);
-  };
+
+
+
+
 
 
   const handleRequestSort = (event, property) => {
@@ -344,7 +461,8 @@ const handleDeleteClick = () => {
   };
 
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+
 
   const visibleRows = React.useMemo(
     () =>
@@ -359,7 +477,7 @@ const handleDeleteClick = () => {
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2, bgcolor: ' #25282C' }}>
         <EnhancedTableToolbar
-          numSelected={selected.length}  // Ensure numSelected is defined
+          numSelected={selected.length}
           onAddTransactionClick={handleAddTransactionClick}
         />
         <TableContainer>
@@ -381,9 +499,10 @@ const handleDeleteClick = () => {
               }}
             />
             <TableBody>
-              {visibleRows.map((row, index) => {
+              {rows.map((row, index) => {
                 const isItemSelected = isSelected(row.id);
                 const labelId = `enhanced-table-checkbox-${index}`;
+
 
                 return (
                   <TableRow
@@ -417,7 +536,8 @@ const handleDeleteClick = () => {
                           color: 'white', // Set the text color of the Checkbox
                           '&.Mui-checked': {
                             color: 'black', // Set the text color when the checkbox is checked
-                          },}}
+                          },
+                        }}
                       />
                     </TableCell>
                     <TableCell
@@ -433,11 +553,11 @@ const handleDeleteClick = () => {
                       {row.title}
                     </TableCell>
 
-                    <TableCell align="right" sx={{ color: '#FFFFFF' }} >   {row.type}   </TableCell>
-                    <TableCell align="right" sx={{ color: '#FFFFFF' }}>{row.date}</TableCell>
+                    <TableCell align="right" sx={{ color: '#FFFFFF' }}>{row.type ? 1 : 0}</TableCell>
+                    <TableCell align="right" sx={{ color: '#FFFFFF' }}>{row.Date}</TableCell>
                     <TableCell align="right" sx={{ color: '#FFFFFF' }}>{row.value}</TableCell>
-                    <TableCell align="right" sx={{ color: '#FFFFFF' }}>{row.userID}</TableCell>
-                    <TableCell align="right" sx={{ color: '#FFFFFF' }}>{row.categoryID}</TableCell>
+                    <TableCell align="right" sx={{ color: '#FFFFFF' }}>{row.UserID}</TableCell>
+                    <TableCell align="right" sx={{ color: '#FFFFFF' }}>{row.CategoryID}</TableCell>
                   </TableRow>
                 );
               })}
@@ -456,35 +576,26 @@ const handleDeleteClick = () => {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          sx={{
-            color: '#FFFFFF', // Set the fixed text color of the title
-          }}
-        />
+    rowsPerPageOptions={[5, 10, 25]}
+    component="div"
+    count={totalRows}
+    rowsPerPage={rowsPerPage}
+    page={page}
+    onPageChange={handleChangePage}
+    onRowsPerPageChange={handleChangeRowsPerPage}
+    sx={{
+        color: '#FFFFFF',
+    }}
+/>
+
+
+
       </Paper>
-      {/* <EnhancedTableToolbar
-        numSelected={selected.length}
-        onAddTransactionClick={handleAddTransactionClick}
-      />
-      {/* <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      /> */}
-      {/* Conditional rendering of the AddTransactionForm */}
       {isAddTransactionFormOpen && (
         <AddTransactionForm
           onClose={() => setAddTransactionFormOpen(false)}
           onAddTransaction={handleAddTransaction}
         />
-
-
-
       )}
       {isEditFormOpen && (
         <EditTransactionForm
@@ -495,6 +606,6 @@ const handleDeleteClick = () => {
       )}
     </Box>
   );
-};
+}
 
 export default EnhancedTable;

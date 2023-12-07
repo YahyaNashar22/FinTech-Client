@@ -10,7 +10,7 @@ import Paper from '@mui/material/Paper';
 const AddTransactionForm = ({ onClose, onAddTransaction }) => {
   const [title, setTitle] = useState('');
   const [type, setType] = useState('');
-  const [date, setDate] = useState('');
+  const [Date, setDate] = useState('');
   const [value, setValue] = useState('');
   const[UserID,setUserID]=useState('');
   const[CategoryID,setCategoryID]=useState('');
@@ -23,7 +23,7 @@ const AddTransactionForm = ({ onClose, onAddTransaction }) => {
     const newTransaction = {
       title,
       type,
-      date,
+      Date,
       value: parseFloat(value),
       UserID,
       CategoryID, // Convert to a number if needed
@@ -69,7 +69,7 @@ const AddTransactionForm = ({ onClose, onAddTransaction }) => {
         />
         <TextField
           label="Date"
-          value={date}
+          value={Date}
           onChange={(e) => setDate(e.target.value)}
           fullWidth
           margin="normal"

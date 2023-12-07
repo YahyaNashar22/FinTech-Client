@@ -11,10 +11,10 @@ const EditTransactionForm = ({ onClose, onEditTransaction, rowData }) => {
   const [editedTransaction, setEditedTransaction] = useState({
     title: rowData.title,
     type: rowData.type,
-    date: rowData.date,
+    Date: rowData.Date,
     value: rowData.value,
-    userID: rowData.userID,
-    categoryID: rowData.categoryID,
+    UserID: rowData.UserID,
+    CategoryID: rowData.CategoryID,
   });
 
   const handleFieldChange = (fieldName, value) => {
@@ -57,8 +57,8 @@ const EditTransactionForm = ({ onClose, onEditTransaction, rowData }) => {
         />
         <TextField
           label="Date"
-          value={editedTransaction.date}
-          onChange={(e) => handleFieldChange('date', e.target.value)}
+          value={editedTransaction.Date}
+          onChange={(e) => handleFieldChange('Date', e.target.value)}
           fullWidth
           margin="normal"
           InputProps={{ style: { color: '#FFFFFF' } }}
@@ -77,8 +77,8 @@ const EditTransactionForm = ({ onClose, onEditTransaction, rowData }) => {
         />
         <TextField
           label="UserID"
-          value={editedTransaction.userID}
-          onChange={(e) => handleFieldChange('userID', e.target.value)}
+          value={editedTransaction.UserID}
+          onChange={(e) => handleFieldChange('UserID', e.target.value)}
           fullWidth
           margin="normal"
           InputProps={{ style: { color: '#FFFFFF' } }}
@@ -87,8 +87,8 @@ const EditTransactionForm = ({ onClose, onEditTransaction, rowData }) => {
         />
         <TextField
           label="CategoryID"
-          value={editedTransaction.categoryID}
-          onChange={(e) => handleFieldChange('categoryID', e.target.value)}
+          value={editedTransaction.CategoryID}
+          onChange={(e) => handleFieldChange('CategoryID', e.target.value)}
           fullWidth
           margin="normal"
           InputProps={{ style: { color: '#FFFFFF' } }}
