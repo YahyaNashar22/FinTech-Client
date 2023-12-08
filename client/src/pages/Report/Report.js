@@ -1,7 +1,8 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 import styles from "../../pages/Report/Report.module.css";
 import axios from "axios"; // Import axios
+import { format } from 'date-fns';
 
 
 const Report = () => {
@@ -10,26 +11,6 @@ const Report = () => {
     amounts: [],
   });
 
-  const [lineChartState, setLineChartState] = useState({
-    options: {
-      // ... (line chart options)
-    },
-    series: [
-      {
-        name: "", // Name to be updated based on selected category
-        data: [], // Data to be updated based on fetched line chart data
-      },
-    ],
-  });
-
-  const [selectedCategory, setSelectedCategory] = useState(null);
-
-  const handlePieChartClick = (event, chartContext, config) => {
-    if (config.dataPointIndex !== undefined) {
-      const clickedCategory = pieChartState.options.labels[config.dataPointIndex];
-      setSelectedCategory(clickedCategory);
-    }
-  };
 
   const [pieChartState, setPieChartState] = useState({
     options: {
@@ -38,6 +19,78 @@ const Report = () => {
     },
     series: [], // Update series based on fetched data
   });
+  const [state, setState] = useState({
+    options: {
+      colors: ["#4DA192", "#14EBBE"],
+      chart: {
+        id: "basic-bar",
+      },
+      xaxis: {
+        categories: [], // Will be populated with months
+      },
+    },
+    series: [
+      {
+        name: "Income",
+        data: [],
+      },
+      {
+        name: "Expense",
+        data: [],
+      },
+    ],
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch data from the getIncomeOutcomeByMonth endpoint
+        const response = await axios.get('http://localhost:5000/transactions/bymonth');
+
+        // Extract data from the response
+        const { data } = response;
+
+        // Separate data into income and expense arrays
+        const incomeData = data
+          .filter((item) => item.type === 'income')
+          .map((item) => item.total);
+
+        const expenseData = data
+          .filter((item) => item.type === 'expense')
+          .map((item) => item.total);
+
+        // Extract unique months from the data
+        const uniqueMonths = [...new Set(data.map((item) => item.month))];
+
+        // Map month numbers to month names
+        const monthNames = [
+          'January', 'February', 'March', 'April', 'May', 'June',
+          'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+
+        const monthCategories = uniqueMonths.map((month) => monthNames[month - 1]);
+
+        setState((prevState) => ({
+          ...prevState,
+          options: {
+            ...prevState.options,
+            xaxis: {
+              categories: monthCategories,
+            },
+          },
+          series: [
+            { ...prevState.series[0], data: incomeData },
+            { ...prevState.series[1], data: expenseData },
+          ],
+        }));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   useEffect(() => {
     const fetchExpenseData = async () => {
@@ -72,145 +125,30 @@ const Report = () => {
     fetchExpenseData();
   }, []);
 
-  useEffect(() => {
-    const fetchLineChartData = async (selectedCategory) => {
-      try {
-        const response = await axios.get(`http://localhost:5000/transactions/line-chart-data?category=${selectedCategory}`);
-
-        const lineChartData = response.data.map((item) => ({
-          date: item.date,
-          value: item.value,
-        }));
-
-        setLineChartState({
-          options: {
-            ...lineChartState.options,
-            xaxis: {
-              categories: lineChartData.map((item) => item.date),
-            },
-          },
-          series: [
-            {
-              name: selectedCategory,
-              data: lineChartData.map((item) => item.value),
-            },
-          ],
-        });
-      } catch (error) {
-        console.error("Error fetching line chart data:", error);
-      }
-    };
-
-    if (selectedCategory !== null) {
-      fetchLineChartData(selectedCategory);
-    }
-  }, [selectedCategory, lineChartState.options]);
-
-  const [incomeExpenseState, setIncomeExpenseState] = useState({
-    income: [],
-    expense: [],
-  });
-
-  const [state, setState] = useState({
-    options: {
-      colors: ["#4DA192", "#FF0000"],
-      chart: {
-        id: "basic-bar",
-      },
-      xaxis: {
-        categories: [], // Update with fetched data
-      },
-    },
-    series: [
-      {
-        name: "Income",
-        data: [], // Update with fetched data
-      },
-      {
-        name: "Expense",
-        data: [], // Update with fetched data
-      },
-    ],
-  });
-
-  useEffect(() => {
-    const fetchIncomeExpenseData = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/transactions/income");
-
-        if (!response || !Array.isArray(response.data)) {
-          console.error("Invalid response format");
-          return;
-        }
-
-        const formattedData = response.data.map((item) => ({
-          year: item.year,
-          type: item.type === 1 ? "Income" : "Expense",
-          total: item.total,
-        }));
-
-        // Separate the data into income and expense
-        const incomeData = formattedData.filter((item) => item.type === "Income");
-        const expenseData = formattedData.filter((item) => item.type === "Expense");
-
-        setIncomeExpenseState({
-          income: incomeData,
-          expense: expenseData,
-        });
-
-        setState({
-          options: {
-            ...state.options,
-            xaxis: {
-              categories: incomeData.map((item) => item.year),
-            },
-          },
-          series: [
-            {
-              name: "Income",
-              data: incomeData.map((item) => item.total),
-            },
-            {
-              name: "Expense",
-              data: expenseData.map((item) => item.total),
-            },
-          ],
-        });
-      } catch (error) {
-        console.error("Error fetching income and expense data:", error);
-      }
-    };
-
-    fetchIncomeExpenseData();
-  }, []);
+ 
   return (
     <div className={styles.container}>
-      <div className={styles.chartContainer}>
-        <Chart options={state.options} series={state.series} type="bar" width="100%" height="600" />
-      </div>
-      
-      <div className={styles.lineChartContainer}>
+  <div className={styles.chartContainer}>
         <Chart
           options={state.options}
           series={state.series}
-          type="line"
+          type="bar"
           width="100%"
-          height="400"
+          height="600"
         />
-       <div className={styles.pieChartContainer}>
+      </div>
+      <div className={styles.pieChartContainer}>
         <Chart
           options={pieChartState.options}
           series={pieChartState.series}
           type="pie"
           width="100%"
           height="100%"
-          events={{
-            dataPointSelection: handlePieChartClick,
-          }}
         />
       </div>
-      </div>
+
     </div>
+
   );
 };
 
