@@ -1,22 +1,27 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import style from "./SignIn.module.css";
 import { motion } from "framer-motion";
 import loginpic from "../../assets/loginpic.png";
 import logo from "../../assets/Vectorlogo.png";
 import { TextField, Grid, Typography, FormControl } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import open from "../../assets/open.png";
 import closed from "../../assets/close.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import userContext from "../../AuthContext";
 
 const SignIn = () => {
+  const { user, setUser } = useContext(userContext);
+  const navigate = useNavigate();
   const [pass, setPass] = useState(true);
   const [isPending, setIsPending] = useState(false);
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const notify = () => toast("Sign in successfull !");
+  const notify2 = () => toast("Something went wrong !");
 
   let see = "";
   let openClose = "";
@@ -40,7 +45,25 @@ const SignIn = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    notify();
+    setIsPending(true);
+    axios
+      .post("http://localhost:5000/users/login", {
+        Email: email,
+        Password: password,
+      })
+      .then((res) => {
+        console.log(res);
+        setIsPending(false);
+        notify();
+        navigate("/");
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        setUser(res.data.user);
+      })
+      .catch((err) => {
+        notify2();
+        console.log(err);
+        setIsPending(false);
+      });
   };
 
   return (

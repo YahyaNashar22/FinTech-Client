@@ -22,14 +22,23 @@ import finishSignUp from "../../assets/finishSignUp.png";
 
 const SignUp = () => {
   const [pass, setPass] = useState(true);
-  const [file, setFile] = useState();
+  const [Picture, setPicture] = useState(null);
   const [role, setRole] = useState("accountant");
   const [isPending, setIsPending] = useState(false);
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [layout, setLayout] = useState(style.wrapper);
   const [layout2, setLayout2] = useState(style.layout2);
+  //////////////////////////////////////////////////////////////
+  // const [formData, setFormData] = useState({
+  //   name: "",
+  //   email: "",
+  //   password: "",
+  //   role: "accountant",
+  //   image: null,
+  // });
+  ///////////////////////////////////////////////////////////////
   /* REGEX */
 
   let passPattern =
@@ -56,8 +65,8 @@ const SignUp = () => {
   /* used to upload pictures */
 
   const handlePictureChange = (e) => {
-    console.log(e.target.files);
-    setFile(URL.createObjectURL(e.target.files[0]));
+    console.log(e.target.files[0]);
+    setPicture(e.target.files[0]);
   };
 
   /* used to handle the select role feature */
@@ -75,22 +84,64 @@ const SignUp = () => {
     setEmail(e.target.value);
   };
 
+  /////////////////////////////////////////////
+  // const handleChange = (event) => {
+  //   let { name, value } = event.target;
+  //   setFormData((prevState) => ({
+  //     ...prevState,
+  //     [name]: value,
+  //   }));
+  // };
+  ////////////////////////////////////////////////
+
+  ////////////////////////////////////////////////
+  // const handleChangeField = (event) => {
+  //   console.log("file", event.target.files[0]);
+  //   setFormData((prevState) => ({
+  //     ...prevState,
+  //     image: event.target.files[0],
+  //   }));
+  // };
+  //////////////////////////////////////////////
+
   /* used to handle the post request */
 
   const notify = () => toast("Account created successfully !");
   const passnotify = () => toast("Password did not meet the criteria !");
   const handleSubmit = async (e) => {
     e.preventDefault();
+    ////////////////////////////////////////////////////////////
+    // const userData = new FormData();
+    // Object.keys(formData).forEach((key) => {
+    //   if (key !== "image") {
+    //     userData.append(key, formData[key]);
+    //   }
+    // });
+    // if (formData.image) {
+    //   userData.append("Picture", formData.image);
+    // }
+    // for (let [key, value] of userData.entries()) {
+    //   console.log(key, value);
+    // }
+    //////////////////////////////////////////////////////////////
     if (validatePass(password)) {
       setIsPending(true);
       axios
-        .post("http://localhost:5000/users/create", {
-          Name: name,
-          Email: email,
-          Password: pass,
-          Role: role,
-          Picture: file,
-        })
+        .post(
+          "http://localhost:5000/users/create",
+          {
+            Name: name,
+            Role: role,
+            Email: email,
+            Password: password,
+            Picture: Picture,
+          },
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
         .then((res) => {
           console.log(res);
           setIsPending(false);
@@ -178,8 +229,8 @@ const SignUp = () => {
               </Grid>
               <Grid item xs={12}>
                 <Select
-                  value={role}
                   onChange={handleRole}
+                  value={role}
                   required
                   fullWidth
                   className={style.selection}
@@ -209,8 +260,8 @@ const SignUp = () => {
                     "& fieldset": { borderColor: "var(--grey-color)" },
                   }}
                   label="Email"
-                  value={email}
                   onChange={handleEmail}
+                  value={email}
                   placeholder="Enter your Email"
                   variant="outlined"
                   type="email"
@@ -231,8 +282,8 @@ const SignUp = () => {
                       "& fieldset": { borderColor: "var(--grey-color)" },
                     }}
                     label="Password"
-                    value={password}
                     onChange={handlePassword}
+                    value={password}
                     placeholder="Enter your Password"
                     variant="outlined"
                     type={see}
@@ -285,6 +336,7 @@ const SignUp = () => {
                 </Typography>
                 <Input
                   label="Upload Your Image"
+                  name="Picture"
                   type="file"
                   onChange={handlePictureChange}
                   sx={{
@@ -369,7 +421,7 @@ const SignUp = () => {
             You Can Now Access The Dashboard !
           </Typography>
           <p className={style.finishSignUpP}>
-            <Link to="/" className={style.finishSignUpL}>
+            <Link to="/signin" className={style.finishSignUpL}>
               Finish
             </Link>
           </p>
