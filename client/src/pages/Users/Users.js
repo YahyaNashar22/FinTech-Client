@@ -18,7 +18,6 @@ const Users = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
-  console.log("user", users)
 
 
 

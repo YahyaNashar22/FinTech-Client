@@ -4,6 +4,8 @@ import pic from '../../assets/icons/noAvatar.png'
 import eye from '../../assets/icons/eye.png'
 import hideEye from '../../assets/icons/hide.png'
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 
 
 const EditUser = () => {
@@ -11,12 +13,17 @@ const EditUser = () => {
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [showPassword3, setShowPassword3] = useState(false);
-  
+
+  // const location = useLocation();
+  // const formData = location.state?.formData || {};
+
+// console.log("souheir",location.state.formData)
+
   // const [editUser, setEditUSer] = useState([]);
 
   // async function fetchEditUser() {
   //   try {
-      
+
   //   } catch (err) {
   //     console.log(err)
   //   }
