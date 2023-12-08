@@ -116,27 +116,6 @@ const EditCompany = () => {
   };
 
   // NEWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-  
-    if (name.startsWith('Social_Media')) {
-      const updatedSocialMedia = formData.Social_Media.map((item) => {
-        if (`Social_Media_${item.platform}` === name) {
-          return { ...item, link: value };
-        }
-        return item;
-      });
-      setFormData({
-        ...formData,
-        Social_Media: updatedSocialMedia,
-      });
-    } else {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: value,
-      }));
-    }
-  };
   // ------------------------------------------
   return (
     <main className={style.main}>
