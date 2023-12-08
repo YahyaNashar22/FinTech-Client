@@ -55,17 +55,6 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
             </li>
           </Link>
 
-<<<<<<< HEAD
-        <Link to="/users">
-        <li className={Styles.sidebarListItem}>
-            <BsPeopleFill className={Styles.icon} /> Users
-        </li>
-        </Link>
-        <Link to="/goal">
-        <li className={Styles.sidebarListItem}>
-          
-            <FaBullseye className={Styles.icon} /> Goals
-=======
           <Link to="/users">
             <li className={Styles.sidebarListItem}>
               <BsPeopleFill className={Styles.icon} /> Users
@@ -74,7 +63,6 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
           <Link to="/goal">
             <li className={Styles.sidebarListItem}>
               <FaBullseye className={Styles.icon} /> Goal
->>>>>>> yahya_context
             </li>
           </Link>
           <Link to="/report">
