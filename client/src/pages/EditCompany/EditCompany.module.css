@@ -50,6 +50,7 @@
   width: 84%;
   background-color: transparent;
   color: white;
+  font-size: 16px;
 }
 .input input:focus {
   outline: none;
@@ -100,6 +101,8 @@
   color: var(--primary-green);
   font-weight: bold;
   font-size: 14px;
+  margin-bottom: 10px;
+  font-size: 16px;
 }
 @media (max-width: 992px) {
   .header {

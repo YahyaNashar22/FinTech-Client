@@ -5,8 +5,6 @@ import axios from 'axios';
 
 const Settings = () => {
   const [data, setData] = useState({
-    id: null,
-    Logo: '',
     Name: '',
     Email: '',
     Description: '',
@@ -21,6 +19,7 @@ const Settings = () => {
       { link: '', platform: 'YoutTube' },
       { link: '', platform: 'LinkedIn' }
     ],
+    Logo: '',
   });
 
   useEffect(() => {
@@ -48,18 +47,13 @@ const Settings = () => {
         <table className={style.dataTable}>
           <tbody>
             <tr>
-              <td>Logo:</td>
-              <td>{data.Logo}</td>
-            </tr>
-            <tr>
               <td>Name:</td>
               <td>{data.Name}</td>
             </tr>
-            <tr>
+            {/* <tr>
               <td>Email:</td>
-              <td style={{color: "red"}}>Fix the email in the databse</td>
-              {/* <td>{data.Email}</td> */}
-            </tr>
+              <td>{data.Email}</td>
+            </tr> */}
             <tr>
               <td>Description:</td>
               <td>{data.Description ? data.Description : 'There is no Description yet!'}</td>
@@ -88,6 +82,10 @@ const Settings = () => {
                 </td>
               </tr>
             ))}
+            <tr>
+              <td>Logo:</td>
+              <td>{data.Logo}</td>
+            </tr>
           </tbody>
         </table>
       </div>

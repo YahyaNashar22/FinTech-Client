@@ -23,14 +23,13 @@ import {Link} from 'react-router-dom';
 
 const Start = () => {
 
-    // Fetching
+    // Sending Data
     const [formData, setFormData] = useState({
       Name: '',
       Logo: '',
       Email: '',
       Description: '',
       Capital: '',
-      UpdatedCapital: '',
       Address: '',
       Social_Media: [
         {
@@ -125,7 +124,7 @@ const Start = () => {
             <input
               type="text"
               placeholder={platformData.platform}
-              name={`Social_Media_${platformData.platform}`} // Unique name for each input
+              name={`Social_Media_${platformData.platform}`}
               value={platformData.link}
               onChange={(e) => handleSocialMediaInputChange(e, index)}
             />
