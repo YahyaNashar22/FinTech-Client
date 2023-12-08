@@ -1,14 +1,18 @@
-.icon {
+.icon, .icon1 {
   vertical-align: middle;
   line-height: 1px;
   font-size: 20px;
+  border-radius: 8px;
+}
+.icon{
+  scale: 2;
 }
 .iconheader {
   vertical-align: middle;
   line-height: 1px;
   font-size: 26px;
 }
-.icon, .iconheader {
+.icon,.icon1, .iconheader {
   margin-right: 23px;
   color:white;
   cursor: pointer;
