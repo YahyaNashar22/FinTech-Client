@@ -24,17 +24,6 @@ function Header({ OpenSidebar }) {
   }, []);
   return (
     <header className={styles.header}>
-<<<<<<< HEAD
-        <div className={styles.menuIcon}>
-            <BsJustify className={styles.icon} onClick={OpenSidebar}/>
-        </div>
-        <div className={styles.headerLeft}>
-        </div>
-        <div className={ styles.headerRight}>
-            <BsFillBellFill className={`${styles.NotificationIcon} ${styles.icon}`}/>
-            <BsPersonCircle className={`${styles.UserIcon} ${styles.icon}`}/>
-        </div>
-=======
       <div className={styles.menuIcon}>
         <BsJustify className={styles.icon} onClick={OpenSidebar} />
       </div>
@@ -49,7 +38,6 @@ function Header({ OpenSidebar }) {
           className={styles.icon}
         />
       </div>
->>>>>>> yahya_context
     </header>
   );
 }
