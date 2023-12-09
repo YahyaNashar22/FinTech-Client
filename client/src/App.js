@@ -11,11 +11,13 @@ function App() {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    if (!user) {
-      const a = localStorage.getItem("user");
-      setUser(JSON.parse(a));
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
     }
   }, []);
+  console.log(user);
 
   axios.defaults.withCredentials = true;
   return (

@@ -99,6 +99,12 @@ cursor: not-allowed;
     .companyName{font-size: 1.8rem;}
     .fillForm{font-size: 1.5rem;}
     .companyLogo{transform: scale(0.8);}
+    .passEye{bottom:56px}
+}
+@media(max-width:720px){
+    .passEye{bottom:70px}
+
+    
 }
 @media(max-width:367px){
     .right{display: none;}
@@ -106,4 +112,5 @@ cursor: not-allowed;
     .companyName{font-size: 1.4rem;}
     .fillForm{font-size: 1rem;}
     .companyLogo{transform: scale(0.6);}
+    .passEye{bottom:106px}
 }

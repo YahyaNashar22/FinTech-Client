@@ -11,7 +11,7 @@
 }
 .createGoal{
     height: 6vh;
-    width: 13vw;
+    width: 8vw;
     border:2px solid var(--primary-green);
     color:var(--primary-green) ;
     text-align: center;

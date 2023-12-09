@@ -1,14 +1,7 @@
 // Header.js
 import React, { useContext, useEffect, useState } from "react";
-import {
-  BsFillBellFill,
-  BsFillEnvelopeFill,
-  BsPersonCircle,
-  BsSearch,
-  BsJustify,
-} from "react-icons/bs";
+import { BsFillBellFill, BsJustify } from "react-icons/bs";
 import styles from "./Header.module.css";
-import axios from "axios";
 import userContext from "../../AuthContext";
 
 function Header({ OpenSidebar }) {
@@ -16,25 +9,13 @@ function Header({ OpenSidebar }) {
   const { user } = useContext(userContext);
   console.log(user);
   useEffect(() => {
-    // axios.get(`http://localhost:5000/users/30`).then((res) => {
-    //   console.log(res);
-
-    setPicture(user.data.Picture);
-    console.log(`this is a ${picture}`);
-  }, []);
+    const timeout = setTimeout(() => {
+      setPicture(user.data.Picture);
+    }, 1);
+    return () => clearTimeout(timeout);
+  }, [user]);
   return (
     <header className={styles.header}>
-<<<<<<< HEAD
-        <div className={styles.menuIcon}>
-            <BsJustify className={styles.icon} onClick={OpenSidebar}/>
-        </div>
-        <div className={styles.headerLeft}>
-        </div>
-        <div className={ styles.headerRight}>
-            <BsFillBellFill className={`${styles.NotificationIcon} ${styles.icon}`}/>
-            <BsPersonCircle className={`${styles.UserIcon} ${styles.icon}`}/>
-        </div>
-=======
       <div className={styles.menuIcon}>
         <BsJustify className={styles.icon} onClick={OpenSidebar} />
       </div>
@@ -49,7 +30,6 @@ function Header({ OpenSidebar }) {
           className={styles.icon}
         />
       </div>
->>>>>>> yahya_context
     </header>
   );
 }
