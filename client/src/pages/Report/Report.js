@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 import styles from "../../pages/Report/Report.module.css";
 import axios from "axios"; // Import axios
-import { format } from 'date-fns';
 
 
 const Report = () => {
@@ -19,23 +18,61 @@ const Report = () => {
     },
     series: [], // Update series based on fetched data
   });
-  const [state, setState] = useState({
+
+  // const [chartData, setChartData] = useState(null);
+  // console.log('chartData:', chartData);
+
+  // const options = {
+  //   xaxis: {
+  //     categories: chartData ? [...new Set(chartData.map(item => item.month))] : [],
+  //   },
+  // };
+  
+  // const series = chartData
+  //   ? chartData.reduce((result, item) => {
+  //       const index = result.findIndex((el) => el.name === item.type);
+  //       if (index === -1) {
+  //         result.push({ name: item.type, data: [item.total] });
+  //       } else {
+  //         result[index].data.push(item.total);
+  //       }
+  //       return result;
+  //     }, [])
+  //   : [];
+  
+
+
+  // // Use this endpoint in your React component
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get("http://localhost:5000/transactions/bymonth");
+  //       setChartData(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
+
+  const [chartData, setChartData] = useState({
     options: {
       colors: ["#4DA192", "#14EBBE"],
       chart: {
         id: "basic-bar",
       },
       xaxis: {
-        categories: [], // Will be populated with months
+        categories: [],
       },
     },
     series: [
       {
-        name: "Income",
+        name: 'Income',
         data: [],
       },
       {
-        name: "Expense",
+        name: 'Expense',
         data: [],
       },
     ],
@@ -44,52 +81,24 @@ const Report = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch data from the getIncomeOutcomeByMonth endpoint
         const response = await axios.get('http://localhost:5000/transactions/bymonth');
-
-        // Extract data from the response
-        const { data } = response;
-
-        // Separate data into income and expense arrays
-        const incomeData = data
-          .filter((item) => item.type === 'income')
-          .map((item) => item.total);
-
-        const expenseData = data
-          .filter((item) => item.type === 'expense')
-          .map((item) => item.total);
-
-        // Extract unique months from the data
-        const uniqueMonths = [...new Set(data.map((item) => item.month))];
-
-        // Map month numbers to month names
-        const monthNames = [
-          'January', 'February', 'March', 'April', 'May', 'June',
-          'July', 'August', 'September', 'October', 'November', 'December'
-        ];
-
-        const monthCategories = uniqueMonths.map((month) => monthNames[month - 1]);
-
-        setState((prevState) => ({
-          ...prevState,
-          options: {
-            ...prevState.options,
-            xaxis: {
-              categories: monthCategories,
-            },
-          },
-          series: [
-            { ...prevState.series[0], data: incomeData },
-            { ...prevState.series[1], data: expenseData },
-          ],
-        }));
+        const data = response.data;
+  
+        console.log('Received Data:', data);
+  
+        // Update state with fetched data
+        setChartData(data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-
-    fetchData();
+  
+    fetchData(); // Call the fetch function
   }, []);
+  
+
+
+
 
 
   useEffect(() => {
@@ -125,18 +134,48 @@ const Report = () => {
     fetchExpenseData();
   }, []);
 
- 
+  // const [state, setState] = useState({
+  //   options: {
+  //     colors: ["#4DA192", "#14EBBE"],
+  //     chart: {
+  //       id: "basic-bar",
+  //     },
+  //     xaxis: {
+  //       categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
+  //     },    
+  //   },
+  //   series: [
+  //     {
+  //       name: "Income",
+  //       data: [30, 40, 45, 50, 49, 60, 70, 91],
+  //     },
+  //     {
+  //       name: "Outcome",
+  //       data: [3, 60, 35, 80, 49, 70, 20, 81],
+  //     },
+  //   ],
+  // });
+
   return (
-    <div className={styles.container}>
-  <div className={styles.chartContainer}>
+     <div className={styles.container}>
+      <div className={styles.chartContainer}>
         <Chart
-          options={state.options}
-          series={state.series}
+          options={chartData.options}
+          series={chartData.series}
           type="bar"
           width="100%"
           height="600"
         />
       </div>
+      {/* <div className={styles.lineChartContainer}>
+        <Chart
+          options={state.options}
+          series={state.series}
+          type="line"
+          width="100%"
+          height="400"
+        /> */}
+
       <div className={styles.pieChartContainer}>
         <Chart
           options={pieChartState.options}
@@ -148,6 +187,7 @@ const Report = () => {
       </div>
 
     </div>
+  
 
   );
 };
