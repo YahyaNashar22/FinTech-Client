@@ -46,7 +46,7 @@ const EditCompany = () => {
     Logo: "",
     Email: "",
     Description: "",
-    Capital: "",
+    Capital: null,
     Address: "",
     Social_Media: [
       { platform: "Facebook", link: "" },
@@ -56,7 +56,7 @@ const EditCompany = () => {
       { platform: "YouTube", link: "" },
       { platform: "LinkedIn", link: "" },
     ],
-    Phone_Number: "",
+    Phone_Number: null,
     Website: "",
   });
 
@@ -75,7 +75,29 @@ const EditCompany = () => {
 
   // End Fetch Data
 
-  const handleSubmit = (event) => {
+  // Start Handle Input Change
+  const handleInputChange = (event, platformIndex) => {
+    const { name, value } = event.target;
+
+    if (platformIndex != null) {
+      const updatedSocialMedia = [...formData.Social_Media];
+      updatedSocialMedia[platformIndex].link = value;
+
+      setFormData((prevState) => ({
+        ...prevState,
+        Social_Media: updatedSocialMedia,
+      }));
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
+  };
+  // End Handle Input Change
+
+  // Start Handle Input Change
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.target);
@@ -83,7 +105,7 @@ const EditCompany = () => {
     const Name = formData.get("Name");
     const Capital = formData.get("Capital");
     const Email = formData.get("Email");
-    const PhoneNumber = formData.get("PhoneNumber");
+    const Phone_Number = formData.get("Phone_Number");
     const Website = formData.get("Website");
 
     const errors = {};
@@ -100,8 +122,8 @@ const EditCompany = () => {
       errors.Email = "Invalid email";
     }
 
-    if (!validatePhoneNumber(PhoneNumber)) {
-      errors.PhoneNumber = "Invalid phone number";
+    if (!validatePhoneNumber(Phone_Number)) {
+      errors.Phone_Number = "Invalid phone number";
     }
 
     if (!validateWebsite(Website)) {
@@ -111,12 +133,16 @@ const EditCompany = () => {
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      // API call to update the company information
+      try {
+        await axios.put("http://localhost:5000/company/update", formData);
+        console.log("Company data updated successfully!");
+      } catch (error) {
+        console.error("Error updating company data:", error);
+      }
     }
   };
+  // End Handle Input Change
 
-  // NEWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-  // ------------------------------------------
   return (
     <main className={style.main}>
       <div className={style.header}>
@@ -130,8 +156,13 @@ const EditCompany = () => {
           <label htmlFor="nameLabel" className={style.label}>
             Name:
           </label>
-          {/* <input type="text" name="Name" id="nameLabel" value={formData.Name} /> */}
-          <input type="text" name="Name" id="nameLabel" value={formData.Name} />
+          <input
+            type="text"
+            name="Name"
+            id="nameLabel"
+            value={formData.Name}
+            onChange={(e) => handleInputChange(e)}
+          />
         </div>
         {formErrors.Name && (
           <span className={style.error}>{formErrors.Name}</span>
@@ -144,7 +175,12 @@ const EditCompany = () => {
             type="text"
             name="Description"
             id="descriptionLabel"
-            value={formData.Description ? formData.Description : '*There is no Description yet!*'}
+            value={
+              formData.Description
+                ? formData.Description
+                : "*There is no Description yet!*"
+            }
+            onChange={(e) => handleInputChange(e)}
           />
         </div>
         <div className={style.input}>
@@ -156,6 +192,7 @@ const EditCompany = () => {
             name="Capital"
             id="capitalLabel"
             value={formData.Capital}
+            onChange={(e) => handleInputChange(e)}
           />
         </div>
         {formErrors.Capital && (
@@ -170,6 +207,7 @@ const EditCompany = () => {
             name="Email"
             id="emailLabel"
             value={formData.Email}
+            onChange={(e) => handleInputChange(e)}
           />
         </div>
         {formErrors.Email && (
@@ -183,7 +221,10 @@ const EditCompany = () => {
             type="text"
             name="Address"
             id="addressLabel"
-            value={formData.Address ? formData.Address : '*There is no Address yet!*'}
+            value={
+              formData.Address ? formData.Address : "*There is no Address yet!*"
+            }
+            onChange={(e) => handleInputChange(e)}
           />
         </div>
         <div className={style.input}>
@@ -194,7 +235,12 @@ const EditCompany = () => {
             type="text"
             name="Facebook"
             id="facebookLabel"
-            value={formData.Social_Media[0].link ? formData.Social_Media[0].link : `*There is no ${formData.Social_Media[0].platform} yet!*`}
+            value={
+              formData.Social_Media[0].link
+                ? formData.Social_Media[0].link
+                : `*There is no ${formData.Social_Media[0].platform} yet!*`
+            }
+            onChange={(e) => handleInputChange(e, 0)}
           />
         </div>
         <div className={style.input}>
@@ -208,7 +254,12 @@ const EditCompany = () => {
             type="text"
             name="Instagram"
             id="instagramLabel"
-            value={formData.Social_Media[1].link ? formData.Social_Media[1].link : `*There is no ${formData.Social_Media[1].platform} yet!*`}
+            value={
+              formData.Social_Media[1].link
+                ? formData.Social_Media[1].link
+                : `*There is no ${formData.Social_Media[1].platform} yet!*`
+            }
+            onChange={(e) => handleInputChange(e, 1)}
           />
         </div>
         <div className={style.input}>
@@ -219,7 +270,12 @@ const EditCompany = () => {
             type="text"
             name="TikTok"
             id="tiktokLabel"
-            value={formData.Social_Media[2].link ? formData.Social_Media[2].link : `*There is no ${formData.Social_Media[2].platform} yet!*`}
+            value={
+              formData.Social_Media[2].link
+                ? formData.Social_Media[2].link
+                : `*There is no ${formData.Social_Media[2].platform} yet!*`
+            }
+            onChange={(e) => handleInputChange(e, 2)}
           />
         </div>
         <div className={style.input}>
@@ -230,7 +286,12 @@ const EditCompany = () => {
             type="text"
             name="X"
             id="xLabel"
-            value={formData.Social_Media[3].link ? formData.Social_Media[3].link : `*There is no ${formData.Social_Media[3].platform} yet!*`}
+            value={
+              formData.Social_Media[3].link
+                ? formData.Social_Media[3].link
+                : `*There is no ${formData.Social_Media[3].platform} yet!*`
+            }
+            onChange={(e) => handleInputChange(e, 3)}
           />
         </div>
         <div className={style.input}>
@@ -241,7 +302,12 @@ const EditCompany = () => {
             type="text"
             name="YouTube"
             id="youtubeLabel"
-            value={formData.Social_Media[4].link ? formData.Social_Media[4].link : `*There is no ${formData.Social_Media[4].platform} yet!*`}
+            value={
+              formData.Social_Media[4].link
+                ? formData.Social_Media[4].link
+                : `*There is no ${formData.Social_Media[4].platform} yet!*`
+            }
+            onChange={(e) => handleInputChange(e, 4)}
           />
         </div>
         <div className={style.input}>
@@ -252,7 +318,12 @@ const EditCompany = () => {
             type="text"
             name="LinkedIn"
             id="linkedInLabel"
-            value={formData.Social_Media[5].link ? formData.Social_Media[5].link : `*There is no ${formData.Social_Media[5].platform} yet!*`}
+            value={
+              formData.Social_Media[5].link
+                ? formData.Social_Media[5].link
+                : `*There is no ${formData.Social_Media[5].platform} yet!*`
+            }
+            onChange={(e) => handleInputChange(e, 5)}
           />
         </div>
         <div className={style.input}>
@@ -261,9 +332,12 @@ const EditCompany = () => {
           </label>
           <input
             type="tel"
-            name="PhoneNumber"
+            name="Phone_Number"
             id="phoneNumberLabel"
-            value={formData.Phone_Number ? formData.Phone_Number : '*There is no.Phone_Number yet!*'}
+            value={
+              formData.Phone_Number ? formData.Phone_Number : "*There is no Phone Number yet!*"
+            }
+            onChange={(e) => handleInputChange(e)}
           />
         </div>
         {formErrors.PhoneNumber && (
@@ -277,7 +351,10 @@ const EditCompany = () => {
             type="text"
             name="Website"
             id="websiteLabel"
-            value={formData.Website ? formData.Website : '*There is no Website yet!*'}
+            value={
+              formData.Website ? formData.Website : "*There is no Website yet!*"
+            }
+            onChange={(e) => handleInputChange(e)}
           />
         </div>
         {formErrors.Website && (
@@ -305,7 +382,7 @@ const EditCompany = () => {
           <button type="reset" className={style.reset}>
             Reset
           </button>
-          <button type="submit" className={style.submit}>
+          <button type="submit" className={style.submit} onSubmit={handleSubmit}>
             Update Info
           </button>
         </div>

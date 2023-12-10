@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import style from './Settings.module.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -16,8 +16,8 @@ const Settings = () => {
       { link: '', platform: 'Instagram' },
       { link: '', platform: 'TikTok' },
       { link: '', platform: 'X' },
-      { link: '', platform: 'YoutTube' },
-      { link: '', platform: 'LinkedIn' }
+      { link: '', platform: 'YouTube' },
+      { link: '', platform: 'LinkedIn' },
     ],
     Logo: '',
   });
@@ -26,8 +26,9 @@ const Settings = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:5000/company/info');
-        setData(response.data.data);
-        console.log('Response:', response.data.data);
+        const data = response.data.data
+        setData(data);
+        console.log('Data Reaponse:', data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -48,7 +49,7 @@ const Settings = () => {
           <tbody>
             <tr>
               <td>Name:</td>
-              <td>{data.Name}</td>
+              <td>{data.Name || '*The is no Name yet!*'}</td>
             </tr>
             {/* <tr>
               <td>Email:</td>
@@ -56,30 +57,30 @@ const Settings = () => {
             </tr> */}
             <tr>
               <td>Description:</td>
-              <td>{data.Description ? data.Description : 'There is no Description yet!'}</td>
+              <td>{data.Description || '*There is no Description yet!*'}</td>
             </tr>
             <tr>
               <td>Address:</td>
-              <td>{data.Address ? data.Address : 'There is no Address yet!'}</td>
+              <td>{data.Address || '*There is no Address yet!*'}</td>
             </tr>
             <tr>
               <td>Phone:</td>
-              <td>{data.Phone_Number ? data.Phone_Number : 'There is no Phone Number yet!'}</td>
+              <td>{data.Phone_Number || 'There is no Phone Number yet*!'}</td>
             </tr>
             <tr>
               <td>Website:</td>
-              <td>{data.Website ? data.Website : 'There is no Website yet!'}</td>
+              <td>{data.Website || '*There is no Website yet!*'}</td>
             </tr>
-            {data.Social_Media.map((platformData, index) => (
+            {/* {data.Social_Media.map((platformData, index) => (
               <tr key={index}>
                 <td>{platformData.platform}:</td>
-                <td>
-                  {platformData.link ? (
-                    platformData.link
-                  ) : (
-                    `There is no ${platformData.platform} yet!`
-                  )}
-                </td>
+                <td>{platformData.link || `*There is no ${platformData.platform} yet!*`}</td>
+              </tr>
+            ))} */}
+            {data.Social_Media && data.Social_Media.map((platformData, index) => (
+              <tr key={index}>
+                <td>{platformData.platform}:</td>
+                <td>{platformData.link || `*There is no ${platformData.platform} yet!*`}</td>
               </tr>
             ))}
             <tr>
@@ -90,6 +91,7 @@ const Settings = () => {
         </table>
       </div>
     </main>
-  )
+  );
 };
+
 export default Settings;
