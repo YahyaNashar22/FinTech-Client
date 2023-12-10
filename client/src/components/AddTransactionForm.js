@@ -9,22 +9,22 @@ import Paper from "@mui/material/Paper";
 
 import io from "socket.io-client";
 
-const socket = io.connect("http://localhost:5000");
+export const socket = io.connect("http://localhost:5000");
 
 const AddTransactionForm = ({ onClose, onAddTransaction }) => {
   const [title, setTitle] = useState("");
   const [type, setType] = useState("");
-  const [date, setDate] = useState("");
+  const [Date, setDate] = useState("");
   const [value, setValue] = useState("");
   const [UserID, setUserID] = useState("");
   const [CategoryID, setCategoryID] = useState("");
   //////////////////////////socketIO//////////////////
   const sendMessage = () => {
-    socket.emit("send_message", { message: "Transaction added" });
+    socket.emit("send_message", "Transaction added");
   };
   useEffect(() => {
     socket.on("receive_message", (data) => {
-      alert(data.message);
+      console.log("notification added");
     });
   }, []);
   ////////////////////////////socketIO////////////////////
@@ -35,7 +35,7 @@ const AddTransactionForm = ({ onClose, onAddTransaction }) => {
     const newTransaction = {
       title,
       type,
-      date,
+      Date,
       value: parseFloat(value),
       UserID,
       CategoryID, // Convert to a number if needed
@@ -77,7 +77,7 @@ const AddTransactionForm = ({ onClose, onAddTransaction }) => {
           />
           <TextField
             label="Date"
-            value={date}
+            value={Date}
             onChange={(e) => setDate(e.target.value)}
             fullWidth
             margin="normal"
