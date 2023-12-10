@@ -99,15 +99,6 @@ const EditCompany = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // const formData = new FormData(event.target);
-
-    // const Name = formData.get("Name");
-    // const Capital = formData.get("Capital");
-    // const Email = formData.get("Email");
-    // const Phone_Number = formData.get("Phone_Number");
-    // const Website = formData.get("Website");
-
-
     const { Name, Capital, Email, Phone_Number, Website, Social_Media, Description, Address } = formData;
     const updatedData = {
       Name,
@@ -115,10 +106,9 @@ const EditCompany = () => {
       Email,
       Phone_Number,
       Website,
-      Social_Media, // Include the social media array directly
+      Social_Media,
       Description,
       Address,
-      // Add other properties as needed
     };
 
     const errors = {};
@@ -395,6 +385,7 @@ const EditCompany = () => {
           <button type="reset" className={style.reset}>
             Reset
           </button>
+          {/* Tostify Here when click on the submit and the submittion works */}
           <button type="submit" className={style.submit} onSubmit={handleSubmit}>
             Update Info
           </button>

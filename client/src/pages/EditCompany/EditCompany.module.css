@@ -50,7 +50,7 @@
   width: 84%;
   background-color: transparent;
   color: white;
-  font-size: 16px;
+  font-size: 18px;
 }
 .input input:focus {
   outline: none;
@@ -125,6 +125,7 @@
   }
   .input input {
     width: 60%;
+    font-size: 14px;
   }
   .submit {
     padding: 7px 12px;
