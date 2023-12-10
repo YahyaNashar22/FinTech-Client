@@ -14,20 +14,19 @@ const EditCompany = () => {
   const validateCapital = (capital) => {
     const capitalRegex = /^\d+$/;
     return (
-      capital === null || capital.trim() === "" || capitalRegex.test(capital)
+      capital === null || capitalRegex.test(capital)
     );
   };
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return email === null || email.trim() === "" || emailRegex.test(email);
-  };
+  // const validateEmail = (email) => {
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   return email === null || email.trim() === "" || emailRegex.test(email);
+  // };
 
   const validatePhoneNumber = (phoneNumber) => {
     const phoneRegex = /^\d+$/;
     return (
       phoneNumber === null ||
-      phoneNumber.trim() === "" ||
       phoneRegex.test(phoneNumber)
     );
   };
@@ -100,13 +99,27 @@ const EditCompany = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const formData = new FormData(event.target);
+    // const formData = new FormData(event.target);
 
-    const Name = formData.get("Name");
-    const Capital = formData.get("Capital");
-    const Email = formData.get("Email");
-    const Phone_Number = formData.get("Phone_Number");
-    const Website = formData.get("Website");
+    // const Name = formData.get("Name");
+    // const Capital = formData.get("Capital");
+    // const Email = formData.get("Email");
+    // const Phone_Number = formData.get("Phone_Number");
+    // const Website = formData.get("Website");
+
+
+    const { Name, Capital, Email, Phone_Number, Website, Social_Media, Description, Address } = formData;
+    const updatedData = {
+      Name,
+      Capital,
+      Email,
+      Phone_Number,
+      Website,
+      Social_Media, // Include the social media array directly
+      Description,
+      Address,
+      // Add other properties as needed
+    };
 
     const errors = {};
 
@@ -118,9 +131,9 @@ const EditCompany = () => {
       errors.Capital = "Invalid capital";
     }
 
-    if (!validateEmail(Email)) {
-      errors.Email = "Invalid email";
-    }
+    // if (!validateEmail(Email)) {
+    //   errors.Email = "Invalid email";
+    // }
 
     if (!validatePhoneNumber(Phone_Number)) {
       errors.Phone_Number = "Invalid phone number";
@@ -134,7 +147,7 @@ const EditCompany = () => {
 
     if (Object.keys(errors).length === 0) {
       try {
-        await axios.put("http://localhost:5000/company/update", formData);
+        await axios.put("http://localhost:5000/company/update", updatedData);
         console.log("Company data updated successfully!");
       } catch (error) {
         console.error("Error updating company data:", error);
