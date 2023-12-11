@@ -63,7 +63,7 @@ const EditUserForm = ({ formData, onSave, onCancel }) => {
                         sx={{ '& fieldset': { borderColor: '#4DA192' } }}
                     />
                     <TextField
-                        label="Pssword"
+                        label="Password"
                         name="Password"
                         // value={formUser.Role}
                         onChange={handleInputChange}
@@ -74,7 +74,7 @@ const EditUserForm = ({ formData, onSave, onCancel }) => {
                         sx={{ '& fieldset': { borderColor: '#4DA192' } }}
                     />
                     <TextField
-                        label="Pssword"
+                        label="New password"
                         name="Password"
                         // value={formUser.Role}
                         onChange={handleInputChange}
@@ -85,7 +85,7 @@ const EditUserForm = ({ formData, onSave, onCancel }) => {
                         sx={{ '& fieldset': { borderColor: '#14EBBE' } }}
                     />
                     <TextField
-                        label="Pssword"
+                        label="confirm password"
                         name="Password"
                         // value={formUser.Role}
                         onChange={handleInputChange}

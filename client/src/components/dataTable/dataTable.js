@@ -5,31 +5,32 @@ import EditUserForm from '../dataTable/EditUserForm.js';
 import axios from 'axios';
 
 export const DataTable = ({ usersData }) => {
-
+console.log(usersData,"s")
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [editFormData, setEditFormData] = useState(null);
+    const [userData, setUsersData]=usersData({usersData})
 
-    // const [userData, setUsersData] = useState(usersData)g
     const openEditModal = (rowData) => {
         setEditFormData(rowData);
         setIsEditModalOpen(true);
     };
-    // const deleteUser = async (userId) => {
-    //     try {
-    //         const response = await axios.delete(`http://localhost:5000/users/${userId}`);
+    console.log("first",usersData)
+    const deleteUser = async (userId) => {
+        try {
+            const response = await axios.delete(`http://localhost:5000/users/${userId}`);
 
-    //         if (response.status === 200) {
-    //             const updatedUsers = usersData.filter((user) => user.id !== userId);
-    //             setUsersData(updatedUsers);
+            if (response.status === 200) {
+                const updatedUsers = usersData.filter((user) => user.id !== userId);
+                setUsersData(updatedUsers);
 
-    //             console.log('User deleted successfully');
-    //         } else {
-    //             console.error('Error deleting user:', response.data.error);
-    //         }
-    //     } catch (error) {
-    //         console.error('Error deleting user:', error.message);
-    //     }
-    // };
+                console.log('User deleted successfully');
+            } else {
+                console.error('Error deleting user:', response.data.error);
+            }
+        } catch (error) {
+            console.error('Error deleting user:', error.message);
+        }
+    };
 
     const closeEditModal = () => {
         setIsEditModalOpen(false);
@@ -88,7 +89,7 @@ export const DataTable = ({ usersData }) => {
                             Edit
                         </span>
                         <span>/</span>
-                        <span className='delete' /*onClick={() => deleteUser(params.row.id)} */>Delete</span>
+                        <span className='delete' onClick={() => deleteUser(params.row.id)} >Delete</span>
                     </div>
                 );
             },

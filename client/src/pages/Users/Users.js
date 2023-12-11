@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from './Users.module.css';
 import { DataTable } from "../../components/dataTable/dataTable";
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 const Users = () => {
 
   let [users, setUsers] = useState([]);
@@ -18,7 +19,7 @@ const Users = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
-
+  console.log("anwar", users)
 
 
 
@@ -27,11 +28,14 @@ const Users = () => {
       <div className={style.UsersContainer}>
         <div className={style.info}>
           <h1>Users</h1>
-          <button className={style.addUserBtn}><pre>+ Add User</pre></button>
+          <Link to="/signup">
+
+            <button className={style.addUserBtn}><pre>+ Add User</pre></button>
+          </Link>
         </div>
         <DataTable
-        usersData={users}
-      />
+          usersData={users}
+        />
       </div>
     </main>
   )
