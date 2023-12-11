@@ -24,17 +24,11 @@ import {Link} from 'react-router-dom';
 const Start = () => {
 
   // Logo
-  const [file, setFile] = useState();
-
-  const handleLogoChange = (e) => {
-    setFile(e.target.files[0]);
-    // setFile(URL.createObjectURL(e.target.files[0]));
-  };
+  const [logoFile, setLogoFile] = useState(null);
 
     // Sending Data
     const [formData, setFormData] = useState({
       Name: '',
-      Logo: file,
       Email: '',
       Description: '',
       Capital: '',
@@ -68,10 +62,14 @@ const Start = () => {
       Phone_Number: '',
       Website: '',
     });
+  
+    const handleLogoChange = (e) => {
+      setLogoFile(e.target.files[0]);
+    };
 
     const handleInputChange = (event) => {
       const { name, value } = event.target;
-    
+  
       if (name.startsWith('Social_Media')) {
         const updatedSocialMedia = formData.Social_Media.map((item) => {
           if (`Social_Media_${item.platform}` === name) {
@@ -84,24 +82,44 @@ const Start = () => {
           Social_Media: updatedSocialMedia,
         });
       } else {
-        setFormData((prevFormData) => ({
-          ...prevFormData,
+        setFormData({
+          ...formData,
           [name]: value,
-        }));
+        });
       }
     };
-    
+
     const handleSubmit = async (event) => {
       event.preventDefault();
-  
+    
+      const formDataToSend = new FormData();
+      formDataToSend.append('Name', formData.Name);
+      formDataToSend.append('Email', formData.Email);
+      formDataToSend.append('Description', formData.Description);
+      formDataToSend.append('Capital', formData.Capital);
+      formDataToSend.append('Address', formData.Address);
+      formDataToSend.append('Phone_Number', formData.Phone_Number);
+      formDataToSend.append('Website', formData.Website);
+      formData.Social_Media.forEach((socialMedia) => {
+        formDataToSend.append(`Social_Media_${socialMedia.platform}`, socialMedia.link);
+      });
+    
+      if (logoFile) {
+        formDataToSend.append('Logo', logoFile);
+      }
+    
       try {
-        const response = await axios.post('http://localhost:5000/company/create', formData);
+        const response = await axios.post('http://localhost:5000/company/create', formDataToSend, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
         console.log('Response:', response.data);
       } catch (error) {
         console.error('Error:', error);
       }
     };
-
+    
   const [showPopup, setShowPopup] = useState(false);
 
   const handleSocialMediaClick = () => {
@@ -153,21 +171,24 @@ const Start = () => {
         <Typography className={style.paragraph} gutterBottom>
         Begin your financial journey. Customize your details to get started.
         </Typography>
-        <form className={style.form} onSubmit={handleSubmit}>
+        <form className={style.form} onSubmit={handleSubmit} encType="multipart/form-data">
           <div className={style.input}>
             <img src={userIcon} alt="Name Icon" className={style.icon} />
             <input type="text" placeholder="Name" name="Name" value={formData.Name} onChange={handleInputChange} required />
           </div>
           <div className={style.input}>
             <img src={logoIcon} alt="Logo Icon" className={style.icon} />
-            <input type="text" placeholder="Logo" name="Logo" value={formData.Logo} onChange={handleInputChange} readOnly={true}/>
+            <input type="text" placeholder="Logo" readOnly={true}/>
             <img src={logoIcon} alt="Logo Icon" className={style.icon} />
             <input
             type="file"
             id="logoUpload"
+            name="Logo" 
+            value={formData.Logo}
             className={style.uploadButtonInput}
             onChange={handleLogoChange}
           />
+
 
           </div>
           <div className={style.input}>
