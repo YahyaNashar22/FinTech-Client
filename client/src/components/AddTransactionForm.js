@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { InputLabel } from '@mui/material';
 
 const AddTransactionForm = ({ onClose, onAddTransaction }) => {
   const [title, setTitle] = useState('');
@@ -21,57 +22,79 @@ const AddTransactionForm = ({ onClose, onAddTransaction }) => {
   const [categoryList, setCategoryList] = useState([]);
 
   useEffect(() => {
-    // Fetch user data and category data and update the state
-    // Example: You can replace the fetchUserList and fetchCategoryList with your API calls
-    fetchUserList().then((users) => setUserList(users));
+    fetchUserList().then((users) => {
+      console.log('User Data:', users);
+      setUserList(users);
+    });
     fetchCategoryList().then((categories) => setCategoryList(categories));
   }, []);
 
   const fetchUserList = async () => {
     try {
-      const response = await fetch('http://localhost:5000/users/getAll'); // Replace '/api/users' with the actual API endpoint for fetching user data
+      const response = await fetch('http://localhost:5000/users/getAll');
       if (!response.ok) {
         throw new Error('Failed to fetch user data');
       }
-  
+
       const users = await response.json();
-      return users;
+
+      // Add a console log to check the structure of the received data
+      console.log('User Data:', users);
+
+      // Check if the data is nested inside a 'data' property
+      const userList = users.data || users;
+
+      if (!Array.isArray(userList)) {
+        throw new Error('Invalid user data format');
+      }
+
+      return userList;
     } catch (error) {
       console.error('Error fetching user data:', error.message);
       return [];
     }
   };
-  
+
+
+
   const fetchCategoryList = async () => {
     try {
-      const response = await fetch('http://localhost:5000/categories/all'); // Replace with your actual API endpoint
+      const response = await fetch('http://localhost:5000/categories/all');
       if (!response.ok) {
-        throw new Error('Failed to fetch category data');
+        throw new Error(`Failed to fetch category data. Status: ${response.status}`);
       }
-  
-      const categories = await response.json();
-  
+
+      const result = await response.json();
+      const categories = result.data;
+
+      console.log('Category Data:', categories); // Log the categories
+
       if (!Array.isArray(categories)) {
         throw new Error('Invalid category data format');
       }
-  
+
+      setCategoryList(categories); // Set categories in the state
+
       return categories;
     } catch (error) {
       console.error('Error fetching category data:', error.message);
       return [];
     }
   };
-  
-  
+
+
+
 
   const handleAddClick = () => {
+    const formattedDate = new Date(date).toISOString().split('T')[0];
+
     const newTransaction = {
       title,
       type,
-      date,
+       Date: date,
       value: parseFloat(value),
-      userID,
-      categoryID,
+     UserID: userID,
+     CategoryID: categoryID,
     };
 
     onAddTransaction(newTransaction);
@@ -123,37 +146,58 @@ const AddTransactionForm = ({ onClose, onAddTransaction }) => {
             InputLabelProps={{ style: { color: '#FFFFFF' } }}
             sx={{ '& fieldset': { borderColor: '#CCCCCC' } }}
           />
+
           <Select
             label="UserID"
             value={userID}
-            onChange={(e) => setUserID(e.target.value)}
+            onChange={(e) => {
+              console.log('Selected User ID:', e.target.value);
+              setUserID(e.target.value);
+            }}
             fullWidth
             margin="normal"
-            sx={{ color: '#FFFFFF', '& fieldset': { borderColor: '#CCCCCC' } }}
+            sx={{
+              '& fieldset': { borderColor: '#CCCCCC' },
+              '& .MuiSelect-menu': { backgroundColor: '#333', color: '#FFFFFF' },
+              '& .MuiSelect-icon': { color: '#FFFFFF' },
+            }}
           >
+
+            <MenuItem value="" disabled>
+              UserID
+            </MenuItem>
             {userList.map((user) => (
               <MenuItem key={user.id} value={user.id}>
-                {user.name}
+                {user.Name}
               </MenuItem>
             ))}
+
           </Select>
           <Select
             label="CategoryID"
             value={categoryID}
-            onChange={(e) => setCategoryID(e.target.value)}
+            onChange={(e) => {
+              console.log('Selected cattegory ID:', e.target.value);
+              setCategoryID(e.target.value);
+            }}
             fullWidth
             margin="normal"
             sx={{
               color: '#FFFFFF',
               '& fieldset': { borderColor: '#CCCCCC' },
+              '& .MuiSelect-menu': { backgroundColor: '#555555' },
             }}
           >
+            <MenuItem value="" disabled>
+              CategoryID
+            </MenuItem>
             {categoryList.map((category) => (
               <MenuItem key={category.id} value={category.id}>
-                {category.name}
+                {category.Name}
               </MenuItem>
             ))}
           </Select>
+
         </DialogContent>
         <DialogActions>
           <Button onClick={handleAddClick} variant="contained" color="primary">

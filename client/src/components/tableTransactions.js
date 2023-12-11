@@ -131,17 +131,21 @@ const EnhancedTable = () => {
 
   const handleAddTransaction = async (newTransaction) => {
     try {
+      console.log('Sending request with data:', newTransaction);
+  
       // Make a POST request to your backend endpoint
       const response = await axios.post('http://localhost:5000/transactions/create', newTransaction);
-
+  
+      console.log('Response from server:', response);
+  
       // Check if the request was successful
       if (response.status === 200) {
         // Update your state with the new transaction
         addTransactionToState(response.data.transaction);
-
+  
         // Close the add transaction form
         setAddTransactionFormOpen(false);
-
+  
         // Show a success toast or perform any other action
         toast.success('Transaction added successfully', { position: 'top-right' });
       } else {
@@ -154,6 +158,8 @@ const EnhancedTable = () => {
       toast.error('Error adding transaction', { position: 'top-right' });
     }
   };
+  
+  
 
 
   function descendingComparator(a, b, orderBy) {
@@ -396,8 +402,8 @@ const EnhancedTable = () => {
         type: newTransaction.type,
         Date: newTransaction.Date,
         value: newTransaction.value,
-        userID: newTransaction.userID,
-        categoryID: newTransaction.categoryID,
+        userID: newTransaction.UserID,
+        categoryID: newTransaction.CategoryID,
       },
     ]);
   };
