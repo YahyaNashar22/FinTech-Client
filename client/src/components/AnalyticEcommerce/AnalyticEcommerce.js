@@ -24,7 +24,7 @@ const style = {
   },
   ".GoalCount": {
     color: "white",
-    mt: "23px",
+    // mt: "23px",
   },
   ".number": {
     // color: "#0794D5",
@@ -32,12 +32,15 @@ const style = {
     fontWeight: "bold",
     fontSize: "13.5px",
   },
+  ".success": {
+    color: "var(--primary-green)",
+    fontWeight: "bold",
+  }
 };
 
 // ==============================|| STATISTICS - ECOMMERCE CARD  ||============================== //
 
 const AnalyticEcommerce = ({
-  color,
   title,
   count,
   percentage,
@@ -47,6 +50,7 @@ const AnalyticEcommerce = ({
   colorB,
   isExpences,
   isGoal,
+  remainingToGoal,
 }) => (
   <MainCard contentSX={style[".box"]}>
     <Stack spacing={0.5}>
@@ -99,7 +103,18 @@ const AnalyticEcommerce = ({
     </Stack>
     <Box sx={style[".paragraph"]}>
       {isGoal ? (
-        ""
+        percentage >= 100 ?
+        <Typography variant="caption" sx={style[".success"]}>
+          Congrats! Your goal reached successfully!
+        </Typography>
+      :
+      <Typography variant="caption">
+      You still have{" "}
+      <Typography component="span" variant="caption"sx={style[".number"]}>
+        {remainingToGoal}
+      </Typography>{" "}
+      to reach your goal.
+    </Typography>
       ) : isExpences ? (
         <Typography variant="caption">
           You spend{" "}

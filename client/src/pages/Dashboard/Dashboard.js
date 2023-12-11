@@ -125,6 +125,13 @@ const Dashboard = () => {
     console.log("No goals found.");
   }
 
+  // Calculate the percentage completed
+  const percentageCompleted = ((financialData.sumIncomes / lastGoalValue) * 100).toFixed(2);
+
+  // Calculate how much is left to reach the goal
+  const remainingToGoal = lastGoalValue - financialData.sumIncomes;
+
+
   return (
     <Grid
       container
@@ -148,15 +155,6 @@ const Dashboard = () => {
       </Grid>
       <Grid item xs={12} sm={6} md={3} lg={3}>
         <AnalyticEcommerce
-          title="Total Profits"
-          count={`$${financialData.profit}`}
-          colorB="var(--secondery-green);"
-          percentage={41.84}
-          extra="$236"
-        />
-      </Grid>
-      <Grid item xs={12} sm={6} md={3} lg={3}>
-        <AnalyticEcommerce
           title="Total Expences"
           count={`$${financialData.sumExpenses}`}
           isLoss
@@ -168,10 +166,20 @@ const Dashboard = () => {
       </Grid>
       <Grid item xs={12} sm={6} md={3} lg={3}>
         <AnalyticEcommerce
+          title="Total Profits"
+          count={`$${financialData.profit}`}
+          colorB="var(--secondery-green);"
+          percentage={41.84}
+          extra="$236"
+        />
+      </Grid>
+      <Grid item xs={12} sm={6} md={3} lg={3}>
+        <AnalyticEcommerce
           title="Goal To Reach"
           count={`$${lastGoalValue}`}
           colorB="var(--secondery-green)"
-          less="$2,395"
+          remainingToGoal={`$${remainingToGoal}`}
+          percentage={percentageCompleted}
           isGoal="true"
         />
       </Grid>
