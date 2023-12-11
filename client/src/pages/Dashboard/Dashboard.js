@@ -121,7 +121,7 @@ const Dashboard = () => {
           <Box sx={{ p: 3, pb: 0}}>
             <Stack spacing={2}>
               <Typography variant="h6" color="textSecondary" sx={{fontSize: "17px", color: "white"}}>
-                This Week Statistics
+                This Week Income
               </Typography>
               <Typography variant="h3" sx={{fontSize:"25px", m: "7px", color: "white"}}>$7,650</Typography>
             </Stack>
