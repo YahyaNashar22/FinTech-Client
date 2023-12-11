@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   BsGrid1X2Fill,
@@ -16,7 +16,19 @@ import axios from "axios";
 import userContext from "../../AuthContext";
 
 function Sidebar({ openSidebarToggle, OpenSidebar }) {
+  const [protectedGoal, setProtectedGoal] = useState();
   const { user } = useContext(userContext);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (user.data.Role === "accountant") {
+        setProtectedGoal("/game");
+      } else {
+        setProtectedGoal("/goal");
+      }
+    }, 1);
+    return () => clearTimeout(timeout);
+  }, [user]);
+
   const logouthandler = async () => {
     try {
       await axios.post("http://localhost:5000/users/userlogout");
@@ -62,11 +74,12 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
               <BsPeopleFill className={Styles.icon} /> Users
             </li>
           </Link>
-          <Link to="/goal">
+          <Link to={protectedGoal}>
             <li className={Styles.sidebarListItem}>
               <FaBullseye className={Styles.icon} /> Goal
             </li>
           </Link>
+
           <Link to="/report">
             <li className={Styles.sidebarListItem}>
               <BsMenuButtonWideFill className={Styles.icon} /> Reports

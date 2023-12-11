@@ -121,6 +121,9 @@ function Game() {
           </div>
         ))}
       </div>
+      <p className={style.paragraph}>
+        You Are Not Authorized ! Finish this game to go back to the dashboard
+      </p>
     </div>
   );
 }
