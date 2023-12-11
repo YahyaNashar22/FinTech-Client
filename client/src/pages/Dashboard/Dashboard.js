@@ -58,9 +58,9 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/transactions/read"
+          "http://localhost:5000/transactions/readAll"
         );
-        const data = response.data || [];
+        const data = response.data.data || [];
         setTransactionsData(data);
         console.log("Data Respond: ", data);
       } catch (error) {
