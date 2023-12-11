@@ -56,6 +56,19 @@
   outline: none;
 }
 
+.uploadButtonInput {
+  padding: 10px;
+  border-radius: 6px;
+  border: 0.5px solid var(--primary-green);
+  width: 84%;
+  background-color: transparent;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+.uploadButtonInput:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
 .input .uploadButton {
   padding: 3px 4px 3px 5px;
   border: none;

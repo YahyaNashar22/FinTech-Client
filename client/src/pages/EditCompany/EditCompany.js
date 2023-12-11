@@ -2,8 +2,10 @@ import { React, useState, useEffect } from "react";
 import style from "./EditCompany.module.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { fontSize } from "@mui/system";
 
 const EditCompany = () => {
+  const [logoFile, setLogoFile] = useState(null);
   const [formErrors, setFormErrors] = useState({});
 
   const validateName = (name) => {
@@ -42,7 +44,7 @@ const EditCompany = () => {
   // Fetching
   const [formData, setFormData] = useState({
     Name: "",
-    Logo: "",
+    Logo: null,
     Email: "",
     Description: "",
     Capital: null,
@@ -95,29 +97,43 @@ const EditCompany = () => {
   };
   // End Handle Input Change
 
+  const handleLogoChange = (event) => {
+    setLogoFile(event.target.files[0]);
+    setFormData({
+      ...formData,
+      Logo: event.target.files[0],  
+    });
+  };
+
   // Start Handle Input Change
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const { Name, Capital, Email, Phone_Number, Website, Social_Media, Description, Address } = formData;
-    const updatedData = {
-      Name,
-      Capital,
-      Email,
-      Phone_Number,
-      Website,
-      Social_Media,
-      Description,
-      Address,
-    };
+    const formDataToSend = new FormData();
+    formDataToSend.append('Name', formData.Name);
+    formDataToSend.append('Email', formData.Email);
+    formDataToSend.append('Description', formData.Description);
+    formDataToSend.append('Capital', formData.Capital);
+    formDataToSend.append('Address', formData.Address);
+    formDataToSend.append('Phone_Number', formData.Phone_Number);
+    formDataToSend.append('Website', formData.Website);
+    formData.Social_Media.forEach((socialMedia, index) => {
+      formDataToSend.append(`Social_Media[${index}][platform]`, socialMedia.platform);
+      formDataToSend.append(`Social_Media[${index}][link]`, socialMedia.link);
+    });
+  
+    if (logoFile) {
+      formDataToSend.append('Logo', logoFile);
+    }
+
 
     const errors = {};
 
-    if (!validateName(Name)) {
+    if (!validateName(formData.Name)) {
       errors.Name = "Invalid name";
     }
 
-    if (!validateCapital(Capital)) {
+    if (!validateCapital(formData.Capital)) {
       errors.Capital = "Invalid capital";
     }
 
@@ -125,19 +141,23 @@ const EditCompany = () => {
     //   errors.Email = "Invalid email";
     // }
 
-    if (!validatePhoneNumber(Phone_Number)) {
+    if (!validatePhoneNumber(formData.Phone_Number)) {
       errors.Phone_Number = "Invalid phone number";
     }
 
-    if (!validateWebsite(Website)) {
+    if (!validateWebsite(formData.Website)) {
       errors.Website = "Invalid website URL";
     }
 
     setFormErrors(errors);
-
+  
     if (Object.keys(errors).length === 0) {
       try {
-        await axios.put("http://localhost:5000/company/update", updatedData);
+        await axios.put("http://localhost:5000/company/update", formDataToSend, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
         console.log("Company data updated successfully!");
       } catch (error) {
         console.error("Error updating company data:", error);
@@ -154,7 +174,7 @@ const EditCompany = () => {
           <button className={style.editInfoButton}>Cancel</button>
         </Link>
       </div>
-      <form className={style.form} onSubmit={handleSubmit}>
+      <form className={style.form} onSubmit={handleSubmit} encType="multipart/form-data">
         <div className={style.input}>
           <label htmlFor="nameLabel" className={style.label}>
             Name:
@@ -343,8 +363,8 @@ const EditCompany = () => {
             onChange={(e) => handleInputChange(e)}
           />
         </div>
-        {formErrors.PhoneNumber && (
-          <span className={style.error}>{formErrors.PhoneNumber}</span>
+        {formErrors.Phone_Number && (
+          <span className={style.error}>{formErrors.Phone_Number}</span>
         )}
         <div className={style.input}>
           <label htmlFor="websiteLabel" className={style.label}>
@@ -364,20 +384,15 @@ const EditCompany = () => {
           <span className={style.error}>{formErrors.Website}</span>
         )}
         <div className={style.input}>
-          <label className={style.label}>Logo:</label>
+          <label className={style.label} htmlFor="logoUpload">Logo:</label>
 
-          <label htmlFor="logoUpload" className={style.uploadButton}>
-            Insert Logo
-          </label>
           <input
             type="file"
             id="logoUpload"
-            style={{ display: "none" }}
-            onChange={(event) => {
-              // Handle image upload using multer
-              const file = event.target.files[0];
-              // Implement multer logic to upload the file
-            }}
+            name="Logo" 
+            className={style.uploadButtonInput}
+            style={{fontSize: "14px"}}
+            onChange={handleLogoChange}
           />
         </div>
 
