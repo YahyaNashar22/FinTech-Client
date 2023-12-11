@@ -23,10 +23,18 @@ import {Link} from 'react-router-dom';
 
 const Start = () => {
 
+  // Logo
+  const [file, setFile] = useState();
+
+  const handleLogoChange = (e) => {
+    setFile(e.target.files[0]);
+    // setFile(URL.createObjectURL(e.target.files[0]));
+  };
+
     // Sending Data
     const [formData, setFormData] = useState({
       Name: '',
-      Logo: '',
+      Logo: file,
       Email: '',
       Description: '',
       Capital: '',
@@ -115,7 +123,6 @@ const Start = () => {
         Social_Media: updatedSocialMedia,
       });
     };
-  
     return (
       <div className={style.popup}>
         {formData.Social_Media.map((platformData, index) => (
@@ -153,18 +160,15 @@ const Start = () => {
           </div>
           <div className={style.input}>
             <img src={logoIcon} alt="Logo Icon" className={style.icon} />
-            <input type="text" placeholder="Logo" name="Logo" value={formData.Logo} onChange={handleInputChange}/>
-            <label htmlFor="logoUpload" className={style.uploadButton}>Insert Logo</label>
-            {/* <input
-              type="file"
-              id="logoUpload"
-              style={{ display: "none" }}
-              onChange={(event) => {
-                // Handle image upload using multer
-                const file = event.target.files[0];
-                // Implement multer logic to upload the file
-              }}
-            /> */}
+            <input type="text" placeholder="Logo" name="Logo" value={formData.Logo} onChange={handleInputChange} readOnly={true}/>
+            <img src={logoIcon} alt="Logo Icon" className={style.icon} />
+            <input
+            type="file"
+            id="logoUpload"
+            className={style.uploadButtonInput}
+            onChange={handleLogoChange}
+          />
+
           </div>
           <div className={style.input}>
             <img src={mailIcon} alt="Email Icon" className={style.icon} />
