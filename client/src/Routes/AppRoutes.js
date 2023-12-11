@@ -19,6 +19,7 @@ import MonthlyGoal from "../pages/MonthlyGoal/MonthlyGoal";
 import QuarterlyGoal from "../pages/QuarterlyGoal/QuarterlyGoal";
 import YearlyGoal from "../pages/YearlyGoal/YearlyGoal";
 import NotFound from "../pages/NotFound/NotFound";
+import Game from "../components/TicTacToe/Game.js";
 
 function AppRoutes() {
   return (
@@ -153,6 +154,14 @@ function AppRoutes() {
             element={
               <LayoutWithoutHeaderSidebar>
                 <SignIn />
+              </LayoutWithoutHeaderSidebar>
+            }
+          />
+          <Route
+            path="/game"
+            element={
+              <LayoutWithoutHeaderSidebar>
+                <Game />
               </LayoutWithoutHeaderSidebar>
             }
           />
