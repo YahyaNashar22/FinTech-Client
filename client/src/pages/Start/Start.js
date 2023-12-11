@@ -100,8 +100,9 @@ const Start = () => {
       formDataToSend.append('Address', formData.Address);
       formDataToSend.append('Phone_Number', formData.Phone_Number);
       formDataToSend.append('Website', formData.Website);
-      formData.Social_Media.forEach((socialMedia) => {
-        formDataToSend.append(`Social_Media_${socialMedia.platform}`, socialMedia.link);
+      formData.Social_Media.forEach((socialMedia, index) => {
+        formDataToSend.append(`Social_Media[${index}][platform]`, socialMedia.platform);
+        formDataToSend.append(`Social_Media[${index}][link]`, socialMedia.link);
       });
     
       if (logoFile) {
