@@ -35,7 +35,9 @@ const Settings = () => {
     };
     fetchData();
   }, []);
-
+  const logoFileName = data.Logo;
+  const logoURL = `http://localhost:5000/images/${logoFileName}`;
+  
   return (
     <main className={style.main}>
       <div className={style.header}>
@@ -71,12 +73,6 @@ const Settings = () => {
               <td>Website:</td>
               <td>{data.Website || '*There is no Website yet!*'}</td>
             </tr>
-            {/* {data.Social_Media.map((platformData, index) => (
-              <tr key={index}>
-                <td>{platformData.platform}:</td>
-                <td>{platformData.link || `*There is no ${platformData.platform} yet!*`}</td>
-              </tr>
-            ))} */}
             {data.Social_Media && data.Social_Media.map((platformData, index) => (
               <tr key={index}>
                 <td>{platformData.platform}:</td>
@@ -85,7 +81,7 @@ const Settings = () => {
             ))}
             <tr>
               <td>Logo:</td>
-              <td>{data.Logo}</td>
+              <td>{data.Logo ? <img src={logoURL} className={style.logoImage} alt="Company Logo" /> : `*There is no Logo yet!*`}</td>
             </tr>
           </tbody>
         </table>
