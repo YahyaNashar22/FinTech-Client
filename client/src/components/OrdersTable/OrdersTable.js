@@ -109,36 +109,13 @@ OrderTableHead.propTypes = {
 
 // ==============================|| ORDER TABLE ||============================== //
 
-export default function OrderTable() {
+export default function OrderTable({transactionsData}) {
   const [order] = useState("asc");
   const [orderBy] = useState("transactionID");
   const [selected] = useState([]);
   const isSelected = (transactionID) => selected.indexOf(transactionID) !== -1;
-  let rows = [];
 
-  // Fetching
-  const [transactionsData, setTransactionsData] = useState({});
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/transactions/read"
-        );
-        const data = response.data || [];
-        setTransactionsData(data);
-        console.log("Data Respond: ", data)
-        // const reversedData = Array.isArray(data) ? data.reverse() : [];
-        // setTransactionData(reversedData);
-        // console.log(reversedData)
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, []);
-  
-  console.log("transactionsData: ", transactionsData)
+  let rows = [];
   rows = Array.isArray(transactionsData)
     ? transactionsData.map((transaction) => {
         return createData(
@@ -150,8 +127,6 @@ export default function OrderTable() {
         );
       })
     : [];
-
-  //-----------------
 
   return (
     <Box>
