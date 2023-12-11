@@ -6,18 +6,6 @@ import { Link } from "react-router-dom";
 function Goal() {
   return (
     <div className={style.wrapper}>
-      {/* <motion.div className={style.particle1} whileHover={{ rotate: 35 }} />
-      <motion.div className={style.particle2} whileHover={{ rotate: -45 }} />
-      <motion.div className={style.particle3} whileHover={{ rotate: 45 }} />
-      <motion.div className={style.particle4} whileHover={{ rotate: -45 }} />
-      <motion.div className={style.particle5} whileHover={{ rotate: 45 }} />
-      <motion.div className={style.particle6} whileHover={{ rotate: -45 }} />
-      <motion.div className={style.particle7} whileHover={{ rotate: 45 }} />
-      <motion.div className={style.particle8} whileHover={{ rotate: -45 }} />
-      <motion.div className={style.particle9} whileHover={{ rotate: 45 }} />
-      <motion.div className={style.particle10} whileHover={{ rotate: -45 }} />
-      <motion.div className={style.particle11} whileHover={{ rotate: 45 }} />
-      <motion.div className={style.particle12} whileHover={{ rotate: -45 }} /> */}
       <Link to="/createGoal" className={style.goal}>
         <motion.div
           initial={{ y: 100, opacity: 0, scale: 1 }}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   BsGrid1X2Fill,
@@ -13,8 +13,10 @@ import Styles from "./Sidebar.module.css";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 import { FaExchangeAlt, FaSignOutAlt, FaBullseye } from "react-icons/fa";
 import axios from "axios";
+import userContext from "../../AuthContext";
 
 function Sidebar({ openSidebarToggle, OpenSidebar }) {
+  const { user } = useContext(userContext);
   const logouthandler = async () => {
     try {
       await axios.post("http://localhost:5000/users/userlogout");
