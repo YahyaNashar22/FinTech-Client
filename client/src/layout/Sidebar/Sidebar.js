@@ -1,4 +1,4 @@
-import React from 'react';
+import {React, useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import {
   BsGrid1X2Fill,
@@ -12,14 +12,36 @@ import {
 import Styles from './Sidebar.module.css';
 import { FaMoneyCheckAlt } from 'react-icons/fa';
 import { FaExchangeAlt, FaSignOutAlt, FaBullseye } from 'react-icons/fa';
+import axios from 'axios';
 
 function Sidebar({ openSidebarToggle, OpenSidebar }) {
+  const [data, setData] = useState({
+    Name: '',
+    Logo: '',
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/company/info');
+        const data = response.data.data
+        setData(data);
+        console.log('Data Reaponse:', data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+  const logoFileName = data.Logo;
+  const logoURL = `http://localhost:5000/images/${logoFileName}`;
+
   return (
     <aside id={Styles.sidebar} className={`${openSidebarToggle ? Styles.sidebarResponsive : ''}`}>
       <div className={Styles.sidebartitle}>
+        <img src={logoURL} alt='Company Logo' className={Styles.logoImage}/>
         <div className={Styles.sidebarbrand}>
-        FINANCIAL
-        {/* <img src="./home/souhad-moussa/Pictures/image.png" alt="FINANCIA" className={Styles.logo} /> */}
+        {data.Name}
         </div>
         {openSidebarToggle && (
           <span className={`${Styles.icon} ${Styles.closeicon}`} onClick={OpenSidebar}>

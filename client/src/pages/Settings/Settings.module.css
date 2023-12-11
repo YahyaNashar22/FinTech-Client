@@ -46,7 +46,8 @@ tr td:first-child {
   font-size: 20px;
 }
 .logoImage {
-  width: 100%;
+  /* width: 100%; */
+  width: 300px;
 }
 
 
@@ -79,5 +80,6 @@ tr td:first-child {
   }
   .logoImage {
     padding: 10px;
+    width: 100%;
   }
 }

@@ -9,19 +9,20 @@
 }
 .closeicon {
   color:var(--primary-green);
-  margin-left: 30px;
   cursor: pointer;
+  display: none;
 }
-
+.logoImage {
+  width: 40px;
+  height: 40px;
+}
 .sidebartitle {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 15px 30px 0px 30px;
-  margin-top: 15px;
-  margin-bottom: 30px;
-  transition: margin-left 0.5s ease; /* Added transition property for margin-left */
-
+  gap: 15px;
+  margin: 30px 0;
+  transition: margin-left 0.5s ease;
 }
 
 .sidebarbrand {
@@ -46,7 +47,7 @@
   padding: 20px 20px 20px 20px;
   font-size: 18px;
   display: flex;
-  gap: 16px;
+  gap: 14px;
   align-items: center;
 }
 
@@ -67,12 +68,6 @@ a{
   display: inline !important;
   position: absolute;
   transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-
-  /*
-    we want the z-index of the sidebar higher so that
-    the charts are not showing over the sidebar 
-    on small screens
-  */
   z-index: 12 !important;
 }
 
