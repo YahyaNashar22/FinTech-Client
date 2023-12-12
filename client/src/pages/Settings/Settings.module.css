@@ -45,6 +45,12 @@ tr td:first-child {
   font-weight: bold;
   font-size: 20px;
 }
+.logoImage {
+  /* width: 100%; */
+  width: 300px;
+}
+
+
 @media (max-width: 992px) {
   tr td:nth-child(2) {
     text-align: center;
@@ -71,5 +77,9 @@ tr td:first-child {
   tr td:nth-child(2) {
     font-size: 15px;
     padding: 0;
+  }
+  .logoImage {
+    padding: 10px;
+    width: 100%;
   }
 }

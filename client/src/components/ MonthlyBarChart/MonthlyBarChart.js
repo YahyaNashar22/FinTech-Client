@@ -1,86 +1,73 @@
+import './MonthlyBarChart.css'; // Create a new CSS file for styling
 import { useEffect, useState } from 'react';
-import './MonthlyBarChart.css'
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
 
 // third-party
 import ReactApexChart from 'react-apexcharts';
+import axios from 'axios';
 
-// chart options
-const barChartOptions = {
-  chart: {
-    type: 'bar',
-    height: 365,
-    toolbar: {
-      show: false
-    }
-  },
-  plotOptions: {
-    bar: {
-      columnWidth: '45%',
-      borderRadius: 4
-    }
-  },
-  dataLabels: {
-    enabled: false
-  },
-  xaxis: {
-    categories: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-    axisBorder: {
-      show: false
-    },
-    axisTicks: {
-      show: false
-    }
-  },
-  yaxis: {
-    show: false
-  },
-  grid: {
-    show: false
-  }
-};
-
-// ==============================|| MONTHLY BAR CHART ||============================== //
-
-const MonthlyBarChart = () => {
+const WeeklyBarChart = () => {
   const theme = useTheme();
 
   const { primary, secondary } = theme.palette.text;
   const info = theme.palette.info.light;
 
-  const [series] = useState([
-    {
-      data: [80, 95, 70, 42, 65, 55, 78]
-    }
-  ]);
-
-  const [options, setOptions] = useState(barChartOptions);
-
-  useEffect(() => {
-    setOptions((prevState) => ({
-      ...prevState,
-      colors: [info],
-      xaxis: {
-        labels: {
-          style: {
-            colors: [secondary, secondary, secondary, secondary, secondary, secondary, secondary]
-          }
-        }
+  const [barChartData, setBarChartData] = useState({
+    options: {
+      colors: ["#4DA192"],
+      chart: {
+        id: "basic-bar",
       },
-      tooltip: {
-        theme: 'light'
+      xaxis: {
+        categories: [],
+      },
+    },
+    series: [
+      {
+        name: 'Income',
+        data: [],
+      },
+    ],
+  });
+
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/transactions/byweek');
+        const data = response.data;
+
+        // Update state with fetched data
+        setBarChartData({
+          options: {
+            colors: ["#4DA192"],
+            chart: { id: "basic-bar" },
+            xaxis: {
+              categories: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], // Update with days of the week
+            },
+          },
+          series: [
+            {
+              name: 'Income',
+              data: data.series[0].data, // Use the income data from the fetched response
+            },
+          ],
+        });
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
-    }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [primary, info, secondary]);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div id="chart">
-      <ReactApexChart options={options} series={series} type="bar" height={359} />
+      <ReactApexChart options={barChartData.options} series={barChartData.series} type="bar" height={359} />
     </div>
   );
 };
 
-export default MonthlyBarChart;
+export default WeeklyBarChart;
