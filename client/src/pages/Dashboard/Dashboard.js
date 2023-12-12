@@ -126,18 +126,21 @@ const Dashboard = () => {
   }
 
   // Calculate the percentage completed
-  const percentageCompleted = ((financialData.sumIncomes / lastGoalValue) * 100).toFixed(2);
+  const percentageCompleted = (
+    (financialData.sumIncomes / lastGoalValue) *
+    100
+  ).toFixed(2);
 
   // Calculate how much is left to reach the goal
   const remainingToGoal = lastGoalValue - financialData.sumIncomes;
-
 
   return (
     <Grid
       container
       rowSpacing={4.5}
       columnSpacing={2.75}
-      sx={styles[".css-dasaed-MuiGrid-root"]}>
+      sx={styles[".css-dasaed-MuiGrid-root"]}
+    >
       {/* row 1 */}
       <Grid item xs={12} sx={{ mb: -2.25 }}>
         <Typography variant="h1" sx={styles.h1}>
@@ -198,14 +201,16 @@ const Dashboard = () => {
                 size="small"
                 onClick={() => setSlot("week")}
                 sx={styles[".buttons"]}
-                variant={slot === "week" ? "outlined" : "text"}>
+                variant={slot === "week" ? "outlined" : "text"}
+              >
                 Week
               </Button>
               <Button
                 size="small"
                 onClick={() => setSlot("month")}
                 sx={styles[".buttons"]}
-                variant={slot === "month" ? "outlined" : "text"}>
+                variant={slot === "month" ? "outlined" : "text"}
+              >
                 Month
               </Button>
             </Stack>
@@ -232,12 +237,14 @@ const Dashboard = () => {
               <Typography
                 variant="h6"
                 color="textSecondary"
-                sx={{ fontSize: "17px", color: "white" }}>
+                sx={{ fontSize: "17px", color: "white" }}
+              >
                 This Week Statistics
               </Typography>
               <Typography
                 variant="h3"
-                sx={{ fontSize: "25px", m: "7px", color: "white" }}>
+                sx={{ fontSize: "25px", m: "7px", color: "white" }}
+              >
                 $7,650
               </Typography>
             </Stack>

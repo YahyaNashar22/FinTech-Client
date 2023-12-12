@@ -6,6 +6,8 @@ import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 import io from "socket.io-client";
 
@@ -14,10 +16,73 @@ export const socket = io.connect("http://localhost:5000");
 const AddTransactionForm = ({ onClose, onAddTransaction }) => {
   const [title, setTitle] = useState("");
   const [type, setType] = useState("");
-  const [Date, setDate] = useState("");
+  const [date, setDate] = useState("");
   const [value, setValue] = useState("");
-  const [UserID, setUserID] = useState("");
-  const [CategoryID, setCategoryID] = useState("");
+  const [userID, setUserID] = useState("");
+  const [categoryID, setCategoryID] = useState("");
+
+  const [userList, setUserList] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
+
+  useEffect(() => {
+    fetchUserList().then((users) => {
+      console.log("User Data:", users);
+      setUserList(users);
+    });
+    fetchCategoryList().then((categories) => setCategoryList(categories));
+  }, []);
+
+  const fetchUserList = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/users/getAll");
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+
+      const users = await response.json();
+
+      // Add a console log to check the structure of the received data
+      console.log("User Data:", users);
+
+      // Check if the data is nested inside a 'data' property
+      const userList = users.data || users;
+
+      if (!Array.isArray(userList)) {
+        throw new Error("Invalid user data format");
+      }
+
+      return userList;
+    } catch (error) {
+      console.error("Error fetching user data:", error.message);
+      return [];
+    }
+  };
+  const fetchCategoryList = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/categories/all");
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch category data. Status: ${response.status}`
+        );
+      }
+
+      const result = await response.json();
+      const categories = result.data;
+
+      console.log("Category Data:", categories); // Log the categories
+
+      if (!Array.isArray(categories)) {
+        throw new Error("Invalid category data format");
+      }
+
+      setCategoryList(categories); // Set categories in the state
+
+      return categories;
+    } catch (error) {
+      console.error("Error fetching category data:", error.message);
+      return [];
+    }
+  };
   //////////////////////////socketIO//////////////////
   const sendMessage = () => {
     socket.emit("send_message", "Transaction added");
@@ -29,23 +94,18 @@ const AddTransactionForm = ({ onClose, onAddTransaction }) => {
   }, []);
   ////////////////////////////socketIO////////////////////
   const handleAddClick = () => {
-    // Validate form data (you may add more validation logic here)
+    const formattedDate = new Date(date).toISOString().split("T")[0];
 
-    // Create a new transaction object
     const newTransaction = {
       title,
       type,
-      Date,
+      Date: formattedDate,
       value: parseFloat(value),
-      UserID,
-      CategoryID, // Convert to a number if needed
-      // Add other properties as needed
+      UserID: userID,
+      CategoryID: categoryID,
     };
 
-    // Call the onAddTransaction callback with the new transaction data
     onAddTransaction(newTransaction);
-
-    // Close the form
     onClose();
   };
 
@@ -96,33 +156,77 @@ const AddTransactionForm = ({ onClose, onAddTransaction }) => {
             sx={{ "& fieldset": { borderColor: "#CCCCCC" } }}
           />
 
-          <TextField
+          <Select
             label="UserID"
-            value={UserID}
-            onChange={(e) => setUserID(e.target.value)}
+            value={userID}
+            onChange={(e) => {
+              console.log("Selected User ID:", e.target.value);
+              setUserID(e.target.value);
+            }}
             fullWidth
             margin="normal"
-            InputProps={{ style: { color: "#FFFFFF" } }}
-            InputLabelProps={{ style: { color: "#FFFFFF" } }}
-            sx={{ "& fieldset": { borderColor: "#CCCCCC" } }}
-          />
-          <TextField
-            label="CategoryID"
-            value={CategoryID}
-            onChange={(e) => setCategoryID(e.target.value)}
-            fullWidth
-            margin="normal"
-            InputProps={{ style: { color: "#FFFFFF" } }}
-            InputLabelProps={{ style: { color: "#FFFFFF" } }}
             sx={{
               "& fieldset": { borderColor: "#CCCCCC" },
-              "&:hover fieldset": { borderColor: "#CCCCCC" },
-              "&.Mui-focused fieldset": { borderColor: "#FF0000" }, // Red when focused
+              "& .MuiSelect-menu": {
+                backgroundColor: "#333",
+                color: "#FFFFFF",
+              },
+              "& .MuiSelect-icon": { color: "#FFFFFF" },
             }}
-          />
-
-          {/* Add more fields as needed */}
+          >
+            <MenuItem value="" disabled>
+              UserID
+            </MenuItem>
+            {userList.map((user) => (
+              <MenuItem key={user.id} value={user.id}>
+                {user.Name}
+              </MenuItem>
+            ))}
+          </Select>
+          <Select
+            label="CategoryID"
+            value={categoryID}
+            onChange={(e) => {
+              console.log("Selected cattegory ID:", e.target.value);
+              setCategoryID(e.target.value);
+            }}
+            fullWidth
+            margin="normal"
+            sx={{
+              color: "#FFFFFF",
+              "& fieldset": { borderColor: "#CCCCCC" },
+              "& .MuiSelect-menu": { backgroundColor: "#555555" },
+            }}
+          >
+            <MenuItem value="" disabled>
+              CategoryID
+            </MenuItem>
+            {categoryList.map((category) => (
+              <MenuItem key={category.id} value={category.id}>
+                {category.Name}
+              </MenuItem>
+            ))}
+          </Select>
         </DialogContent>
+        <DialogActions>
+          <Button onClick={handleAddClick} variant="contained" color="primary">
+            Add
+          </Button>
+          <Button onClick={onClose} color="primary">
+            Cancel
+          </Button>
+        </DialogActions>
+        <TextField
+          label="Value"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          fullWidth
+          margin="normal"
+          InputProps={{ style: { color: "#FFFFFF" } }}
+          InputLabelProps={{ style: { color: "#FFFFFF" } }}
+          sx={{ "& fieldset": { borderColor: "#CCCCCC" } }}
+        />
+        {/* Add more fields as needed */}
         <DialogActions>
           <Button
             onClick={() => {

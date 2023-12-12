@@ -65,7 +65,6 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
         <img src={logoURL} alt="Company Logo" className={Styles.logoImage} />
         <div className={Styles.sidebarbrand}>
           {data.Name}
-          FINANCIAL
           {/* <img src="./home/souhad-moussa/Pictures/image.png" alt="FINANCIA" className={Styles.logo} /> */}
         </div>
         {openSidebarToggle && (
